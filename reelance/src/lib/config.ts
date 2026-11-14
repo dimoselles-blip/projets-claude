@@ -13,7 +13,18 @@ function num(value: string | undefined, fallback: number) {
   return Number.isFinite(n) && value !== undefined && value !== "" ? n : fallback;
 }
 
-const fedapayEnv = (process.env.FEDAPAY_ENV ?? "sandbox").toLowerCase() === "live" ? "live" : "sandbox";
+/** Mode déduit du préfixe de la clé secrète (sk_live_… / sk_sandbox_…). */
+const fedapayKeyEnv = (process.env.FEDAPAY_SECRET_KEY ?? "").startsWith("sk_live_")
+  ? "live"
+  : (process.env.FEDAPAY_SECRET_KEY ?? "").startsWith("sk_sandbox_")
+    ? "sandbox"
+    : null;
+// FEDAPAY_ENV prime s'il est renseigné ; sinon on suit la clé (sandbox par défaut).
+const fedapayEnv = process.env.FEDAPAY_ENV
+  ? process.env.FEDAPAY_ENV.toLowerCase() === "live"
+    ? "live"
+    : "sandbox"
+  : (fedapayKeyEnv ?? "sandbox");
 
 export const config = {
   appName: "Reelance",
@@ -27,6 +38,8 @@ export const config = {
 
   fedapay: {
     env: fedapayEnv as "sandbox" | "live",
+    /** Mode correspondant à la clé secrète, pour détecter une incohérence avec FEDAPAY_ENV. */
+    keyEnv: fedapayKeyEnv as "sandbox" | "live" | null,
     apiBase:
       process.env.FEDAPAY_API_BASE ??
       (fedapayEnv === "live" ? "https://api.fedapay.com" : "https://sandbox-api.fedapay.com"),
@@ -39,7 +52,7 @@ export const config = {
 
   /**
    * Mode démo : simule le paiement sans appeler FedaPay (développement uniquement).
-   * Toujours désactivé si FEDAPAY_ENV=live.
+   * Toujours désactivé en mode live.
    */
   paymentSimulation: bool(process.env.PAYMENT_SIMULATION) && fedapayEnv !== "live",
 

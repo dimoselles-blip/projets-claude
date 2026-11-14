@@ -189,6 +189,20 @@ export function mapPayoutStatus(status: string): "SENT" | "FAILED" | "PROCESSING
   return "PROCESSING";
 }
 
+// ───────────── Vérification de la connexion ─────────────
+
+export type FedapayBalance = { id: number; amount: number; mode?: string | null };
+
+/**
+ * Appel en lecture seule (GET /v1/balances) : vérifie que la clé secrète est acceptée
+ * et renvoie les soldes du compte. Ne crée ni transaction ni reversement.
+ */
+export async function checkConnection() {
+  const data = await request<unknown>("GET", "/balances");
+  const list = unwrap<FedapayBalance[] | { balances?: FedapayBalance[] }>(data, "balances");
+  return Array.isArray(list) ? list : (list.balances ?? []);
+}
+
 // ───────────── Webhooks ─────────────
 
 /**

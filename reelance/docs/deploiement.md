@@ -93,7 +93,7 @@ L'application écoute sur `127.0.0.1:3000` : placez Nginx et Certbot devant, com
 ## Avant l'ouverture au public
 
 - [ ] `NEXT_PUBLIC_APP_URL` en HTTPS, domaine définitif
-- [ ] Clés FedaPay **live**, `FEDAPAY_ENV=live`, webhook live déclaré, service Payouts activé, modes Mobile Money vérifiés (voir [fedapay.md](fedapay.md))
+- [ ] Clés FedaPay **live** dans les variables de l'hébergeur, « Tester la connexion FedaPay » au vert, webhook live déclaré, service Payouts activé, modes Mobile Money vérifiés (voir [fedapay.md](fedapay.md))
 - [ ] `PAYMENT_SIMULATION=false`
 - [ ] `CRON_SECRET` défini et cron actif (vérifier la réponse de `/api/cron`)
 - [ ] SMTP configuré (sinon pas d'e-mails, ni de réinitialisation de mot de passe)

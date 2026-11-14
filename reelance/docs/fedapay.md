@@ -14,17 +14,24 @@ Reelance appelle l'API REST de FedaPay directement (`src/lib/fedapay.ts`), avec 
 ## 1. Variables d'environnement
 
 ```env
-FEDAPAY_ENV="sandbox"                 # puis "live" en production
-FEDAPAY_PUBLIC_KEY="pk_sandbox_…"
+FEDAPAY_PUBLIC_KEY="pk_sandbox_…"     # puis pk_live_… en production
 FEDAPAY_SECRET_KEY="sk_sandbox_…"
 FEDAPAY_WEBHOOK_SECRET="wh_sandbox_…"
 NEXT_PUBLIC_APP_URL="https://votre-domaine.com"   # sert de callback_url
 ```
 
-- `FEDAPAY_ENV` choisit l'API : `https://sandbox-api.fedapay.com` ou `https://api.fedapay.com`.
+- Le mode est **déduit de la clé secrète** : `sk_sandbox_…` → `https://sandbox-api.fedapay.com`, `sk_live_…` → `https://api.fedapay.com`. `FEDAPAY_ENV` (« sandbox » ou « live ») ne sert qu'à forcer un mode ; en cas d'incohérence avec la clé, le back office l'affiche.
 - Les clés se trouvent dans le tableau de bord FedaPay, rubrique **Paramètres → Clés API** (une paire par environnement).
 - La clé publique n'est pas utilisée par le parcours actuel (redirection vers la page de paiement FedaPay). Elle est prévue pour intégrer plus tard le widget Checkout.js dans la page.
-- Ne mettez jamais la clé secrète dans le code ni dans une variable `NEXT_PUBLIC_…`.
+- Ne mettez jamais la clé secrète dans le code, dans une variable `NEXT_PUBLIC_…`, dans un e-mail ou une conversation. Elle se colle **uniquement** dans les variables d'environnement de l'hébergeur (Vercel : Settings → Environment Variables ; VPS : fichier `.env` du serveur). Si elle a circulé ailleurs, régénérez-la dans le tableau de bord FedaPay.
+
+### Vérifier la connexion
+
+Une fois les clés en place et le site redéployé : **back office → Paramètres → « Tester la connexion FedaPay »**. Le test est en lecture seule (il lit les soldes du compte, sans créer de paiement ni de reversement) et affiche :
+
+- « Connexion FedaPay réussie (mode LIVE — paiements réels). Solde du compte : … » si tout est bon ;
+- « FedaPay refuse la clé secrète (HTTP 401) » si la clé est fausse, révoquée ou d'un autre mode ;
+- « Incohérence : la clé secrète est une clé live mais FEDAPAY_ENV vaut sandbox » si le mode forcé ne correspond pas.
 
 ## 2. Parcours de paiement
 
@@ -70,7 +77,7 @@ En V1, quand l'admin tranche un litige en faveur du client, Reelance clôt le s�
 
 ## 7. Passage en production
 
-1. Remplacez les trois clés sandbox par les clés live et passez `FEDAPAY_ENV="live"`.
+1. Remplacez les clés sandbox par les clés live (le site passe automatiquement en mode live) et vérifiez avec « Tester la connexion FedaPay ».
 2. Créez le webhook **live** (le secret est différent de celui du sandbox).
 3. Vérifiez que `NEXT_PUBLIC_APP_URL` est l'URL HTTPS définitive.
 4. Faites un vrai paiement de faible montant de bout en bout : paiement, livraison, validation, reversement.

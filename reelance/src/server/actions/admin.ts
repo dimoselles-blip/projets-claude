@@ -8,6 +8,9 @@ import { audit } from "@/lib/audit";
 import { errorMessage, flash } from "@/lib/flash";
 import { saveSettings } from "@/lib/settings";
 import { refreshExchangeRates } from "@/lib/rates";
+import { config, isFedapayConfigured } from "@/lib/config";
+import { checkConnection, FedapayError } from "@/lib/fedapay";
+import { formatXof } from "@/lib/currency";
 import { slugify } from "@/lib/utils";
 import { toFieldErrors } from "@/lib/validation";
 import {
@@ -264,6 +267,29 @@ export async function saveSettingsAction(_prev: ActionState, formData: FormData)
   await audit(user.id, "settings.update", "Setting", "platform", values);
   revalidatePath("/admin/parametres");
   return { ok: true, message: "Paramètres enregistrés. Ils s'appliquent aux nouvelles commandes." };
+}
+
+/** Teste la clé FedaPay configurée (lecture seule) et affiche le résultat. */
+export async function testFedapayAction() {
+  await run(async (adminId) => {
+    if (!isFedapayConfigured()) throw new Error("FEDAPAY_SECRET_KEY n'est pas renseignée sur le serveur.");
+    if (config.fedapay.keyEnv && config.fedapay.keyEnv !== config.fedapay.env) {
+      throw new Error(
+        `Incohérence : la clé secrète est une clé ${config.fedapay.keyEnv} mais FEDAPAY_ENV vaut « ${config.fedapay.env} ». Corrigez FEDAPAY_ENV (ou supprimez-la).`,
+      );
+    }
+    try {
+      const balances = await checkConnection();
+      const total = balances.reduce((s, b) => s + (Number(b.amount) || 0), 0);
+      await audit(adminId, "fedapay.test", "Setting", "fedapay", { env: config.fedapay.env, ok: true });
+      return `Connexion FedaPay réussie (mode ${config.fedapay.env === "live" ? "LIVE — paiements réels" : "sandbox"}). Solde du compte : ${formatXof(total)}.`;
+    } catch (err) {
+      if (err instanceof FedapayError && (err.status === 401 || err.status === 403)) {
+        throw new Error(`FedaPay refuse la clé secrète (HTTP ${err.status}). Vérifiez FEDAPAY_SECRET_KEY et que le mode (${config.fedapay.env}) correspond à la clé.`);
+      }
+      throw new Error(`Connexion à FedaPay impossible : ${err instanceof Error ? err.message : "erreur inconnue"}.`);
+    }
+  }, ["/admin/parametres"]);
 }
 
 export async function refreshRatesAction() {

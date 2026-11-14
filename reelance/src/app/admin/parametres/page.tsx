@@ -6,7 +6,7 @@ import { config, isCloudinaryConfigured, isFedapayConfigured } from "@/lib/confi
 import { getSettings } from "@/lib/settings";
 import { CURRENCIES, type CurrencyCode } from "@/lib/currency";
 import { formatDate } from "@/lib/utils";
-import { refreshRatesAction, saveSettingsAction } from "@/server/actions/admin";
+import { refreshRatesAction, saveSettingsAction, testFedapayAction } from "@/server/actions/admin";
 import { ActionForm, FormField, FormStatus } from "@/components/forms/ActionForm";
 import { SubmitButton } from "@/components/ui/submit-button";
 import { Checkbox, Input } from "@/components/ui/form";
@@ -20,6 +20,7 @@ export default async function AdminSettingsPage() {
   const [settings, rates] = await Promise.all([getSettings(), prisma.exchangeRate.findMany({ orderBy: { currency: "asc" } })]);
   const checks = [
     { label: `FedaPay (${config.fedapay.env === "live" ? "live" : "sandbox"}) — clé secrète`, ok: isFedapayConfigured() },
+    { label: "FedaPay — clé publique", ok: Boolean(config.fedapay.publicKey) },
     { label: "FedaPay — secret du webhook", ok: Boolean(config.fedapay.webhookSecret) },
     { label: "Mode démo des paiements", ok: config.paymentSimulation, neutral: true },
     { label: "Cloudinary (upload d'images)", ok: isCloudinaryConfigured() },
@@ -101,6 +102,17 @@ export default async function AdminSettingsPage() {
                   </li>
                 ))}
               </ul>
+              {config.fedapay.keyEnv && config.fedapay.keyEnv !== config.fedapay.env && (
+                <p className="mt-4 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">
+                  La clé secrète est une clé {config.fedapay.keyEnv}, mais le site est en mode {config.fedapay.env}. Corrigez FEDAPAY_ENV.
+                </p>
+              )}
+              <form action={testFedapayAction} className="mt-4">
+                <SubmitButton size="sm" variant="dark" pendingLabel="Test en cours…">
+                  Tester la connexion FedaPay
+                </SubmitButton>
+                <p className="mt-1.5 text-xs text-ink-500">Lecture seule : aucun paiement ni reversement n&apos;est créé.</p>
+              </form>
               <p className="mt-4 text-xs text-ink-500">
                 URL du webhook à déclarer dans FedaPay : <code className="rounded bg-ink-100 px-1.5 py-0.5">{config.appUrl}/api/webhooks/fedapay</code>
               </p>
