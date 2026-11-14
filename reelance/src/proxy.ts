@@ -11,10 +11,11 @@ export function proxy(request: NextRequest) {
   const isProtected = PROTECTED_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`));
 
   if (isProtected && !request.cookies.has("rl_session")) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/connexion";
-    url.search = `?suivant=${encodeURIComponent(pathname + search)}`;
-    return NextResponse.redirect(url);
+    // Redirection relative : fonctionne derrière un proxy (Nginx, aperçu) sans connaître le domaine public.
+    return new NextResponse(null, {
+      status: 307,
+      headers: { Location: `/connexion?suivant=${encodeURIComponent(pathname + search)}` },
+    });
   }
 
   const headers = new Headers(request.headers);

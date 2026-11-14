@@ -56,6 +56,8 @@ server {
 }
 ```
 
+La ligne `proxy_set_header Host $host;` est importante : sans elle, les formulaires sont refusés (protection anti-falsification de Next.js). À défaut, renseignez `SERVER_ACTIONS_ALLOWED_ORIGINS` avec votre domaine.
+
 ```bash
 sudo ln -s /etc/nginx/sites-available/reelance /etc/nginx/sites-enabled/
 sudo nginx -t && sudo systemctl reload nginx
