@@ -1,0 +1,62 @@
+# Déploiement sur VPS : application + PostgreSQL.
+#   1. cp .env.example .env  (et remplissez les valeurs ; DATABASE_URL est défini ci-dessous)
+#   2. docker compose build
+#   3. docker compose run --rm migrate      (migrations + catégories + compte admin)
+#   4. docker compose up -d
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: reelance
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me}
+      POSTGRES_DB: reelance
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U reelance"]
+      interval: 10s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      target: runner
+      args:
+        NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://reelance:${POSTGRES_PASSWORD:-change-me}@db:5432/reelance?schema=public
+    ports:
+      - "127.0.0.1:3000:3000" # exposé via Nginx (HTTPS) sur le même serveur
+    depends_on:
+      db:
+        condition: service_healthy
+
+  migrate:
+    build:
+      context: .
+      target: migrate
+      args:
+        NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://reelance:${POSTGRES_PASSWORD:-change-me}@db:5432/reelance?schema=public
+    depends_on:
+      db:
+        condition: service_healthy
+    profiles: ["tools"]
+
+  # Tâche planifiée : validation automatique des livraisons + taux de change, toutes les heures
+  cron:
+    image: alpine:3.20
+    restart: unless-stopped
+    env_file: .env
+    command: >
+      sh -c 'echo "0 * * * * wget -qO- --header=\"Authorization: Bearer $$CRON_SECRET\" http://app:3000/api/cron > /proc/1/fd/1 2>&1" | crontab - && crond -f'
+    depends_on:
+      - app
+
+volumes:
+  pgdata:

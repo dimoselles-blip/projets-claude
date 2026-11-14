@@ -14,6 +14,12 @@ Pages HTML autonomes : ouvre `index.html` dans un navigateur, sans rien installe
 
 Pour les mettre en ligne gratuitement : Settings → Pages → Deploy from a branch → `main`. Chaque page sera alors accessible à l'adresse `https://dimoselles-blip.github.io/projets-claude/pages/<dossier>/`.
 
+## Applications
+
+| Dossier | Projet |
+| --- | --- |
+| [`reelance`](reelance/README.md) | Reelance : marketplace de monteurs vidéo freelances (Next.js, PostgreSQL, paiement FedaPay en séquestre). Installation et déploiement dans [`reelance/README.md`](reelance/README.md) |
+
 ## Documents (`docs/`)
 
 Copies en Markdown, faites le 14 novembre 2026. Les versions de travail restent dans Claude, où elles se modifient.

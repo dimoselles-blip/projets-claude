@@ -1,0 +1,519 @@
+// Reelance — schéma de base de données (PostgreSQL / Prisma 7)
+// Tous les montants sont stockés en FCFA (XOF), en entiers (le FCFA n'a pas de centimes).
+// La devise d'affichage du client et le taux utilisé sont figés sur la commande et le séquestre.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ───────────────────────────── Utilisateurs ─────────────────────────────
+
+enum Role {
+  ADMIN
+  FREELANCER
+  CLIENT
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+}
+
+model User {
+  id           String     @id @default(cuid())
+  email        String     @unique
+  passwordHash String
+  name         String
+  role         Role
+  status       UserStatus @default(ACTIVE)
+  phone        String?
+  country      String     @default("BJ")
+  currency     String     @default("XOF") // devise d'affichage préférée
+  lastLoginAt  DateTime?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  sessions            Session[]
+  passwordResetTokens PasswordResetToken[]
+  freelancerProfile   FreelancerProfile?
+  clientProfile       ClientProfile?
+  services            Service[]
+  missions            Mission[]
+  applications        Application[]
+  clientOrders        Order[]              @relation("ClientOrders")
+  freelancerOrders    Order[]              @relation("FreelancerOrders")
+  payouts             Payout[]             @relation("FreelancerPayouts")
+  processedPayouts    Payout[]             @relation("PayoutProcessor")
+  disputesOpened      Dispute[]            @relation("DisputeOpener")
+  disputesResolved    Dispute[]            @relation("DisputeResolver")
+  orderEvents         OrderEvent[]
+  auditLogs           AuditLog[]
+
+  @@index([role, status])
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  tokenHash String   @unique // SHA-256 du jeton stocké dans le cookie
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userAgent String?
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  tokenHash String    @unique
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+}
+
+model FreelancerProfile {
+  id              String          @id @default(cuid())
+  userId          String          @unique
+  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  slug            String          @unique
+  headline        String          @default("")
+  bio             String          @default("")
+  avatarUrl       String?
+  city            String?
+  country         String          @default("BJ")
+  skills          String[]
+  software        String[]
+  languages       String[]
+  dayRateXof      Int? // tarif journalier indicatif
+  yearsExperience Int?
+  isAvailable     Boolean         @default(true)
+  isVerified      Boolean         @default(false) // badge « vérifié » attribué par l'admin
+  // Coordonnées de reversement (Mobile Money via FedaPay Payouts)
+  payoutOperator  String? // clé de PAYOUT_OPERATORS (src/lib/constants.ts)
+  payoutPhone     String?
+  portfolio       PortfolioItem[]
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+}
+
+model PortfolioItem {
+  id           String            @id @default(cuid())
+  profileId    String
+  profile      FreelancerProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  title        String
+  description  String?
+  videoUrl     String // lien YouTube, Vimeo, Google Drive…
+  thumbnailUrl String?
+  position     Int               @default(0)
+  createdAt    DateTime          @default(now())
+
+  @@index([profileId])
+}
+
+model ClientProfile {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  companyName String
+  sector      String?
+  companySize String?
+  website     String?
+  logoUrl     String?
+  city        String?
+  country     String   @default("BJ")
+  about       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ───────────────────────────── Catalogue ─────────────────────────────
+
+model Category {
+  id          String     @id @default(cuid())
+  name        String
+  slug        String     @unique
+  description String?
+  icon        String? // nom d'icône (voir CategoryIcon)
+  position    Int        @default(0)
+  isActive    Boolean    @default(true)
+  parentId    String?
+  parent      Category?  @relation("CategoryTree", fields: [parentId], references: [id], onDelete: Restrict)
+  children    Category[] @relation("CategoryTree")
+  services    Service[]
+  missions    Mission[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([parentId])
+}
+
+enum ServiceStatus {
+  DRAFT
+  PENDING_REVIEW
+  PUBLISHED
+  REJECTED
+  PAUSED
+}
+
+model Service {
+  id              String           @id @default(cuid())
+  slug            String           @unique
+  freelancerId    String
+  freelancer      User             @relation(fields: [freelancerId], references: [id], onDelete: Cascade)
+  categoryId      String
+  category        Category         @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  title           String
+  description     String
+  coverUrl        String?
+  videoUrl        String? // vidéo de démonstration (lien)
+  tags            String[]
+  status          ServiceStatus    @default(PENDING_REVIEW)
+  rejectionReason String?
+  publishedAt     DateTime?
+  packages        ServicePackage[]
+  orders          Order[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  @@index([status, categoryId])
+  @@index([freelancerId])
+}
+
+enum PackageTier {
+  BASIC
+  STANDARD
+  PREMIUM
+}
+
+model ServicePackage {
+  id           String      @id @default(cuid())
+  serviceId    String
+  service      Service     @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  tier         PackageTier
+  name         String
+  description  String      @default("")
+  priceXof     Int // prix de référence saisi par le freelance, en FCFA
+  deliveryDays Int
+  revisions    Int         @default(1)
+  features     String[]
+  orders       Order[]
+
+  @@unique([serviceId, tier])
+}
+
+// ───────────────────────────── Missions ─────────────────────────────
+
+enum MissionStatus {
+  PENDING_REVIEW
+  OPEN
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  REJECTED
+}
+
+model Mission {
+  id              String        @id @default(cuid())
+  clientId        String
+  client          User          @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  categoryId      String
+  category        Category      @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  title           String
+  description     String
+  budgetMinXof    Int?
+  budgetMaxXof    Int
+  deadline        DateTime?
+  skills          String[]
+  status          MissionStatus @default(PENDING_REVIEW)
+  rejectionReason String?
+  publishedAt     DateTime?
+  applications    Application[]
+  orders          Order[]
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@index([status, categoryId])
+  @@index([clientId])
+}
+
+enum ApplicationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  WITHDRAWN
+}
+
+model Application {
+  id           String            @id @default(cuid())
+  missionId    String
+  mission      Mission           @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  freelancerId String
+  freelancer   User              @relation(fields: [freelancerId], references: [id], onDelete: Cascade)
+  coverLetter  String
+  priceXof     Int // devis du freelance, en FCFA
+  deliveryDays Int
+  status       ApplicationStatus @default(PENDING)
+  order        Order?
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  @@unique([missionId, freelancerId])
+  @@index([freelancerId])
+}
+
+// ───────────────────────────── Commandes & séquestre ─────────────────────────────
+
+enum OrderType {
+  SERVICE
+  MISSION
+}
+
+enum OrderStatus {
+  AWAITING_PAYMENT
+  IN_PROGRESS
+  DELIVERED
+  REVISION_REQUESTED
+  COMPLETED
+  DISPUTED
+  CANCELLED
+  REFUNDED
+}
+
+model Order {
+  id                     String          @id @default(cuid())
+  reference              String          @unique // ex. RL-261114-7KQ2M
+  type                   OrderType
+  clientId               String
+  client                 User            @relation("ClientOrders", fields: [clientId], references: [id], onDelete: Restrict)
+  freelancerId           String
+  freelancer             User            @relation("FreelancerOrders", fields: [freelancerId], references: [id], onDelete: Restrict)
+  serviceId              String?
+  service                Service?        @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+  packageId              String?
+  package                ServicePackage? @relation(fields: [packageId], references: [id], onDelete: SetNull)
+  missionId              String?
+  mission                Mission?        @relation(fields: [missionId], references: [id], onDelete: SetNull)
+  applicationId          String?         @unique
+  application            Application?    @relation(fields: [applicationId], references: [id], onDelete: SetNull)
+  title                  String
+  brief                  String          @default("") // consignes du client
+  // Montants (FCFA)
+  priceXof               Int // payé par le client
+  commissionRateBps      Int // taux appliqué, en points de base (1000 = 10 %)
+  commissionXof          Int // retenue Reelance
+  freelancerNetXof       Int // reversé au freelance
+  // Devise d'affichage du client, figée à la création
+  displayCurrency        String          @default("XOF")
+  displayAmount          Decimal         @db.Decimal(14, 2)
+  xofPerUnit             Decimal         @db.Decimal(18, 6) // 1 unité de displayCurrency = x FCFA
+  deliveryDays           Int
+  revisionsAllowed       Int             @default(1)
+  revisionsUsed          Int             @default(0)
+  status                 OrderStatus     @default(AWAITING_PAYMENT)
+  paidAt                 DateTime?
+  dueAt                  DateTime?
+  deliveredAt            DateTime?
+  autoCompleteAt         DateTime? // validation automatique si le client ne réagit pas
+  completedAt            DateTime?
+  completedAutomatically Boolean         @default(false)
+  cancelledAt            DateTime?
+  createdAt              DateTime        @default(now())
+  updatedAt              DateTime        @updatedAt
+
+  payments   Payment[]
+  deliveries Delivery[]
+  escrow     Escrow?
+  dispute    Dispute?
+  events     OrderEvent[]
+
+  @@index([clientId, status])
+  @@index([freelancerId, status])
+  @@index([status, autoCompleteAt])
+}
+
+model Delivery {
+  id        String   @id @default(cuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  message   String
+  links     String[] // liens de téléchargement (WeTransfer, Drive, Vimeo…)
+  createdAt DateTime @default(now())
+
+  @@index([orderId])
+}
+
+enum PaymentStatus {
+  PENDING
+  APPROVED
+  DECLINED
+  CANCELED
+  REFUNDED
+}
+
+model Payment {
+  id                   String        @id @default(cuid())
+  orderId              String
+  order                Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  provider             String        @default("FEDAPAY")
+  fedapayTransactionId String?       @unique
+  fedapayReference     String?
+  amountXof            Int
+  currency             String        @default("XOF")
+  status               PaymentStatus @default(PENDING)
+  mode                 String? // moyen utilisé (mtn, moov, card…)
+  paymentUrl           String?
+  approvedAt           DateTime?
+  lastPayload          Json?
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
+
+  @@index([orderId])
+}
+
+enum EscrowStatus {
+  HELD // fonds bloqués sur la plateforme
+  RELEASABLE // livraison validée : à reverser au freelance
+  RELEASING // reversement FedaPay en cours
+  RELEASED // reversé au freelance
+  REFUNDED // remboursé au client (litige)
+}
+
+model Escrow {
+  id               String       @id @default(cuid())
+  orderId          String       @unique
+  order            Order        @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  amountXof        Int
+  commissionXof    Int
+  freelancerNetXof Int
+  displayCurrency  String
+  displayAmount    Decimal      @db.Decimal(14, 2)
+  status           EscrowStatus @default(HELD)
+  heldAt           DateTime     @default(now())
+  releasableAt     DateTime?
+  releasedAt       DateTime?
+  refundedAt       DateTime?
+  payouts          Payout[]
+
+  @@index([status])
+}
+
+enum PayoutStatus {
+  PROCESSING
+  SENT
+  FAILED
+}
+
+enum PayoutMethod {
+  FEDAPAY
+  MANUAL
+}
+
+model Payout {
+  id               String       @id @default(cuid())
+  escrowId         String
+  escrow           Escrow       @relation(fields: [escrowId], references: [id], onDelete: Restrict)
+  freelancerId     String
+  freelancer       User         @relation("FreelancerPayouts", fields: [freelancerId], references: [id], onDelete: Restrict)
+  amountXof        Int
+  method           PayoutMethod
+  status           PayoutStatus @default(PROCESSING)
+  operator         String?
+  phone            String?
+  fedapayPayoutId  String?      @unique
+  fedapayReference String?
+  failureReason    String?
+  note             String?
+  processedById    String?
+  processedBy      User?        @relation("PayoutProcessor", fields: [processedById], references: [id], onDelete: SetNull)
+  sentAt           DateTime?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  @@index([escrowId])
+  @@index([freelancerId])
+}
+
+enum DisputeStatus {
+  OPEN
+  RESOLVED_FOR_FREELANCER
+  RESOLVED_FOR_CLIENT
+}
+
+model Dispute {
+  id             String        @id @default(cuid())
+  orderId        String        @unique
+  order          Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  openedById     String
+  openedBy       User          @relation("DisputeOpener", fields: [openedById], references: [id], onDelete: Restrict)
+  reason         String
+  status         DisputeStatus @default(OPEN)
+  resolutionNote String?
+  resolvedById   String?
+  resolvedBy     User?         @relation("DisputeResolver", fields: [resolvedById], references: [id], onDelete: SetNull)
+  createdAt      DateTime      @default(now())
+  resolvedAt     DateTime?
+
+  @@index([status])
+}
+
+model OrderEvent {
+  id        String   @id @default(cuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  type      String
+  message   String
+  actorId   String?
+  actor     User?    @relation(fields: [actorId], references: [id], onDelete: SetNull)
+  createdAt DateTime @default(now())
+
+  @@index([orderId, createdAt])
+}
+
+// ───────────────────────────── Plateforme ─────────────────────────────
+
+model ExchangeRate {
+  currency   String   @id // ex. EUR
+  xofPerUnit Decimal  @db.Decimal(18, 6) // 1 EUR = 655.957 FCFA
+  source     String
+  updatedAt  DateTime @updatedAt
+}
+
+model Setting {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
+}
+
+model WebhookEvent {
+  id        String   @id @default(cuid())
+  provider  String
+  eventName String
+  objectId  String?
+  payload   Json
+  processed Boolean  @default(false)
+  error     String?
+  createdAt DateTime @default(now())
+
+  @@index([provider, objectId])
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  actorId    String?
+  actor      User?    @relation(fields: [actorId], references: [id], onDelete: SetNull)
+  action     String
+  targetType String
+  targetId   String
+  details    Json?
+  createdAt  DateTime @default(now())
+
+  @@index([targetType, targetId])
+}
