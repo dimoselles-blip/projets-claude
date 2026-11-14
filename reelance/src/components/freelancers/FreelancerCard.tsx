@@ -23,7 +23,7 @@ export function FreelancerCard({ freelancer }: { freelancer: FreelancerCardData 
         <div className="min-w-0 flex-1">
           <p className="flex items-center gap-1.5 font-semibold text-ink-900">
             <span className="truncate">{freelancer.name}</span>
-            {p.isVerified && <BadgeCheck className="size-4 shrink-0 text-brand-600" aria-label="Profil vérifié" />}
+            {p.isVerified && <BadgeCheck className="size-4 shrink-0 fill-brand-400 text-ink-950" aria-label="Profil vérifié" />}
           </p>
           <p className="mt-0.5 line-clamp-2 text-sm text-ink-600">{p.headline}</p>
           <p className="mt-1.5 flex items-center gap-1 text-xs text-ink-500">

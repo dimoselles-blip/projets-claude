@@ -5,11 +5,12 @@ import { CategoryIcon } from "@/components/CategoryIcon";
 import { Price } from "@/components/Price";
 import type { ServiceCardData } from "@/lib/queries";
 
-const gradients = [
-  "from-brand-700 via-brand-600 to-brand-400",
-  "from-ink-900 via-brand-900 to-brand-600",
-  "from-brand-900 via-brand-700 to-accent-500",
-  "from-ink-800 via-ink-700 to-brand-500",
+/** Couvertures générées (quand le freelance n'a pas mis d'image) : déclinaisons noir et jaune de la charte. */
+const covers = [
+  { bg: "bg-ink-950", icon: "text-brand-400", stripe: "bg-brand-400" },
+  { bg: "bg-brand-400", icon: "text-ink-950", stripe: "bg-ink-950" },
+  { bg: "bg-gradient-to-br from-ink-900 to-ink-700", icon: "text-brand-400", stripe: "bg-brand-400" },
+  { bg: "bg-brand-100", icon: "text-ink-950", stripe: "bg-brand-400" },
 ];
 
 export function ServiceCover({ service, className = "" }: { service: Pick<ServiceCardData, "id" | "title" | "coverUrl" | "category">; className?: string }) {
@@ -18,11 +19,11 @@ export function ServiceCover({ service, className = "" }: { service: Pick<Servic
     return <img src={service.coverUrl} alt="" loading="lazy" className={`h-full w-full object-cover ${className}`} />;
   }
   const icon = service.category.icon ?? service.category.parent?.icon;
-  const g = gradients[service.id.charCodeAt(service.id.length - 1) % gradients.length];
+  const c = covers[service.id.charCodeAt(service.id.length - 1) % covers.length]!;
   return (
-    <div className={`relative grid h-full w-full place-items-center bg-gradient-to-br ${g} ${className}`}>
-      <CategoryIcon name={icon} className="size-12 text-white/80" />
-      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/25 to-transparent" />
+    <div className={`relative grid h-full w-full place-items-center ${c.bg} ${className}`}>
+      <CategoryIcon name={icon} className={`size-12 ${c.icon}`} />
+      <span className={`absolute bottom-4 left-4 h-1 w-10 rounded-full ${c.stripe}`} />
     </div>
   );
 }
@@ -43,9 +44,9 @@ export function ServiceCard({ service }: { service: ServiceCardData }) {
         <div className="flex items-center gap-2">
           <Avatar name={service.freelancer.name} src={profile?.avatarUrl} size={26} />
           <span className="truncate text-sm font-medium text-ink-800">{service.freelancer.name}</span>
-          {profile?.isVerified && <BadgeCheck className="size-4 shrink-0 text-brand-600" aria-label="Profil vérifié" />}
+          {profile?.isVerified && <BadgeCheck className="size-4 shrink-0 fill-brand-400 text-ink-950" aria-label="Profil vérifié" />}
         </div>
-        <h3 className="mt-2.5 line-clamp-2 font-sans text-[15px] leading-snug font-medium text-ink-900 group-hover:text-brand-700">{service.title}</h3>
+        <h3 className="mt-2.5 line-clamp-2 font-sans text-[15px] leading-snug font-medium text-ink-900 decoration-brand-400 decoration-[3px] underline-offset-4 group-hover:underline">{service.title}</h3>
         <p className="mt-1.5 text-xs text-ink-500">{service.category.parent ? `${service.category.parent.name} · ${service.category.name}` : service.category.name}</p>
         <div className="mt-auto flex items-end justify-between gap-2 pt-4">
           <span className="inline-flex items-center gap-1 text-xs text-ink-500">

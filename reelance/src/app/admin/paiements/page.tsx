@@ -58,7 +58,7 @@ export default async function AdminPaymentsPage() {
         </div>
       )}
 
-      <div className="grid gap-3 sm:grid-cols-3 sm:gap-4">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
         <Stat label="En séquestre" value={formatXof(held._sum.amountXof ?? 0)} hint={`${held._count} commande(s) en cours`} />
         <Stat label="À reverser" value={formatXof(toRelease)} hint={`${releasable.length} reversement(s) en attente`} />
         <Stat label="Reversements en cours" value={releasing.length} />
@@ -87,7 +87,7 @@ export default async function AdminPaymentsPage() {
                 return (
                   <tr key={e.id}>
                     <Td>
-                      <Link href={`/admin/commandes/${e.order.id}`} className="font-medium hover:text-brand-700">
+                      <Link href={`/admin/commandes/${e.order.id}`} className="font-medium decoration-brand-400 decoration-[3px] underline-offset-4 hover:underline">
                         {e.order.reference}
                       </Link>
                       <p className="max-w-56 truncate text-xs text-ink-500">{e.order.title}</p>
@@ -157,7 +157,7 @@ export default async function AdminPaymentsPage() {
         </Card>
       )}
 
-      <div className="mt-6 grid gap-6 2xl:grid-cols-2">
+      <div className="mt-6 grid grid-cols-1 gap-6 2xl:grid-cols-2">
         <Card>
           <CardHeader title="Derniers encaissements" />
           <Table>
@@ -174,7 +174,7 @@ export default async function AdminPaymentsPage() {
                 <tr key={p.id}>
                   <Td className="text-xs">{formatDate(p.createdAt, true)}</Td>
                   <Td>
-                    <Link href={`/admin/commandes/${p.order.id}`} className="font-medium hover:text-brand-700">
+                    <Link href={`/admin/commandes/${p.order.id}`} className="font-medium decoration-brand-400 decoration-[3px] underline-offset-4 hover:underline">
                       {p.order.reference}
                     </Link>
                     <p className="text-xs text-ink-500">

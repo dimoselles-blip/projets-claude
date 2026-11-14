@@ -35,11 +35,11 @@ export function PackageSelector({ packages, orderHref, canOrder, reason }: { pac
               onClick={() => setActive(i)}
               className={cn(
                 "relative py-3.5 text-sm font-semibold transition",
-                i === active ? "text-brand-700" : "text-ink-500 hover:text-ink-800",
+                i === active ? "text-ink-950" : "text-ink-500 hover:text-ink-800",
               )}
             >
               {p.label}
-              {i === active && <span className="absolute inset-x-4 bottom-0 h-0.5 rounded-full bg-brand-600" />}
+              {i === active && <span className="absolute inset-x-4 bottom-0 h-1 rounded-full bg-brand-400" />}
             </button>
           ))}
         </div>
@@ -73,7 +73,7 @@ export function PackageSelector({ packages, orderHref, canOrder, reason }: { pac
         {canOrder ? (
           <Link
             href={`${orderHref}?offre=${pkg.tier}`}
-            className="mt-6 flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-brand-600 font-semibold text-white hover:bg-brand-700"
+            className="mt-6 flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-brand-400 font-semibold text-ink-950 hover:bg-brand-300"
           >
             Commander ({pkg.price}) <ArrowRight className="size-4" />
           </Link>

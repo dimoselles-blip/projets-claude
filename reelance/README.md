@@ -88,5 +88,5 @@ Comptes de démo (avec `SEED_DEMO=true`), mot de passe `Demo-Reelance-2026` :
 - [Architecture, modèle de données et flux de paiement](docs/architecture.md)
 - [Intégration FedaPay : clés, webhook, reversements, passage en production](docs/fedapay.md)
 - [Déploiement : Vercel, VPS Hostinger (PM2 ou Docker)](docs/deploiement.md)
-- [Charte graphique et intégration du logo](docs/charte-graphique.md)
+- [Charte graphique : logo, couleurs noir et jaune, typographies, règles d'usage](docs/charte-graphique.md)
 - Variables d'environnement : [`.env.example`](.env.example), commentée ligne par ligne

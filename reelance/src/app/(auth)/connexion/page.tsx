@@ -27,7 +27,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
           <Input id="password" name="password" type="password" autoComplete="current-password" required />
         </FormField>
         <div className="text-right">
-          <Link href="/mot-de-passe-oublie" className="text-sm font-medium text-brand-700 hover:text-brand-800">
+          <Link href="/mot-de-passe-oublie" className="text-sm link-brand">
             Mot de passe oublié ?
           </Link>
         </div>
@@ -38,7 +38,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
       </ActionForm>
       <p className="mt-8 text-center text-sm text-ink-600">
         Pas encore de compte ?{" "}
-        <Link href={`/inscription${sp.suivant ? `?suivant=${encodeURIComponent(sp.suivant)}` : ""}`} className="font-semibold text-brand-700">
+        <Link href={`/inscription${sp.suivant ? `?suivant=${encodeURIComponent(sp.suivant)}` : ""}`} className="link-brand">
           Inscrivez-vous gratuitement
         </Link>
       </p>

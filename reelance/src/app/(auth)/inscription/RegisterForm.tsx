@@ -55,7 +55,7 @@ export function RegisterForm({ defaultRole, next }: { defaultRole: Role; next?: 
           name="acceptTerms"
           label={
             <>
-              J&apos;accepte les <Link href="/conditions" className="font-medium text-brand-700 underline">conditions d&apos;utilisation</Link> de Reelance.
+              J&apos;accepte les <Link href="/conditions" className="link-brand">conditions d&apos;utilisation</Link> de Reelance.
             </>
           }
         />
@@ -77,10 +77,10 @@ function RoleCard({ active, onClick, icon, title, text }: { active: boolean; onC
       aria-pressed={active}
       className={cn(
         "flex flex-col items-start rounded-2xl border-2 p-4 text-left transition",
-        active ? "border-brand-600 bg-brand-50" : "border-ink-200 hover:border-ink-300",
+        active ? "border-ink-950 bg-brand-50" : "border-ink-200 hover:border-ink-300",
       )}
     >
-      <span className={cn("grid size-9 place-items-center rounded-xl", active ? "bg-brand-600 text-white" : "bg-ink-100 text-ink-600")}>{icon}</span>
+      <span className={cn("grid size-9 place-items-center rounded-xl", active ? "bg-brand-400 text-ink-950" : "bg-ink-100 text-ink-600")}>{icon}</span>
       <span className="mt-3 text-sm font-semibold text-ink-900">{title}</span>
       <span className="text-xs text-ink-500">{text}</span>
     </button>

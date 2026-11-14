@@ -72,13 +72,13 @@ export default async function AdminUsersPage({ searchParams }: { searchParams: P
                     <div className="min-w-0">
                       <p className="flex items-center gap-1 font-medium">
                         {u.freelancerProfile ? (
-                          <Link href={`/freelances/${u.freelancerProfile.slug}`} className="hover:text-brand-700">
+                          <Link href={`/freelances/${u.freelancerProfile.slug}`} className="decoration-brand-400 decoration-[3px] underline-offset-4 hover:underline">
                             {u.name}
                           </Link>
                         ) : (
                           u.name
                         )}
-                        {u.freelancerProfile?.isVerified && <BadgeCheck className="size-4 text-brand-600" />}
+                        {u.freelancerProfile?.isVerified && <BadgeCheck className="size-4 fill-brand-400 text-ink-950" />}
                       </p>
                       <p className="text-xs text-ink-500">
                         {u.email}

@@ -101,15 +101,15 @@ export default async function ServicePage({ params }: { params: Params }) {
         </Link>
       </nav>
 
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-12">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-12">
         <div className="min-w-0">
           <h1 className="text-2xl leading-tight font-bold sm:text-3xl">{service.title}</h1>
           <div className="mt-4 flex items-center gap-3">
             <Avatar name={service.freelancer.name} src={profile?.avatarUrl} size={44} />
             <div>
-              <Link href={`/freelances/${profile?.slug}`} className="flex items-center gap-1.5 font-semibold hover:text-brand-700">
+              <Link href={`/freelances/${profile?.slug}`} className="flex items-center gap-1.5 font-semibold decoration-brand-400 decoration-[3px] underline-offset-4 hover:underline">
                 {service.freelancer.name}
-                {profile?.isVerified && <BadgeCheck className="size-4 text-brand-600" />}
+                {profile?.isVerified && <BadgeCheck className="size-4 fill-brand-400 text-ink-950" />}
               </Link>
               <p className="text-sm text-ink-500">{profile?.headline}</p>
             </div>
@@ -213,7 +213,7 @@ export default async function ServicePage({ params }: { params: Params }) {
           <div className="sticky top-24 space-y-4">
             <PackageSelector packages={packages} orderHref={`/commander/${service.slug}`} canOrder={canOrder} reason={reason} />
             <div className="flex items-start gap-3 rounded-2xl bg-ink-50 p-4 text-sm text-ink-600">
-              <ShieldCheck className="size-5 shrink-0 text-brand-600" />
+              <ShieldCheck className="size-5 shrink-0 text-ink-950" />
               <p>
                 Reelance garde votre paiement en séquestre. Le monteur n&apos;est payé qu&apos;après validation de la livraison. Un problème ? Ouvrez un litige, l&apos;équipe tranche.
               </p>
@@ -225,7 +225,7 @@ export default async function ServicePage({ params }: { params: Params }) {
       {others.length > 0 && (
         <section className="mt-16">
           <h2 className="text-xl font-bold">Autres services de {service.freelancer.name}</h2>
-          <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {others.map((s) => (
               <ServiceCard key={s.id} service={s} />
             ))}

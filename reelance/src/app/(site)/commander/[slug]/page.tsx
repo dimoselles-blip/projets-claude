@@ -54,7 +54,7 @@ export default async function CheckoutPage({ params, searchParams }: { params: P
       </Link>
       <h1 className="mt-3 text-2xl font-bold sm:text-3xl">Finaliser votre commande</h1>
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+      <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
         <Card>
           <CardBody>
             <ActionForm action={createServiceOrderAction} className="space-y-5">
@@ -86,7 +86,7 @@ export default async function CheckoutPage({ params, searchParams }: { params: P
             </div>
             <CardBody className="space-y-4">
               <div>
-                <p className="text-xs font-semibold text-brand-700 uppercase">Offre {tierLabel}</p>
+                <p className="eyebrow text-xs!">Offre {tierLabel}</p>
                 <p className="mt-1 font-semibold">{service.title}</p>
                 <p className="text-sm text-ink-500">par {service.freelancer.name}</p>
               </div>
@@ -115,8 +115,8 @@ export default async function CheckoutPage({ params, searchParams }: { params: P
               </div>
             </CardBody>
           </Card>
-          <div className="flex gap-3 rounded-2xl bg-brand-50 p-4 text-sm text-brand-900">
-            <ShieldCheck className="size-5 shrink-0 text-brand-600" />
+          <div className="flex gap-3 rounded-2xl border border-brand-300 bg-brand-50 p-4 text-sm text-ink-800">
+            <ShieldCheck className="size-5 shrink-0 text-ink-950" />
             <p>
               Votre paiement reste bloqué sur Reelance. Vous validez la livraison (ou elle l&apos;est automatiquement après {settings.autoCompleteDays} jours sans réponse) avant que le monteur soit payé.
             </p>

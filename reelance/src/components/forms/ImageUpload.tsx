@@ -69,7 +69,7 @@ export function ImageUpload({
           )}
           {busy && (
             <div className="absolute inset-0 grid place-items-center bg-white/70">
-              <Loader2 className="size-5 animate-spin text-brand-600" />
+              <Loader2 className="size-5 animate-spin text-ink-950" />
             </div>
           )}
         </div>

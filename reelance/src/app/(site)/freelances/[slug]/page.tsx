@@ -46,16 +46,19 @@ export default async function FreelancerProfilePage({ params }: { params: Params
 
   return (
     <div>
-      <div className="h-36 bg-gradient-to-r from-ink-950 via-brand-900 to-brand-700 sm:h-44" />
-      <div className="container-page">
-        <div className="-mt-14 grid gap-8 lg:grid-cols-[320px_minmax(0,1fr)] lg:gap-10">
+      <div className="relative h-36 overflow-hidden bg-ink-950 sm:h-44">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/brand/mark.svg" alt="" aria-hidden className="absolute top-6 right-5 h-12 sm:top-1/2 sm:right-10 sm:h-20 sm:-translate-y-1/2" />
+      </div>
+      <div className="container-page relative">
+        <div className="-mt-14 grid grid-cols-1 gap-8 lg:grid-cols-[320px_minmax(0,1fr)] lg:gap-10">
           {/* Colonne profil */}
           <aside className="space-y-4">
             <div className="rounded-2xl border border-ink-100 bg-white p-6 shadow-card">
               <Avatar name={user.name} src={profile.avatarUrl} size={96} className="ring-4 ring-white" />
               <h1 className="mt-4 flex items-center gap-2 text-2xl font-bold">
                 {user.name}
-                {profile.isVerified && <BadgeCheck className="size-5 text-brand-600" aria-label="Profil vérifié par Reelance" />}
+                {profile.isVerified && <BadgeCheck className="size-5 fill-brand-400 text-ink-950" aria-label="Profil vérifié par Reelance" />}
               </h1>
               <p className="mt-1 text-ink-600">{profile.headline}</p>
               <div className="mt-4 flex flex-wrap gap-2">
@@ -80,7 +83,7 @@ export default async function FreelancerProfilePage({ params }: { params: Params
             {profile.software.length > 0 && (
               <div className="rounded-2xl border border-ink-100 bg-white p-6 shadow-card">
                 <h2 className="flex items-center gap-2 text-sm font-semibold text-ink-900">
-                  <MonitorCog className="size-4 text-brand-600" /> Logiciels
+                  <MonitorCog className="size-4 text-ink-950" /> Logiciels
                 </h2>
                 <div className="mt-3 flex flex-wrap gap-1.5">
                   {profile.software.map((s) => (
@@ -112,7 +115,7 @@ export default async function FreelancerProfilePage({ params }: { params: Params
             {profile.portfolio.length > 0 && (
               <section className="mt-12">
                 <h2 className="text-xl font-bold">Portfolio</h2>
-                <div className="mt-4 grid gap-5 sm:grid-cols-2">
+                <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2">
                   {profile.portfolio.map((item) => (
                     <figure key={item.id} className="overflow-hidden rounded-2xl border border-ink-100 bg-white shadow-card">
                       <VideoEmbed url={item.videoUrl} title={item.title} />
@@ -131,7 +134,7 @@ export default async function FreelancerProfilePage({ params }: { params: Params
               {user.services.length === 0 ? (
                 <p className="mt-3 text-ink-500">Aucun service publié pour le moment. Vous pouvez publier une mission : ce monteur pourra y postuler.</p>
               ) : (
-                <div className="mt-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
                   {user.services.map((s) => (
                     <ServiceCard key={s.id} service={s} />
                   ))}

@@ -27,7 +27,7 @@ export default async function MissionsPage({ searchParams }: { searchParams: Pro
         </LinkButton>
       </div>
 
-      <form className="mt-6 mb-8 grid gap-2 rounded-2xl border border-ink-100 bg-ink-50/60 p-3 sm:grid-cols-[1fr_240px_auto]">
+      <form className="mt-6 mb-8 grid grid-cols-1 gap-2 rounded-2xl border border-ink-100 bg-ink-50/60 p-3 sm:grid-cols-[1fr_240px_auto]">
         <div className="relative">
           <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-ink-400" aria-hidden />
           <input name="q" defaultValue={sp.q} type="search" placeholder="Mot-clé…" className="h-11 w-full rounded-lg border border-ink-200 bg-white pr-3 pl-9 text-sm" />
@@ -46,7 +46,7 @@ export default async function MissionsPage({ searchParams }: { searchParams: Pro
       {result.items.length === 0 ? (
         <EmptyState icon={<Inbox className="size-5" />} title="Aucune mission ouverte pour le moment" description="Revenez bientôt, ou publiez vos services pour être trouvé directement par les entreprises." />
       ) : (
-        <div className="grid gap-4 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           {result.items.map((m) => (
             <MissionCard key={m.id} mission={m} />
           ))}

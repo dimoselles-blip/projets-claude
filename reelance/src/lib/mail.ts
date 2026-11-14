@@ -21,16 +21,18 @@ function getTransporter() {
 }
 
 function layout(title: string, body: string, cta?: { label: string; url: string }) {
-  return `<!doctype html><html lang="fr"><body style="margin:0;background:#f5f6fa;font-family:Inter,Arial,sans-serif;color:#0e1330">
+  // Les messageries n'affichent pas le SVG : on utilise la version PNG du logo.
+  const logo = `${config.appUrl}/brand/logo-email.png`;
+  return `<!doctype html><html lang="fr"><body style="margin:0;background:#f7f7f5;font-family:Inter,Arial,sans-serif;color:#141413">
   <table width="100%" cellpadding="0" cellspacing="0" style="padding:32px 12px"><tr><td align="center">
-  <table width="560" cellpadding="0" cellspacing="0" style="max-width:560px;background:#fff;border-radius:16px;overflow:hidden">
-    <tr><td style="background:#0e1330;padding:20px 28px;color:#fff;font-size:20px;font-weight:700;letter-spacing:-.3px">Reelance<span style="color:#ff5a4e">.</span></td></tr>
+  <table width="560" cellpadding="0" cellspacing="0" style="max-width:560px;background:#fff;border-radius:16px;overflow:hidden;border:1px solid #efefec">
+    <tr><td style="padding:22px 28px;border-bottom:4px solid #f2e924"><img src="${logo}" alt="Reelance" height="30" style="height:30px;width:auto;display:block;border:0"></td></tr>
     <tr><td style="padding:28px">
-      <h1 style="font-size:20px;margin:0 0 12px">${esc(title)}</h1>
-      <div style="font-size:15px;line-height:1.6;color:#3b4260">${body}</div>
-      ${cta ? `<p style="margin:24px 0 0"><a href="${cta.url}" style="display:inline-block;background:#5b3df5;color:#fff;text-decoration:none;padding:12px 20px;border-radius:10px;font-weight:600">${cta.label}</a></p>` : ""}
+      <h1 style="font-size:20px;margin:0 0 12px;color:#0a0a0a">${esc(title)}</h1>
+      <div style="font-size:15px;line-height:1.6;color:#3f3f3b">${body}</div>
+      ${cta ? `<p style="margin:24px 0 0"><a href="${cta.url}" style="display:inline-block;background:#f2e924;color:#0a0a0a;text-decoration:none;padding:12px 20px;border-radius:10px;font-weight:700">${esc(cta.label)}</a></p>` : ""}
     </td></tr>
-    <tr><td style="padding:16px 28px;border-top:1px solid #eceef5;font-size:12px;color:#8a90a8">Reelance — la marketplace des monteurs vidéo d'Afrique francophone.</td></tr>
+    <tr><td style="padding:16px 28px;background:#0a0a0a;font-size:12px;color:#c3c3bc">Reelance — la marketplace des monteurs vidéo d'Afrique francophone.</td></tr>
   </table></td></tr></table></body></html>`;
 }
 

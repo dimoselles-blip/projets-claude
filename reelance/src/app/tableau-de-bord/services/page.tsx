@@ -87,7 +87,7 @@ export default async function MyServicesPage() {
         </ul>
       )}
       <p className="mt-6 text-sm text-ink-500">
-        Besoin d&apos;inspiration ? <Link href="/services" className="font-medium text-brand-700">Parcourez le catalogue</Link>.
+        Besoin d&apos;inspiration ? <Link href="/services" className="link-brand">Parcourez le catalogue</Link>.
       </p>
     </>
   );

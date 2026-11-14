@@ -3,9 +3,9 @@ import type { ComponentProps } from "react";
 import { cn } from "@/lib/utils";
 
 const variants = {
-  primary: "bg-brand-600 text-white hover:bg-brand-700 shadow-sm shadow-brand-600/20",
-  dark: "bg-ink-900 text-white hover:bg-ink-800",
-  secondary: "bg-brand-50 text-brand-700 hover:bg-brand-100",
+  primary: "bg-brand-400 text-ink-950 hover:bg-brand-300 shadow-sm ring-1 ring-inset ring-ink-950/10",
+  dark: "bg-ink-950 text-white hover:bg-ink-800",
+  secondary: "bg-brand-100 text-ink-950 hover:bg-brand-200",
   outline: "border border-ink-200 bg-white text-ink-900 hover:border-ink-300 hover:bg-ink-50",
   ghost: "text-ink-700 hover:bg-ink-100",
   danger: "bg-red-600 text-white hover:bg-red-700",

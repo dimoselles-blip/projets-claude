@@ -2,36 +2,33 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 /**
- * Logo Reelance.
- * Quand le logo définitif sera livré : déposez-le dans /public/brand/logo.svg (et logo-white.svg pour les fonds sombres),
- * puis passez USE_BRAND_FILE à true. Le reste du site n'a pas besoin d'être modifié.
+ * Logo Reelance (fichiers vectoriels dans /public/brand).
+ * - « dark »  : lettres noires, pour fonds clairs (logo.svg)
+ * - « light » : lettres blanches, pour fonds sombres (logo-white.svg)
+ * Les « ee » restent toujours jaunes (#F2E924).
  */
-const USE_BRAND_FILE = false;
-
-export function LogoMark({ className }: { className?: string }) {
+export function Logo({
+  variant = "dark",
+  className,
+  href = "/",
+  size = "md",
+}: {
+  variant?: "dark" | "light";
+  className?: string;
+  href?: string;
+  size?: "sm" | "md" | "lg";
+}) {
+  const height = { sm: "h-6", md: "h-7 sm:h-8", lg: "h-10 sm:h-12" }[size];
   return (
-    <svg viewBox="0 0 32 32" aria-hidden className={cn("size-8", className)}>
-      <rect width="32" height="32" rx="9" className="fill-brand-600" />
-      <path d="M12 9.5v13a1 1 0 0 0 1.53.85l10.2-6.5a1 1 0 0 0 0-1.7l-10.2-6.5A1 1 0 0 0 12 9.5Z" fill="#fff" />
-      <circle cx="25.5" cy="6.5" r="3" className="fill-accent-500" />
-    </svg>
+    <Link href={href} className={cn("inline-flex shrink-0 items-center", className)} aria-label="Reelance — accueil">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={variant === "light" ? "/brand/logo-white.svg" : "/brand/logo.svg"} alt="Reelance" className={cn(height, "w-auto")} />
+    </Link>
   );
 }
 
-export function Logo({ variant = "dark", className, href = "/" }: { variant?: "dark" | "light"; className?: string; href?: string }) {
-  return (
-    <Link href={href} className={cn("inline-flex items-center gap-2", className)} aria-label="Reelance — accueil">
-      {USE_BRAND_FILE ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={variant === "light" ? "/brand/logo-white.svg" : "/brand/logo.svg"} alt="Reelance" className="h-8 w-auto" />
-      ) : (
-        <>
-          <LogoMark />
-          <span className={cn("font-display text-[1.35rem] font-extrabold tracking-tight", variant === "light" ? "text-white" : "text-ink-900")}>
-            Reelance
-          </span>
-        </>
-      )}
-    </Link>
-  );
+/** Symbole « ee » seul (icône d'application, avatars de marque, petits formats). */
+export function LogoIcon({ className }: { className?: string }) {
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img src="/brand/icon.svg" alt="" aria-hidden className={cn("size-8 rounded-lg", className)} />;
 }

@@ -15,7 +15,7 @@ export default async function RegisterPage({ searchParams }: { searchParams: Pro
       </div>
       <p className="mt-8 text-center text-sm text-ink-600">
         Déjà inscrit ?{" "}
-        <Link href={`/connexion${sp.suivant ? `?suivant=${encodeURIComponent(sp.suivant)}` : ""}`} className="font-semibold text-brand-700">
+        <Link href={`/connexion${sp.suivant ? `?suivant=${encodeURIComponent(sp.suivant)}` : ""}`} className="link-brand">
           Connectez-vous
         </Link>
       </p>

@@ -68,7 +68,7 @@ export default async function AdminServicesPage({ searchParams }: { searchParams
                   </p>
                   <p className="mt-2 line-clamp-3 text-sm text-ink-700">{s.description}</p>
                   <p className="mt-2 text-xs text-ink-500">{s.packages.map((p) => `${p.name} : ${formatXof(p.priceXof)} / ${p.deliveryDays} j`).join(" · ")}</p>
-                  <Link href={`/services/${s.slug}`} target="_blank" className="mt-2 inline-flex items-center gap-1 text-sm font-medium text-brand-700">
+                  <Link href={`/services/${s.slug}`} target="_blank" className="mt-2 inline-flex items-center gap-1 text-sm link-brand">
                     Aperçu complet <ExternalLink className="size-3.5" />
                   </Link>
                 </div>

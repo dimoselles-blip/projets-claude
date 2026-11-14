@@ -81,12 +81,12 @@ export default async function AdminDashboard() {
         <Stat label="Services vendus" value={servicesSold} icon={<Package className="size-5" />} hint={`${publishedServices} service(s) en ligne`} />
         <Stat label="Missions publiées" value={missionsPublished} icon={<FileText className="size-5" />} />
         <Stat label="Fonds en séquestre" value={formatXof(held)} icon={<Lock className="size-5" />} />
-        <Stat label="À reverser aux freelances" value={formatXof(toRelease)} icon={<Wallet className="size-5" />} hint={<Link href="/admin/paiements" className="text-brand-700">Traiter les reversements →</Link>} />
+        <Stat label="À reverser aux freelances" value={formatXof(toRelease)} icon={<Wallet className="size-5" />} hint={<Link href="/admin/paiements" className="link-brand">Traiter les reversements →</Link>} />
         <Stat label="Taux de litige" value={`${disputeRate.toFixed(1)} %`} icon={<Scale className="size-5" />} hint={`${openDisputes} litige(s) ouvert(s) · ${disputes} au total`} />
         <Stat label="Utilisateurs" value={freelancers + clients} icon={<Users className="size-5" />} hint={`${freelancers} freelances · ${clients} clients · +${newUsers} ce mois`} />
       </div>
 
-      <div className="mt-6 grid gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
+      <div className="mt-6 grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
         <Card>
           <CardHeader title="Volume mensuel" description="Montants payés, 6 derniers mois (FCFA)" />
           <CardBody>
@@ -97,8 +97,8 @@ export default async function AdminDashboard() {
                   <div key={m.key} className="flex flex-1 flex-col items-center gap-2">
                     <span className="text-[11px] font-medium text-ink-500">{total ? `${Math.round(total / 1000)}k` : ""}</span>
                     <div className="flex w-full max-w-12 flex-col justify-end overflow-hidden rounded-t-lg bg-ink-100" style={{ height: `${Math.max(4, (total / max) * 180)}px` }}>
-                      <div className="w-full bg-brand-300" style={{ height: `${total ? (m.mission / total) * 100 : 0}%` }} title={`Missions : ${formatXof(m.mission)}`} />
-                      <div className="w-full bg-brand-600" style={{ height: `${total ? (m.service / total) * 100 : 0}%` }} title={`Services : ${formatXof(m.service)}`} />
+                      <div className="w-full bg-brand-400" style={{ height: `${total ? (m.mission / total) * 100 : 0}%` }} title={`Missions : ${formatXof(m.mission)}`} />
+                      <div className="w-full bg-ink-950" style={{ height: `${total ? (m.service / total) * 100 : 0}%` }} title={`Services : ${formatXof(m.service)}`} />
                     </div>
                     <span className="text-xs text-ink-500 capitalize">{m.label}</span>
                   </div>
@@ -107,16 +107,16 @@ export default async function AdminDashboard() {
             </div>
             <div className="mt-4 flex gap-4 text-xs text-ink-600">
               <span className="flex items-center gap-1.5">
-                <span className="size-2.5 rounded-sm bg-brand-600" /> Services
+                <span className="size-2.5 rounded-sm bg-ink-950" /> Services
               </span>
               <span className="flex items-center gap-1.5">
-                <span className="size-2.5 rounded-sm bg-brand-300" /> Missions
+                <span className="size-2.5 rounded-sm bg-brand-400" /> Missions
               </span>
             </div>
           </CardBody>
         </Card>
         <Card>
-          <CardHeader title="Dernières commandes payées" action={<Link href="/admin/commandes" className="text-sm font-semibold text-brand-700">Tout voir</Link>} />
+          <CardHeader title="Dernières commandes payées" action={<Link href="/admin/commandes" className="text-sm link-brand">Tout voir</Link>} />
           {recentOrders.length === 0 ? <p className="p-6 text-sm text-ink-500">Aucune commande payée pour l&apos;instant.</p> : <OrderList orders={recentOrders} viewer="ADMIN" hrefBase="/admin/commandes" />}
         </Card>
       </div>

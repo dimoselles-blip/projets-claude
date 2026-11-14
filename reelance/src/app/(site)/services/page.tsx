@@ -109,13 +109,13 @@ export default async function ServicesPage({ searchParams }: { searchParams: SP 
           title="Aucun service ne correspond à votre recherche"
           description="Élargissez vos filtres, ou publiez une mission : les monteurs vous enverront leurs devis."
           action={
-            <Link href="/tableau-de-bord/missions/nouvelle" className="font-semibold text-brand-700">
+            <Link href="/tableau-de-bord/missions/nouvelle" className="link-brand">
               Publier une mission →
             </Link>
           }
         />
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {result.items.map((s) => (
             <ServiceCard key={s.id} service={s} />
           ))}

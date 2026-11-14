@@ -37,7 +37,7 @@ export default async function EarningsPage() {
           </p>
         </div>
       )}
-      <div className="grid gap-3 sm:grid-cols-3 sm:gap-4">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
         <Stat label="En séquestre" value={formatXof(total(["HELD"]))} icon={<Lock className="size-5" />} hint="Commandes en cours, payées par le client" />
         <Stat label="À recevoir" value={formatXof(total(["RELEASABLE", "RELEASING"]))} icon={<WalletCards className="size-5" />} hint="Validées, reversement en préparation" />
         <Stat label="Reçu" value={formatXof(total(["RELEASED"]))} icon={<Wallet className="size-5" />} hint={operator ? `Sur ${operator.label} · ${profile.payoutPhone}` : undefined} />
@@ -64,7 +64,7 @@ export default async function EarningsPage() {
               {escrows.map((e) => (
                 <tr key={e.id}>
                   <Td>
-                    <Link href={`/tableau-de-bord/commandes/${e.order.id}`} className="font-medium hover:text-brand-700">
+                    <Link href={`/tableau-de-bord/commandes/${e.order.id}`} className="font-medium decoration-brand-400 decoration-[3px] underline-offset-4 hover:underline">
                       {e.order.title}
                     </Link>
                     <p className="text-xs text-ink-500">{e.order.reference}</p>

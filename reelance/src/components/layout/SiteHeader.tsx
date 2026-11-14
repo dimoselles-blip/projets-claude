@@ -40,7 +40,7 @@ export async function SiteHeader() {
             type="search"
             placeholder="Montage YouTube, clip, motion…"
             aria-label="Rechercher un service"
-            className="h-10 w-full rounded-xl border border-ink-200 bg-ink-50 pr-3 pl-9 text-sm placeholder:text-ink-400 focus:border-brand-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-100"
+            className="h-10 w-full rounded-xl border border-ink-200 bg-ink-50 pr-3 pl-9 text-sm placeholder:text-ink-400 focus:border-ink-950 focus:bg-white focus:shadow-none focus:outline-none focus:ring-4 focus:ring-brand-300/60"
           />
         </form>
 

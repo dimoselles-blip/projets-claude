@@ -26,9 +26,9 @@ export function AdminNav({ counts }: { counts: Record<"services" | "missions" | 
           const active = item.href === "/admin" ? pathname === "/admin" : pathname.startsWith(item.href);
           const count = item.badge ? counts[item.badge] : 0;
           return (
-            <Link key={item.href} href={item.href} className={cn("flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-2 text-sm font-medium", active ? "bg-white text-ink-900" : "bg-white/10 text-ink-200")}>
+            <Link key={item.href} href={item.href} className={cn("flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-2 text-sm font-medium", active ? "bg-brand-400 text-ink-950" : "bg-white/10 text-ink-200")}>
               <item.icon className="size-4" /> {item.label}
-              {count > 0 && <span className="rounded-full bg-accent-500 px-1.5 text-xs text-white">{count}</span>}
+              {count > 0 && <span className="rounded-full bg-brand-400 px-1.5 text-xs font-semibold text-ink-950">{count}</span>}
             </Link>
           );
         })}
@@ -43,8 +43,8 @@ export function AdminNav({ counts }: { counts: Record<"services" | "missions" | 
                 href={item.href}
                 className={cn("flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium", active ? "bg-white/10 text-white" : "text-ink-300 hover:bg-white/5 hover:text-white")}
               >
-                <item.icon className="size-[18px]" /> <span className="flex-1">{item.label}</span>
-                {count > 0 && <span className="rounded-full bg-accent-500 px-2 py-0.5 text-xs font-semibold text-white">{count}</span>}
+                <item.icon className={cn("size-[18px]", active && "text-brand-400")} /> <span className="flex-1">{item.label}</span>
+                {count > 0 && <span className="rounded-full bg-brand-400 px-2 py-0.5 text-xs font-semibold text-ink-950">{count}</span>}
               </Link>
             </li>
           );

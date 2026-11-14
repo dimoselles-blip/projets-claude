@@ -60,15 +60,15 @@ async function FreelancerOverview({ user }: { user: CurrentUser }) {
       />
 
       {todo.length > 0 && (
-        <Card className="mb-6 border-brand-100 bg-brand-50/50">
+        <Card className="mb-6 border-brand-300 bg-brand-50">
           <div className="p-5 sm:p-6">
-            <p className="flex items-center gap-2 font-semibold text-brand-900">
-              <CircleAlert className="size-5 text-brand-600" /> Pour recevoir vos premières commandes
+            <p className="flex items-center gap-2 font-semibold text-ink-950">
+              <CircleAlert className="size-5 text-ink-950" /> Pour recevoir vos premières commandes
             </p>
             <ul className="mt-3 space-y-2 text-sm">
               {todo.map((t) => (
                 <li key={t.href}>
-                  <Link href={t.href} className="text-brand-800 underline-offset-2 hover:underline">
+                  <Link href={t.href} className="link-brand font-medium">
                     → {t.label}
                   </Link>
                 </li>
@@ -89,7 +89,7 @@ async function FreelancerOverview({ user }: { user: CurrentUser }) {
         <CardHeader
           title="Commandes récentes"
           action={
-            <Link href="/tableau-de-bord/commandes" className="text-sm font-semibold text-brand-700">
+            <Link href="/tableau-de-bord/commandes" className="text-sm link-brand">
               Tout voir
             </Link>
           }
@@ -150,9 +150,9 @@ async function ClientOverview({ user }: { user: CurrentUser }) {
         </Card>
       )}
 
-      <div className="mt-6 grid gap-6 xl:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
+      <div className="mt-6 grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
         <Card>
-          <CardHeader title="Commandes récentes" action={<Link href="/tableau-de-bord/commandes" className="text-sm font-semibold text-brand-700">Tout voir</Link>} />
+          <CardHeader title="Commandes récentes" action={<Link href="/tableau-de-bord/commandes" className="text-sm link-brand">Tout voir</Link>} />
           {recent.length === 0 ? (
             <div className="p-6">
               <EmptyState icon={<ShoppingBag className="size-5" />} title="Aucune commande" description="Achetez un service clé en main ou publiez une mission pour recevoir des devis." action={<LinkButton href="/services">Parcourir les services</LinkButton>} />
@@ -162,7 +162,7 @@ async function ClientOverview({ user }: { user: CurrentUser }) {
           )}
         </Card>
         <Card>
-          <CardHeader title="Mes missions" action={<Link href="/tableau-de-bord/missions" className="text-sm font-semibold text-brand-700">Tout voir</Link>} />
+          <CardHeader title="Mes missions" action={<Link href="/tableau-de-bord/missions" className="text-sm link-brand">Tout voir</Link>} />
           {missions.length === 0 ? (
             <p className="p-6 text-sm text-ink-500">Aucune mission active.</p>
           ) : (

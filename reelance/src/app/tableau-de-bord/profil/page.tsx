@@ -55,7 +55,7 @@ async function FreelancerProfileForm({ user, welcome }: { user: CurrentUser; wel
         title="Profil & portfolio"
         description="Un profil complet, avec des réalisations, inspire confiance aux entreprises."
         actions={
-          <Link href={`/freelances/${profile.slug}`} className="inline-flex items-center gap-1 text-sm font-semibold text-brand-700">
+          <Link href={`/freelances/${profile.slug}`} className="inline-flex items-center gap-1 text-sm link-brand">
             Voir mon profil public <ExternalLink className="size-4" />
           </Link>
         }
@@ -70,7 +70,7 @@ async function FreelancerProfileForm({ user, welcome }: { user: CurrentUser; wel
         <Card>
           <CardHeader title="Informations du profil" />
           <CardBody>
-            <ActionForm action={updateFreelancerProfileAction} className="grid gap-5 sm:grid-cols-2">
+            <ActionForm action={updateFreelancerProfileAction} className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <div className="sm:col-span-2">
                 <FormField name="avatarUrl" label="Photo de profil">
                   <ImageUpload name="avatarUrl" defaultValue={profile.avatarUrl} folder="avatars" shape="round" label="Changer la photo" />
@@ -124,7 +124,7 @@ async function FreelancerProfileForm({ user, welcome }: { user: CurrentUser; wel
           <CardHeader title="Portfolio" description="Ajoutez vos meilleures réalisations (liens YouTube, Vimeo ou Google Drive)." />
           <CardBody className="space-y-6">
             {portfolio.length > 0 && (
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {portfolio.map((item) => (
                   <div key={item.id} className="overflow-hidden rounded-xl border border-ink-100">
                     <VideoEmbed url={item.videoUrl} title={item.title} />
@@ -145,7 +145,7 @@ async function FreelancerProfileForm({ user, welcome }: { user: CurrentUser; wel
                 ))}
               </div>
             )}
-            <ActionForm action={addPortfolioItemAction} resetOnSuccess className="grid gap-4 rounded-xl bg-ink-50 p-4 sm:grid-cols-2">
+            <ActionForm action={addPortfolioItemAction} resetOnSuccess className="grid grid-cols-1 gap-4 rounded-xl bg-ink-50 p-4 sm:grid-cols-2">
               <FormField name="title" label="Titre de la réalisation">
                 <Input id="pf-title" name="title" placeholder="Ex. : Aftermovie Festival de Ouidah" />
               </FormField>
@@ -171,7 +171,7 @@ async function FreelancerProfileForm({ user, welcome }: { user: CurrentUser; wel
             description={`Vos gains sont reversés sur ce compte Mobile Money après validation de chaque commande (commission Reelance : ${settings.commissionRateBps / 100} %).`}
           />
           <CardBody>
-            <ActionForm action={updatePayoutAction} className="grid gap-4 sm:grid-cols-2">
+            <ActionForm action={updatePayoutAction} className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <FormField name="payoutOperator" label="Opérateur">
                 <Select id="payoutOperator" name="payoutOperator" defaultValue={profile.payoutOperator ?? ""}>
                   <option value="" disabled>
@@ -206,7 +206,7 @@ function ClientProfileForm({ user }: { user: CurrentUser }) {
       <PageHeader title="Profil entreprise" description="Ces informations sont visibles par les freelances qui postulent à vos missions." />
       <Card>
         <CardBody>
-          <ActionForm action={updateClientProfileAction} className="grid gap-5 sm:grid-cols-2">
+          <ActionForm action={updateClientProfileAction} className="grid grid-cols-1 gap-5 sm:grid-cols-2">
             <div className="sm:col-span-2">
               <FormField name="logoUrl" label="Logo">
                 <ImageUpload name="logoUrl" defaultValue={c?.logoUrl} folder="logos" shape="round" label="Changer le logo" />

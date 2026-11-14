@@ -1,53 +1,48 @@
 @import "@fontsource-variable/inter";
-@import "@fontsource-variable/plus-jakarta-sans";
+@import "@fontsource-variable/outfit";
 @import "tailwindcss";
 
 /*
  * Charte Reelance — voir docs/charte-graphique.md
- * Pour adapter la palette au logo définitif, modifiez uniquement les variables --color-brand-* et --color-accent-*.
+ * Couleurs du logo : noir #0A0A0A et jaune #F2E924.
+ * Règle d'or : le jaune s'utilise en APLAT (boutons, surlignages, badges) avec du texte noir,
+ * ou en texte sur fond noir. Jamais de texte jaune sur fond blanc, ni de texte blanc sur jaune.
  */
 @theme {
   --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-display: "Plus Jakarta Sans Variable", "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit Variable", "Inter Variable", ui-sans-serif, system-ui, sans-serif;
 
-  /* Violet électrique : couleur de marque (boutons, liens, focus) */
-  --color-brand-50: #f3f1ff;
-  --color-brand-100: #e9e5ff;
-  --color-brand-200: #d4ccff;
-  --color-brand-300: #b4a4ff;
-  --color-brand-400: #8f73ff;
-  --color-brand-500: #6f4dfb;
-  --color-brand-600: #5b3df5;
-  --color-brand-700: #4a2ed6;
-  --color-brand-800: #3c26ad;
-  --color-brand-900: #33228a;
-  --color-brand-950: #1d1259;
+  /* Jaune Reelance (brand-400 = couleur exacte du logo) */
+  --color-brand-50: #fefde8;
+  --color-brand-100: #fdfac2;
+  --color-brand-200: #fbf48a;
+  --color-brand-300: #f7ee52;
+  --color-brand-400: #f2e924;
+  --color-brand-500: #dcd20e;
+  --color-brand-600: #b5ac06;
+  --color-brand-700: #8a8308;
+  --color-brand-800: #6b650e; /* seule teinte jaune lisible en texte sur blanc (6:1) */
+  --color-brand-900: #4d4910;
+  --color-brand-950: #2c2a06;
 
-  /* Corail « REC » : accent ponctuel (badges, point du logo, mises en avant) */
-  --color-accent-50: #fff2f1;
-  --color-accent-100: #ffe1de;
-  --color-accent-400: #ff7c72;
-  --color-accent-500: #ff5a4e;
-  --color-accent-600: #ec3a2e;
-
-  /* Encre : textes et fonds sombres */
-  --color-ink-50: #f5f6fa;
-  --color-ink-100: #eceef5;
-  --color-ink-200: #d8dbe8;
-  --color-ink-300: #b5bad0;
-  --color-ink-400: #8a90a8;
-  --color-ink-500: #636a85;
-  --color-ink-600: #4a5069;
-  --color-ink-700: #3b4260;
-  --color-ink-800: #232a47;
-  --color-ink-900: #0e1330;
-  --color-ink-950: #080b1f;
+  /* Encre : noir du logo et gris neutres légèrement chauds */
+  --color-ink-50: #f7f7f5;
+  --color-ink-100: #efefec;
+  --color-ink-200: #e0e0db;
+  --color-ink-300: #c3c3bc;
+  --color-ink-400: #93938c;
+  --color-ink-500: #6e6e68;
+  --color-ink-600: #55554f;
+  --color-ink-700: #3f3f3b;
+  --color-ink-800: #282826;
+  --color-ink-900: #141413;
+  --color-ink-950: #0a0a0a;
 
   --radius-xl: 0.875rem;
   --radius-2xl: 1.125rem;
 
-  --shadow-card: 0 1px 2px rgb(14 19 48 / 0.04), 0 4px 16px -4px rgb(14 19 48 / 0.08);
-  --shadow-card-hover: 0 2px 4px rgb(14 19 48 / 0.05), 0 12px 32px -8px rgb(14 19 48 / 0.16);
+  --shadow-card: 0 1px 2px rgb(10 10 10 / 0.04), 0 4px 16px -4px rgb(10 10 10 / 0.08);
+  --shadow-card-hover: 0 2px 4px rgb(10 10 10 / 0.05), 0 12px 32px -8px rgb(10 10 10 / 0.16);
 }
 
 @layer base {
@@ -61,10 +56,13 @@
     @apply font-display tracking-tight;
   }
   ::selection {
-    @apply bg-brand-200 text-ink-900;
+    @apply bg-brand-300 text-ink-950;
   }
+  /* Focus visible sur fond clair comme sur fond noir : contour noir + halo jaune */
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-brand-500;
+    outline: 2px solid var(--color-ink-950);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 6px var(--color-brand-400);
   }
 }
 
@@ -77,4 +75,45 @@
   &::-webkit-scrollbar {
     display: none;
   }
+}
+
+/* Lien de marque : texte noir souligné de jaune */
+@utility link-brand {
+  font-weight: 600;
+  color: var(--color-ink-950);
+  text-decoration-line: underline;
+  text-decoration-color: var(--color-brand-400);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
+  transition: text-decoration-color 150ms;
+  &:hover {
+    text-decoration-color: var(--color-ink-950);
+  }
+}
+
+/* Petit intertitre au-dessus des titres de section, précédé d'un trait jaune */
+@utility eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink-700);
+  &::before {
+    content: "";
+    width: 1.25rem;
+    height: 0.25rem;
+    border-radius: 9999px;
+    background: var(--color-brand-400);
+  }
+}
+
+/* Surlignage façon marqueur, repris des « ee » jaunes du logo */
+@utility marker {
+  background-image: linear-gradient(transparent 58%, var(--color-brand-400) 58%, var(--color-brand-400) 92%, transparent 92%);
+  padding-inline: 0.08em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }

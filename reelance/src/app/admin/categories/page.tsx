@@ -27,12 +27,12 @@ export default async function AdminCategoriesPage() {
   return (
     <>
       <PageHeader title="Catégories" description="Organisez le catalogue en catégories et sous-catégories. Les changements sont immédiats sur le site." />
-      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_380px]">
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_380px]">
         <div className="space-y-4">
           {roots.map((root) => (
             <Card key={root.id}>
               <div className="flex items-center gap-3 border-b border-ink-100 px-5 py-4">
-                <span className="grid size-10 place-items-center rounded-xl bg-brand-50 text-brand-600">
+                <span className="grid size-10 place-items-center rounded-xl bg-brand-400 text-ink-950">
                   <CategoryIcon name={root.icon} className="size-5" />
                 </span>
                 <div className="flex-1">
@@ -76,7 +76,7 @@ export default async function AdminCategoriesPage() {
 function CategoryEditor({ category, roots }: { category: Category; roots: Category[] }) {
   return (
     <details className="mt-1">
-      <summary className="cursor-pointer text-xs font-medium text-brand-700">Modifier</summary>
+      <summary className="cursor-pointer text-xs link-brand">Modifier</summary>
       <div className="mt-3 rounded-xl bg-ink-50 p-4">
         <CategoryFields category={category} roots={roots} />
         <form action={deleteCategoryAction} className="mt-3">
@@ -93,7 +93,7 @@ function CategoryEditor({ category, roots }: { category: Category; roots: Catego
 function CategoryFields({ category, roots }: { category?: Category; roots: Category[] }) {
   const prefix = category?.id ?? "new";
   return (
-    <ActionForm action={saveCategoryAction} resetOnSuccess={!category} className="grid gap-3 sm:grid-cols-2">
+    <ActionForm action={saveCategoryAction} resetOnSuccess={!category} className="grid grid-cols-1 gap-3 sm:grid-cols-2">
       {category && <input type="hidden" name="id" value={category.id} />}
       <FormField name="name" label="Nom">
         <Input id={`${prefix}-name`} name="name" defaultValue={category?.name} />

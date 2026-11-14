@@ -20,7 +20,7 @@ export default async function NewMissionPage() {
       <PageHeader title="Publier une mission" description="Plus votre besoin est précis, plus les devis seront pertinents." />
       <Card>
         <CardBody>
-          <ActionForm action={createMissionAction} className="grid gap-5 sm:grid-cols-2">
+          <ActionForm action={createMissionAction} className="grid grid-cols-1 gap-5 sm:grid-cols-2">
             <FormField name="title" label="Titre de la mission" className="sm:col-span-2" hint="Ex. : Montage de 4 vidéos Reels par mois pour une marque de cosmétiques">
               <Input id="title" name="title" maxLength={120} />
             </FormField>

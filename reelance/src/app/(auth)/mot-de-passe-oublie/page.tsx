@@ -22,7 +22,7 @@ export default function ForgotPasswordPage() {
         </SubmitButton>
       </ActionForm>
       <p className="mt-8 text-center text-sm">
-        <Link href="/connexion" className="font-semibold text-brand-700">
+        <Link href="/connexion" className="link-brand">
           ← Retour à la connexion
         </Link>
       </p>

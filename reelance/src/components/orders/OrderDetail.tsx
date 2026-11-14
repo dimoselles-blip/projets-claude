@@ -76,7 +76,7 @@ export function OrderDetail({
 
       <PaymentReturnBanner status={paymentReturn} />
 
-      <div className="mt-6 grid gap-6 xl:grid-cols-[minmax(0,1fr)_340px]">
+      <div className="mt-6 grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_340px]">
         <div className="min-w-0 space-y-6">
           {/* ───── Actions selon le rôle et le statut ───── */}
           <NextStep order={order} viewer={viewer} autoCompleteDays={autoCompleteDays} revisionsLeft={revisionsLeft} />
@@ -92,7 +92,7 @@ export function OrderDetail({
                   <li key={d.id} className="px-5 py-5 sm:px-6">
                     <div className="flex items-center justify-between gap-2">
                       <p className="flex items-center gap-2 font-semibold">
-                        <PackageCheck className="size-4 text-brand-600" /> Livraison n°{order.deliveries.length - i}
+                        <PackageCheck className="size-4 text-ink-950" /> Livraison n°{order.deliveries.length - i}
                       </p>
                       <span className="text-xs text-ink-500">{formatDate(d.createdAt, true)}</span>
                     </div>
@@ -100,7 +100,7 @@ export function OrderDetail({
                     <ul className="mt-3 space-y-1.5">
                       {d.links.map((l) => (
                         <li key={l}>
-                          <a href={l} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm font-medium break-all text-brand-700 hover:underline">
+                          <a href={l} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm break-all link-brand">
                             <ExternalLink className="size-3.5 shrink-0" /> {l}
                           </a>
                         </li>
@@ -118,12 +118,12 @@ export function OrderDetail({
             <CardBody>
               <p className="text-sm leading-relaxed whitespace-pre-line text-ink-700">{order.brief || "—"}</p>
               {order.service && (
-                <Link href={`/services/${order.service.slug}`} className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-brand-700">
+                <Link href={`/services/${order.service.slug}`} className="mt-4 inline-flex items-center gap-1 text-sm link-brand">
                   <FileText className="size-4" /> Voir le service commandé
                 </Link>
               )}
               {order.mission && (
-                <Link href={`/missions/${order.mission.id}`} className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-brand-700">
+                <Link href={`/missions/${order.mission.id}`} className="mt-4 inline-flex items-center gap-1 text-sm link-brand">
                   <FileText className="size-4" /> Voir la mission
                 </Link>
               )}
@@ -159,7 +159,7 @@ export function OrderDetail({
             <ol className="relative space-y-5 px-5 py-5 sm:px-6">
               {order.events.map((e) => (
                 <li key={e.id} className="flex gap-3">
-                  <span className="mt-1.5 size-2 shrink-0 rounded-full bg-brand-500" />
+                  <span className="mt-1.5 size-2.5 shrink-0 rounded-full bg-brand-400 ring-2 ring-ink-950" />
                   <div>
                     <p className="text-sm text-ink-800">{e.message}</p>
                     <p className="text-xs text-ink-500">
@@ -254,10 +254,10 @@ function NextStep({ order, viewer, autoCompleteDays, revisionsLeft }: { order: O
       return <Notice icon={<Hourglass className="size-5" />} title="En attente du paiement du client" text="La commande démarrera dès que le client aura payé. Les fonds seront alors bloqués en séquestre." />;
     }
     return (
-      <Card className="border-brand-200">
+      <Card className="border-brand-400">
         <CardBody>
           <p className="flex items-center gap-2 font-semibold">
-            <Lock className="size-5 text-brand-600" /> Réglez la commande pour la démarrer
+            <Lock className="size-5 text-ink-950" /> Réglez la commande pour la démarrer
           </p>
           <p className="mt-2 text-sm text-ink-600">
             Paiement sécurisé par FedaPay (Mobile Money ou carte). Montant : <strong>{formatMoney(Number(order.displayAmount), order.displayCurrency)}</strong>
@@ -293,7 +293,7 @@ function NextStep({ order, viewer, autoCompleteDays, revisionsLeft }: { order: O
     }
     const lastRevision = order.events.find((e) => e.type === "REVISION_REQUESTED");
     return (
-      <Card className="border-brand-200">
+      <Card className="border-brand-400">
         <CardHeader
           title={order.status === "REVISION_REQUESTED" ? "Livrer la version retouchée" : "Livrer la commande"}
           description={order.dueAt ? `À livrer avant le ${formatDate(order.dueAt)} (${formatRelative(order.dueAt)}).` : undefined}
@@ -501,7 +501,7 @@ function Notice({ icon, title, text, tone = "neutral" }: { icon: React.ReactNode
   const tones = { neutral: "border-ink-100 bg-white", success: "border-emerald-200 bg-emerald-50/60", danger: "border-red-200 bg-red-50/60" };
   return (
     <div className={`flex gap-3 rounded-2xl border p-5 ${tones[tone]}`}>
-      <span className="text-brand-600">{icon}</span>
+      <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-brand-400 text-ink-950">{icon}</span>
       <div>
         <p className="font-semibold">{title}</p>
         <p className="mt-1 text-sm text-ink-600">{text}</p>

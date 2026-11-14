@@ -52,7 +52,7 @@ export default async function MyMissionsPage() {
                   </div>
                   <StatusBadge status={m.status} map={MISSION_STATUS} />
                 </div>
-                <p className="mt-3 text-sm font-medium text-brand-700">{m._count.applications} candidature(s) →</p>
+                <p className="mt-3 text-sm link-brand">{m._count.applications} candidature(s) →</p>
                 {m.status === "REJECTED" && m.rejectionReason && <p className="mt-2 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">Motif du refus : {m.rejectionReason}</p>}
               </Link>
             </li>

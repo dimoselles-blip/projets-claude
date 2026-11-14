@@ -18,7 +18,7 @@ export function CurrencySwitcher({ current, className }: { current: CurrencyCode
         defaultValue={current}
         onChange={() => formRef.current?.requestSubmit()}
         className={cn(
-          "h-9 cursor-pointer rounded-lg border border-ink-200 bg-white pr-2 pl-2.5 text-sm font-medium text-ink-700 hover:border-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-200",
+          "h-9 cursor-pointer rounded-lg border border-ink-200 bg-white pr-2 pl-2.5 text-sm font-medium text-ink-700 hover:border-ink-300 focus:outline-none focus:shadow-none focus:ring-2 focus:ring-brand-300",
         )}
       >
         {CURRENCY_CODES.map((code) => (

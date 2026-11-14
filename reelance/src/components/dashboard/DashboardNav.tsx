@@ -69,7 +69,7 @@ export function DashboardNav({ role }: { role: "FREELANCER" | "CLIENT" }) {
               href={item.href}
               className={cn(
                 "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition",
-                isActive(item) ? "bg-brand-50 text-brand-700" : "text-ink-600 hover:bg-ink-50 hover:text-ink-900",
+                isActive(item) ? "bg-brand-400 font-semibold text-ink-950" : "text-ink-600 hover:bg-ink-50 hover:text-ink-900",
               )}
             >
               <item.icon className="size-[18px]" /> {item.label}

@@ -68,7 +68,7 @@ export default async function MyMissionPage({ params }: { params: Promise<{ id: 
         <div className="mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">Mission refusée : {mission.rejectionReason}</div>
       )}
       {activeOrder && (
-        <Card className="mb-6 border-brand-200">
+        <Card className="mb-6 border-brand-400">
           <CardBody className="flex flex-wrap items-center justify-between gap-3">
             <p className="text-sm">
               Mission confiée à <strong>{activeOrder.freelancer.name}</strong>.{" "}
@@ -97,8 +97,8 @@ export default async function MyMissionPage({ params }: { params: Promise<{ id: 
                     <Avatar name={a.freelancer.name} src={p?.avatarUrl} size={48} />
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-2">
-                        <Link href={`/freelances/${p?.slug}`} className="flex items-center gap-1 font-semibold hover:text-brand-700">
-                          {a.freelancer.name} {p?.isVerified && <BadgeCheck className="size-4 text-brand-600" />}
+                        <Link href={`/freelances/${p?.slug}`} className="flex items-center gap-1 font-semibold decoration-brand-400 decoration-[3px] underline-offset-4 hover:underline">
+                          {a.freelancer.name} {p?.isVerified && <BadgeCheck className="size-4 fill-brand-400 text-ink-950" />}
                         </Link>
                         <StatusBadge status={a.status} map={APPLICATION_STATUS} />
                       </div>

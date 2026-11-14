@@ -30,7 +30,7 @@ export default async function AdminSettingsPage() {
   return (
     <>
       <PageHeader title="Paramètres" description="Règles de la plateforme, devises et état de la configuration." />
-      <div className="grid gap-6 xl:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
         <Card>
           <CardHeader title="Règles de la marketplace" description="S'appliquent aux nouvelles commandes ; les commandes existantes gardent leurs conditions." />
           <CardBody>

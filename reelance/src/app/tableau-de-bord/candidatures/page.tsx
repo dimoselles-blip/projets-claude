@@ -33,7 +33,7 @@ export default async function ApplicationsPage() {
             <li key={a.id} className="rounded-2xl border border-ink-100 bg-white p-5 shadow-card">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="min-w-0">
-                  <Link href={`/missions/${a.missionId}`} className="font-semibold hover:text-brand-700">
+                  <Link href={`/missions/${a.missionId}`} className="font-semibold decoration-brand-400 decoration-[3px] underline-offset-4 hover:underline">
                     {a.mission.title}
                   </Link>
                   <p className="mt-1 text-sm text-ink-500">

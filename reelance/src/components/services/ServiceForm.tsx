@@ -103,12 +103,12 @@ export function ServiceForm({
           title="Offres et prix"
           description="Saisissez vos prix en FCFA : ils sont convertis automatiquement dans la devise de chaque client (EUR, USD…)."
         />
-        <CardBody className="grid gap-4 lg:grid-cols-3">
+        <CardBody className="grid grid-cols-1 gap-4 lg:grid-cols-3">
           {TIERS.map(({ tier, label, hint }) => {
             const p = pkg(tier);
             const on = enabled[tier];
             return (
-              <div key={tier} className={cn("rounded-2xl border p-4", on ? "border-brand-200 bg-brand-50/30" : "border-dashed border-ink-200")}>
+              <div key={tier} className={cn("rounded-2xl border p-4", on ? "border-brand-400 bg-brand-50" : "border-dashed border-ink-200")}>
                 <div className="flex items-center justify-between">
                   <p className="font-semibold">{label}</p>
                   {tier !== "BASIC" && (
@@ -118,7 +118,7 @@ export function ServiceForm({
                         name={`pkg_${tier}_enabled`}
                         checked={on}
                         onChange={(e) => setEnabled((s) => ({ ...s, [tier]: e.target.checked }))}
-                        className="size-4 accent-brand-600"
+                        className="size-4 accent-ink-950"
                       />
                       Activer
                     </label>

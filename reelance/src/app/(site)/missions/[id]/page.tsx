@@ -53,7 +53,7 @@ export default async function MissionPage({ params }: { params: Params }) {
       <Link href="/missions" className="text-sm text-ink-500 hover:text-ink-900">
         ← Toutes les missions
       </Link>
-      <div className="mt-4 grid gap-8 lg:grid-cols-[minmax(0,1fr)_380px]">
+      <div className="mt-4 grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_380px]">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
             <Badge tone="brand">{mission.category.parent ? `${mission.category.parent.name} · ${mission.category.name}` : mission.category.name}</Badge>
@@ -62,7 +62,7 @@ export default async function MissionPage({ params }: { params: Params }) {
           </div>
           <h1 className="mt-3 text-2xl leading-tight font-bold sm:text-3xl">{mission.title}</h1>
 
-          <div className="mt-6 grid gap-3 sm:grid-cols-3">
+          <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
             <Fact label="Budget">
               {mission.budgetMinXof ? (
                 <>
