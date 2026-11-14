@@ -2,18 +2,34 @@
 
 Trois options. Dans tous les cas : base PostgreSQL, variables de `.env.example`, **HTTPS obligatoire** (le cookie de session est `Secure` en production), et un appel horaire de `/api/cron`.
 
-## Option A — Vercel + base managée (le plus simple)
+## Option A — Vercel (le plus simple, sans rien installer)
 
-1. **Base** : créez une base PostgreSQL sur Neon, Supabase ou Railway (offres gratuites) et copiez l'URL de connexion (avec `?sslmode=require` si demandé).
-2. **Projet Vercel** : importez le dépôt GitHub, avec `reelance` comme **Root Directory**. Framework : Next.js. Les commandes par défaut conviennent (`npm install`, `npm run build`).
-3. **Variables** (Settings → Environment Variables) : toutes celles de `.env.example`, dont `DATABASE_URL`, `NEXT_PUBLIC_APP_URL=https://votre-domaine.com`, les clés FedaPay, `CRON_SECRET` (chaîne aléatoire).
-4. **Migrations et admin**, depuis votre poste, avec l'URL de la base de production :
-   ```bash
-   DATABASE_URL="postgresql://…" ADMIN_EMAIL="…" ADMIN_PASSWORD="…" npm run db:deploy
-   DATABASE_URL="postgresql://…" ADMIN_EMAIL="…" ADMIN_PASSWORD="…" npm run db:seed
-   ```
-5. **Cron** : `vercel.json` déclare un appel quotidien de `/api/cron` (le plan gratuit n'autorise qu'un cron par jour). Vercel envoie automatiquement `Authorization: Bearer $CRON_SECRET`. Avec le plan Pro, passez à `"0 * * * *"` (toutes les heures). La validation automatique est aussi appliquée dès qu'une commande concernée est ouverte, donc un cron quotidien suffit pour démarrer.
-6. **Domaine** : ajoutez votre domaine dans Vercel, puis déclarez le webhook FedaPay sur `https://votre-domaine.com/api/webhooks/fedapay`.
+Tout se fait dans le navigateur. Les tables, les catégories et le compte admin sont créés automatiquement au moment du déploiement (script `vercel-build`).
+
+1. **Compte** : créez un compte gratuit sur [vercel.com](https://vercel.com) avec « Continue with GitHub ».
+2. **Projet** : *Add New… → Project*, importez le dépôt GitHub qui contient Reelance.
+   - **Root Directory** : cliquez sur *Edit* et choisissez `reelance`.
+   - Framework : Next.js (détecté automatiquement). Ne touchez pas aux commandes.
+   - Le code doit être sur la branche par défaut du dépôt (`main`). Sinon, après l'import : *Settings → Environments → Production → Branch Tracking* et indiquez la branche.
+3. **Variables d'environnement** (sur le même écran, rubrique *Environment Variables*) :
+
+   | Nom | Valeur |
+   | --- | --- |
+   | `ADMIN_EMAIL` | votre e-mail d'administrateur |
+   | `ADMIN_PASSWORD` | un mot de passe fort (10 caractères minimum) |
+   | `CRON_SECRET` | une longue chaîne aléatoire |
+   | `PAYMENT_SIMULATION` | `true` pour tester sans FedaPay (à retirer en production) |
+   | `SEED_DEMO` | `true` pour avoir des monteurs et services de démonstration (facultatif) |
+
+4. **Base de données** : cliquez sur *Deploy* (le premier déploiement échoue : c'est normal, il manque la base). Ouvrez ensuite l'onglet **Storage → Create Database → Neon (Postgres)**, choisissez la région la plus proche (Europe), puis **Connect** au projet. Vercel ajoute lui-même les variables de connexion.
+5. **Redéployer** : onglet *Deployments* → menu « ⋯ » du dernier déploiement → *Redeploy*.
+6. **C'est en ligne** : l'adresse s'affiche sur la page du projet (ex. `https://reelance-xxxx.vercel.app`). Connectez-vous avec `ADMIN_EMAIL` et `ADMIN_PASSWORD` : vous arrivez dans le back office.
+
+Ensuite :
+
+- **Votre domaine** : *Settings → Domains*, ajoutez `reelance.com` (ou autre) et suivez les instructions DNS. Puis ajoutez `NEXT_PUBLIC_APP_URL=https://votre-domaine` et redéployez.
+- **FedaPay** : ajoutez `FEDAPAY_PUBLIC_KEY`, `FEDAPAY_SECRET_KEY` (puis `FEDAPAY_WEBHOOK_SECRET`), retirez `PAYMENT_SIMULATION`, redéployez, et utilisez « Tester la connexion FedaPay » dans les paramètres admin (voir [fedapay.md](fedapay.md)).
+- **Cron** : `vercel.json` déclare un appel quotidien de `/api/cron` (le plan gratuit n'autorise qu'un cron par jour). Vercel envoie automatiquement `Authorization: Bearer $CRON_SECRET`. Avec le plan Pro, passez à `"0 * * * *"`. La validation automatique est aussi appliquée dès qu'une commande concernée est ouverte.
 
 ## Option B — VPS Hostinger avec Node.js et PM2
 

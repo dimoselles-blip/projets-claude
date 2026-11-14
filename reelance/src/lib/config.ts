@@ -28,7 +28,14 @@ const fedapayEnv = process.env.FEDAPAY_ENV
 
 export const config = {
   appName: "Reelance",
-  appUrl: (process.env.NEXT_PUBLIC_APP_URL ?? process.env.APP_URL ?? "http://localhost:3000").replace(/\/$/, ""),
+  // NEXT_PUBLIC_APP_URL si défini ; sinon l'adresse fournie automatiquement par Vercel.
+  appUrl: (
+    process.env.NEXT_PUBLIC_APP_URL ??
+    process.env.APP_URL ??
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : undefined) ??
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined) ??
+    "http://localhost:3000"
+  ).replace(/\/$/, ""),
   isProduction: process.env.NODE_ENV === "production",
 
   session: {

@@ -6,7 +6,8 @@ import { PrismaClient } from "@/generated/prisma/client";
  * Prisma 7 utilise le pilote `pg` via l'adaptateur officiel.
  */
 function createClient() {
-  const connectionString = process.env.DATABASE_URL;
+  // DATABASE_URL, ou les noms de variables posés automatiquement par l'intégration Neon de Vercel.
+  const connectionString = process.env.DATABASE_URL ?? process.env.POSTGRES_PRISMA_URL ?? process.env.POSTGRES_URL;
   if (!connectionString) {
     throw new Error("DATABASE_URL n'est pas défini. Voir .env.example.");
   }
