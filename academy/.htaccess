@@ -1,0 +1,57 @@
+# DIMO Tech Academy — configuration Apache / LiteSpeed (Hostinger)
+Options -Indexes
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # HTTPS : activez plutôt « Forcer HTTPS » dans hPanel → Sécurité → SSL.
+    # Si besoin, décommentez les 3 lignes suivantes une fois le certificat SSL actif.
+    # RewriteCond %{HTTPS} !=on
+    # RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Dossiers internes jamais accessibles depuis le web
+    RewriteRule ^(config|src|views|storage|contenu)(/|$) - [F,L]
+    # Fichiers cachés (.env, .git…), sauf .well-known (certificats SSL)
+    RewriteRule (^|/)\.(?!well-known/) - [F,L]
+
+    # Fichiers existants (images, CSS, JS) servis directement
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^ - [L]
+
+    # Tout le reste passe par index.php
+    RewriteRule ^ index.php [L,QSA]
+</IfModule>
+
+# Compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml text/plain application/xml
+</IfModule>
+
+# Cache navigateur des fichiers statiques (les URL sont versionnées)
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+    <FilesMatch "\.(woff2|css|js|webp|png|svg|ico)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+</IfModule>
+
+AddType font/woff2 .woff2
+AddType image/webp .webp
+
+# Taille maximale des envois (supports de cours)
+<IfModule mod_php.c>
+    php_value upload_max_filesize 64M
+    php_value post_max_size 64M
+</IfModule>

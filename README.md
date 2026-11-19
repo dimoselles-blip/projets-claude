@@ -8,7 +8,7 @@ Pages HTML autonomes : ouvre `index.html` dans un navigateur, sans rien installe
 
 | Dossier | Projet |
 | --- | --- |
-| [`pages/dimo-tech-academy`](pages/dimo-tech-academy/index.html) | Site de DIMO Tech Academy : « Formez-vous à la Data & l'IA » |
+| [`pages/dimo-tech-academy`](pages/dimo-tech-academy/index.html) | Première maquette du site de DIMO Tech Academy (remplacée par la plateforme [`academy`](academy/README.md)) |
 | [`pages/page-vente-cours-agents-ia`](pages/page-vente-cours-agents-ia/index.html) | Page de vente de la formation « Crée tes propres agents IA » |
 | [`pages/affiche-cours-agents-ia`](pages/affiche-cours-agents-ia/index.html) | Affiche de la formation « Crée tes propres agents IA » |
 
@@ -18,6 +18,7 @@ Pour les mettre en ligne gratuitement : Settings → Pages → Deploy from a bra
 
 | Dossier | Projet |
 | --- | --- |
+| [`academy`](academy/README.md) | **Plateforme DIMO Tech Academy** (PHP + MySQL, pour Hostinger) : site, catalogue 2026, inscription et paiement Mobile Money en plusieurs tranches, espace apprenant, administration. Mise en ligne dans [`academy/README.md`](academy/README.md), guide de contenu dans [`academy/GUIDE-CONTENU.md`](academy/GUIDE-CONTENU.md), branchements restants dans [`academy/BRANCHEMENTS.md`](academy/BRANCHEMENTS.md) |
 | [`reelance`](reelance/README.md) | Reelance : marketplace de monteurs vidéo freelances (Next.js, PostgreSQL, paiement FedaPay en séquestre). Installation et déploiement dans [`reelance/README.md`](reelance/README.md) |
 
 ## Documents (`docs/`)

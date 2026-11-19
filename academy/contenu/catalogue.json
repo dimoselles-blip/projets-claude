@@ -1,0 +1,407 @@
+{
+  "version": 1,
+  "_lisez_moi": "Fichier de contenu unique de DIMO Tech Academy (catalogue 2026). Importé à l'installation, puis modifiable depuis l'administration. Pour réimporter après modification : Administration → Fichier de contenu → Importer. L'import ajoute ou met à jour, il ne supprime rien.",
+
+  "categories": [
+    { "slug": "masterclass", "nom": "Masterclass", "onglet": "Masterclass gratuites", "accroche": "Des sessions courtes pour découvrir les nouvelles technologies et apprendre gratuitement.", "ordre": 1 },
+    { "slug": "data", "nom": "Data", "onglet": "Parcours Data", "accroche": "Trois parcours hybrides — direct, vidéos et présentiel — du premier tableau de bord au pipeline de données.", "ordre": 2 },
+    { "slug": "ia", "nom": "IA", "onglet": "Parcours IA", "accroche": "De l’IA générative au quotidien jusqu’au métier d’ingénieur IA.", "ordre": 3 },
+    { "slug": "tech", "nom": "Tech", "onglet": "Parcours Tech", "accroche": "Cybersécurité et objets connectés : deux parcours hybrides tournés vers la pratique.", "ordre": 4 }
+  ],
+
+  "formateurs": [
+    { "nom": "Morelle ATIN", "role": "Fondatrice — Ingénieur Télécoms et TIC, consultante Data/IA", "publie": 1, "ordre": 1 }
+  ],
+
+  "formations": [
+    {
+      "slug": "ia-gagner-du-temps-business",
+      "titre": "IA pour gagner du temps dans son business",
+      "categorie": "masterclass", "statut": "publie", "niveau": "Débutant",
+      "prix": 0, "mode": "selon_session", "certification": "aucune",
+      "accroche": "Une session gratuite pour repérer les tâches que l’IA peut alléger dans votre activité.",
+      "public_cible": "Entrepreneurs, indépendants, commerçants et professionnels qui veulent gagner du temps.",
+      "quiz": ["decouvrir-ia", "ia-business"],
+      "ordre": 1
+    },
+    {
+      "slug": "metiers-data-ia",
+      "titre": "Découvrir les métiers de la Data & de l’IA",
+      "categorie": "masterclass", "statut": "publie", "niveau": "Débutant",
+      "prix": 0, "mode": "selon_session", "certification": "aucune",
+      "accroche": "Une session gratuite pour comprendre les métiers de la Data et de l’IA, les compétences demandées et les parcours pour y accéder.",
+      "public_cible": "Étudiants, jeunes diplômés et professionnels qui envisagent une reconversion.",
+      "quiz": ["decouvrir-ia", "metier-data"],
+      "ordre": 2
+    },
+    {
+      "slug": "ia-pour-entrepreneurs",
+      "titre": "IA pour entrepreneurs",
+      "categorie": "masterclass", "statut": "publie", "niveau": "Débutant",
+      "prix": 0, "mode": "selon_session", "certification": "aucune",
+      "accroche": "Une session gratuite pour identifier les usages concrets de l’IA dans votre entreprise.",
+      "public_cible": "Entrepreneurs, porteurs de projet et dirigeants de PME.",
+      "quiz": ["decouvrir-ia", "ia-business"],
+      "ordre": 3
+    },
+    {
+      "slug": "decouvrir-power-bi",
+      "titre": "Découvrir Power BI",
+      "categorie": "masterclass", "statut": "publie", "niveau": "Débutant",
+      "prix": 0, "mode": "selon_session", "certification": "aucune",
+      "accroche": "Une session gratuite pour découvrir Power BI, l’outil de tableaux de bord parmi les plus demandés en entreprise.",
+      "public_cible": "Étudiants, assistants, gestionnaires et toute personne qui travaille avec des chiffres.",
+      "quiz": ["decouvrir-ia", "metier-data"],
+      "ordre": 4
+    },
+
+    {
+      "slug": "data-starter",
+      "titre": "Data Starter",
+      "categorie": "data", "statut": "publie", "niveau": "Débutant",
+      "duree": "1 mois", "prix": 75000, "mode": "hybride", "certification": "certificat",
+      "accroche": "Démarrez vite dans la data avec Excel, Power BI et SQL, et décrochez vos premières missions.",
+      "probleme": "Démarrer vite dans la data : maîtriser les outils les plus demandés en entreprise (Excel, Power BI, SQL) et décrocher ses premières missions.",
+      "objectifs": [
+        "Analyser des données avec Excel avancé",
+        "Créer ses premiers tableaux de bord Power BI",
+        "Écrire des requêtes SQL simples",
+        "Présenter un portfolio et trouver ses premiers clients"
+      ],
+      "public_cible": "Étudiants, jeunes diplômés, entrepreneurs et professionnels qui débutent en data.",
+      "resultat": "Certificat, premier portfolio, accompagnement vers les premiers clients ou le premier emploi.",
+      "quiz": ["metier-data"],
+      "ordre": 1,
+      "modules": [
+        { "code": "M1", "titre": "Excel avancé", "description": "Tableaux croisés, formules clés." },
+        { "code": "M2", "titre": "Power BI", "description": "Import, visuels, tableaux de bord." },
+        { "code": "M3", "titre": "SQL pour débutants" },
+        { "code": "M4", "titre": "Portfolio et recherche de clients ou d’emploi" }
+      ]
+    },
+    {
+      "slug": "data-analyst-bi",
+      "titre": "Data Analyst & BI",
+      "categorie": "data", "statut": "publie", "niveau": "Débutant",
+      "duree": "6 mois", "prix": 600000, "mode": "hybride", "certification": "certificat", "stage": 1,
+      "accroche": "Transformez des données brutes en tableaux de bord et rapports qui aident à décider.",
+      "probleme": "Transformer des données brutes en tableaux de bord et rapports actionnables pour le pilotage opérationnel, sans compétences avancées en programmation.",
+      "objectifs": [
+        "Maîtriser SQL pour l’extraction et l’analyse",
+        "Concevoir des dashboards interactifs (Power BI, Tableau)",
+        "Réaliser des analyses ad hoc et du storytelling data",
+        "Déployer et automatiser les rapports (Power BI Service)"
+      ],
+      "public_cible": "Chargés d’études, contrôleurs de gestion, marketers, débutants en data.",
+      "resultat": "Certificat, portfolio de dashboards professionnels, stage.",
+      "debouches": ["Data Analyst", "BI Analyst", "Business Analyst"],
+      "quiz": ["metier-data"],
+      "ordre": 2,
+      "modules": [
+        { "code": "M1", "titre": "SQL pour l’analyse", "description": "Requêtes avancées, agrégations." },
+        { "code": "M2", "titre": "Préparation et modélisation des données", "description": "Power Query, modèle en étoile." },
+        { "code": "M3", "titre": "DataViz et dashboarding", "description": "Power BI, DAX, design d’impact." },
+        { "code": "M4", "titre": "Analyse métier et déploiement", "description": "KPIs, storytelling, Power BI Service." }
+      ]
+    },
+    {
+      "slug": "data-engineer",
+      "titre": "Data Engineer",
+      "categorie": "data", "statut": "publie", "niveau": "Intermédiaire",
+      "duree": "9 mois", "prix": 800000, "mode": "hybride", "certification": "certificat",
+      "accroche": "Construisez des infrastructures de données fiables, scalables et automatisées.",
+      "probleme": "Construire des infrastructures de données fiables, scalables et automatisées, fondation de la data science et de la BI.",
+      "objectifs": [
+        "Concevoir et construire des pipelines ETL/ELT robustes",
+        "Maîtriser les outils Big Data (Spark) et le Cloud (AWS, Azure)",
+        "Automatiser et orchestrer des workflows (Airflow)",
+        "Appliquer les bonnes pratiques DataOps"
+      ],
+      "public_cible": "Développeurs, administrateurs de bases de données, profils techniques qui veulent se spécialiser.",
+      "resultat": "Certificat, 2 projets de pipelines sur GitHub.",
+      "debouches": ["Data Engineer", "Ingénieur Big Data", "Ingénieur Cloud Data"],
+      "quiz": ["metier-data"],
+      "ordre": 3,
+      "modules": [
+        { "code": "M1", "titre": "Fondations", "description": "Python avancé, SQL avancé, Linux." },
+        { "code": "M2", "titre": "Big Data et Cloud", "description": "PySpark, Data Lakes, AWS ou Azure." },
+        { "code": "M3", "titre": "Ingénierie des données", "description": "Airflow, bases de Kafka, modélisation de Data Warehouses." },
+        { "code": "M4", "titre": "DataOps et projet", "description": "Docker, CI/CD, pipeline de bout en bout." }
+      ]
+    },
+
+    {
+      "slug": "ia-generative-au-travail",
+      "titre": "IA générative au travail",
+      "categorie": "ia", "statut": "publie", "niveau": "Débutant",
+      "duree": "1 jour", "prix": 15000, "mode": "au_choix", "format_label": "Présentiel ou en ligne", "certification": "attestation",
+      "accroche": "Gagnez du temps au quotidien avec ChatGPT, Claude ou Copilot, en toute sécurité.",
+      "probleme": "Gagner du temps au quotidien : utiliser ChatGPT, Claude ou Copilot pour rédiger, analyser et automatiser les tâches de bureau, en toute sécurité.",
+      "objectifs": [
+        "Comprendre ce que l’IA générative sait et ne sait pas faire",
+        "Rédiger des prompts efficaces",
+        "Appliquer l’IA à ses tâches réelles (mails, rapports, analyses)",
+        "Utiliser l’IA de façon responsable et sécurisée"
+      ],
+      "public_cible": "Salariés, cadres, entrepreneurs, enseignants.",
+      "resultat": "Attestation, bibliothèque de prompts prête à l’emploi.",
+      "quiz": ["decouvrir-ia", "ia-business"],
+      "ordre": 1,
+      "modules": [
+        { "code": "M1", "titre": "Panorama de l’IA générative et des outils" },
+        { "code": "M2", "titre": "Prompting efficace" },
+        { "code": "M3", "titre": "Cas pratiques métiers", "description": "Rédaction, analyse, présentations." },
+        { "code": "M4", "titre": "Éthique, confidentialité et bonnes pratiques" }
+      ]
+    },
+    {
+      "slug": "createurs-agents-ia",
+      "titre": "Créateurs d’agents IA",
+      "categorie": "ia", "statut": "publie", "niveau": "Débutant",
+      "duree": "3 jours", "prix": 45000, "prix_en_ligne": 30000, "mode": "au_choix", "format_label": "Présentiel à Akpakpa ou en ligne", "certification": "certificat",
+      "accroche": "Créez des agents IA qui travaillent pour vous, sans être développeur.",
+      "probleme": "Créer des agents IA qui travaillent pour soi : répondre aux clients, traiter des documents, automatiser des tâches répétitives, sans être développeur.",
+      "objectifs": [
+        "Comprendre le fonctionnement d’un agent IA",
+        "Concevoir et paramétrer son premier agent",
+        "Connecter l’agent à ses outils (mails, WhatsApp, documents)",
+        "Livrer un agent fonctionnel en fin de formation"
+      ],
+      "public_cible": "Débutants motivés et professionnels de la tech.",
+      "resultat": "Certificat, agents IA fonctionnels créés pendant la formation.",
+      "quiz": ["ia-business", "pro-ia"],
+      "ordre": 2,
+      "modules": [
+        { "code": "M1", "titre": "Les bases des agents IA" },
+        { "code": "M2", "titre": "Concevoir son premier agent" },
+        { "code": "M3", "titre": "Connecter et automatiser" },
+        { "code": "M4", "titre": "Projet final et certificat" }
+      ]
+    },
+    {
+      "slug": "data-scientist",
+      "titre": "Data Scientist",
+      "categorie": "ia", "statut": "publie", "niveau": "Intermédiaire",
+      "duree": "12 mois", "prix": 800000, "mode": "hybride", "certification": "certificat", "stage": 1,
+      "accroche": "Devenez data scientist opérationnel : machine learning, modélisation prédictive et portfolio GitHub.",
+      "probleme": "Former des data scientists opérationnels, capables de résoudre des problèmes business grâce au machine learning et à la modélisation prédictive.",
+      "objectifs": [
+        "Maîtriser la chaîne complète d’un projet data, de l’exploration au déploiement",
+        "Développer une expertise en statistiques et machine learning",
+        "Optimiser et évaluer des modèles avancés (XGBoost, LightGBM)",
+        "Constituer un portfolio GitHub compétitif"
+      ],
+      "public_cible": "Bac+3 minimum, analystes en reconversion, professionnels visant un poste de Data Scientist.",
+      "prerequis": "Bac+3 minimum.",
+      "resultat": "Certificat, portfolio de 3 projets, stage.",
+      "debouches": ["Data Scientist junior", "ML Engineer"],
+      "quiz": ["pro-ia"],
+      "ordre": 3,
+      "modules": [
+        { "code": "S1", "titre": "Fondamentaux", "description": "Python, SQL, statistiques, DataViz." },
+        { "code": "S2", "titre": "Machine Learning", "description": "Algorithmes supervisés et non supervisés, feature engineering, XGBoost, LightGBM." },
+        { "code": "S3", "titre": "Production et projet", "description": "MLOps avec Docker et API, compétition de type Kaggle, projet de fin de formation." }
+      ]
+    },
+    {
+      "slug": "ingenieur-ia",
+      "titre": "Ingénieur IA",
+      "categorie": "ia", "statut": "publie", "niveau": "Avancé",
+      "duree": "8 mois", "prix": 800000, "mode": "hybride", "certification": "certificat",
+      "accroche": "Concevez des applications d’IA concrètes — assistants, agents, vision — et mettez-les en production.",
+      "probleme": "Concevoir des applications d’IA concrètes (assistants, chatbots, agents, vision par ordinateur) et les mettre en production.",
+      "objectifs": [
+        "Maîtriser le deep learning (réseaux de neurones, CNN, Transformers)",
+        "Exploiter les LLM et l’IA générative via API",
+        "Construire des solutions RAG et des agents IA",
+        "Déployer une IA en production de façon responsable"
+      ],
+      "public_cible": "Data Scientists, ingénieurs logiciel, développeurs avec de solides bases en Python et ML.",
+      "prerequis": "Solides bases en Python et en machine learning.",
+      "resultat": "Certificat, application d’IA déployée.",
+      "debouches": ["Ingénieur IA", "Ingénieur LLM", "Développeur IA"],
+      "quiz": ["pro-ia"],
+      "ordre": 4,
+      "modules": [
+        { "code": "M1", "titre": "Deep learning", "description": "PyTorch, TensorFlow." },
+        { "code": "M2", "titre": "IA générative et LLM", "description": "API, prompt engineering, RAG, agents." },
+        { "code": "M3", "titre": "Spécialisation NLP ou vision", "description": "YOLO, segmentation." },
+        { "code": "M4", "titre": "Déploiement et projet", "description": "API, Docker, éthique." }
+      ]
+    },
+
+    {
+      "slug": "cybersecurite-soc",
+      "titre": "Cybersécurité offensive & défensive (SOC)",
+      "categorie": "tech", "statut": "publie", "niveau": "Intermédiaire",
+      "duree": "7 mois", "prix": 600000, "mode": "hybride", "certification": "certificat",
+      "accroche": "Apprenez à penser comme un attaquant et à défendre les systèmes d’information.",
+      "probleme": "Protéger les actifs informationnels des entreprises contre des menaces croissantes, en apprenant à penser comme un attaquant (pentest) et à se défendre (détection et réponse).",
+      "objectifs": [
+        "Comprendre les vulnérabilités courantes et les techniques d’attaque",
+        "Mettre en œuvre des tests d’intrusion éthiques",
+        "Apprendre à monitorer, détecter et répondre aux incidents",
+        "Maîtriser les outils de sécurité (Kali Linux, SIEM, IDS/IPS)"
+      ],
+      "public_cible": "Administrateurs système/réseau, développeurs, étudiants en informatique qui veulent se réorienter.",
+      "resultat": "Certificat, expérience en laboratoires CTF.",
+      "debouches": ["Analyste SOC", "Pentester junior", "Administrateur sécurité"],
+      "quiz": ["cyber-iot"],
+      "ordre": 1,
+      "modules": [
+        { "code": "M1", "titre": "Fondements et réseaux", "description": "TCP/IP, architectures, vulnérabilités." },
+        { "code": "M2", "titre": "Pentest et hacking éthique", "description": "Reconnaissance, exploitation, post-exploitation avec Kali Linux." },
+        { "code": "M3", "titre": "Cybersécurité défensive", "description": "Analyse de logs, SIEM Splunk ou Elastic, réponse aux incidents." },
+        { "code": "M4", "titre": "Laboratoires et CTF", "description": "Capture The Flag." }
+      ]
+    },
+    {
+      "slug": "iot-full-stack",
+      "titre": "IoT Full-Stack",
+      "categorie": "tech", "statut": "publie", "niveau": "Intermédiaire",
+      "duree": "6 mois", "prix": 800000, "mention_prix": "kit fourni", "mode": "hybride", "certification": "certificat",
+      "accroche": "Concevez et prototypez des objets connectés intelligents, du capteur au cloud.",
+      "probleme": "Concevoir et prototyper des objets connectés intelligents, en intégrant matériel, réseaux et logiciel pour créer de nouveaux services ou optimiser des processus.",
+      "objectifs": [
+        "Prototyper avec des cartes électroniques (Arduino, ESP32, Raspberry Pi)",
+        "Programmer en C/C++ et Python pour l’embarqué",
+        "Maîtriser les protocoles de communication (MQTT, LoRaWAN, BLE)",
+        "Connecter un objet à une plateforme cloud (AWS IoT, Azure IoT)"
+      ],
+      "public_cible": "Ingénieurs, développeurs, makers, passionnés d’électronique et de programmation.",
+      "resultat": "Certificat, prototype d’objet connecté fonctionnel.",
+      "debouches": ["Développeur IoT", "Ingénieur prototypage", "Chef de projet IoT"],
+      "quiz": ["cyber-iot"],
+      "ordre": 2,
+      "modules": [
+        { "code": "M1", "titre": "Électronique et prototypage", "description": "Arduino, ESP32, capteurs, actionneurs." },
+        { "code": "M2", "titre": "Programmation embarquée et réseaux", "description": "C/C++, MicroPython, MQTT, LoRa." },
+        { "code": "M3", "titre": "Cloud et applications", "description": "AWS IoT Core, Node-RED, dashboards." },
+        { "code": "M4", "titre": "Projet d’objet connecté complet", "description": "Kit fourni." }
+      ]
+    },
+
+    {
+      "slug": "maitriser-chatgpt-claude",
+      "titre": "Maîtriser ChatGPT & Claude",
+      "categorie": "ia", "statut": "brouillon", "niveau": "Débutant",
+      "duree": "1 jour", "prix": 10000, "mode": "selon_session", "certification": "aucune",
+      "accroche": "Brouillon — formation du brief initial absente du catalogue 2026. Proche de « IA générative au travail » : à garder, retirer ou fusionner.",
+      "ordre": 90
+    },
+    {
+      "slug": "creer-premier-agent-ia",
+      "titre": "Créer son premier Agent IA",
+      "categorie": "ia", "statut": "brouillon", "niveau": "Intermédiaire",
+      "duree": "1 jour", "prix": 15000, "mode": "selon_session", "certification": "aucune",
+      "accroche": "Brouillon — formation du brief initial absente du catalogue 2026 : à garder, retirer ou fusionner.",
+      "ordre": 91
+    },
+    {
+      "slug": "power-bi-premier-dashboard",
+      "titre": "Power BI : créer son premier Dashboard",
+      "categorie": "data", "statut": "brouillon", "niveau": "Débutant",
+      "duree": "1 jour", "prix": 15000, "mode": "selon_session", "certification": "aucune",
+      "accroche": "Brouillon — formation du brief initial absente du catalogue 2026 : à garder, retirer ou fusionner.",
+      "ordre": 90
+    },
+    {
+      "slug": "gagner-argent-claude-ai",
+      "titre": "Gagner de l’argent avec Claude AI",
+      "categorie": "ia", "statut": "brouillon", "niveau": "Intermédiaire",
+      "duree": "3 jours", "prix": 25000, "mode": "selon_session", "certification": "aucune",
+      "accroche": "Brouillon — formation du brief initial absente du catalogue 2026 : à garder, retirer ou fusionner.",
+      "ordre": 92
+    },
+    {
+      "slug": "data-analytics-power-bi",
+      "titre": "Data Analytics avec Power BI",
+      "categorie": "data", "statut": "brouillon", "niveau": "Intermédiaire",
+      "duree": "2 semaines", "prix": 50000, "mode": "selon_session", "certification": "aucune",
+      "accroche": "Brouillon — formation du brief initial absente du catalogue 2026 : à garder, retirer ou fusionner.",
+      "ordre": 91
+    },
+    {
+      "slug": "python-pour-la-data",
+      "titre": "Python pour la Data",
+      "categorie": "data", "statut": "brouillon", "niveau": "Intermédiaire",
+      "duree": "3 semaines", "prix": 60000, "mode": "selon_session", "certification": "aucune",
+      "accroche": "Brouillon — formation du brief initial absente du catalogue 2026 : à garder, retirer ou fusionner.",
+      "ordre": 92
+    }
+  ],
+
+  "sessions": [],
+
+  "temoignages": [],
+
+  "indicateurs": [
+    { "cle": "apprenants-formes", "libelle": "Apprenants formés", "valeur": null, "suffixe": "", "ordre": 1 },
+    { "cle": "certifications", "libelle": "Certifications délivrées", "valeur": null, "suffixe": "", "ordre": 2 },
+    { "cle": "taux-insertion", "libelle": "Taux d’insertion", "valeur": null, "suffixe": "%", "ordre": 3 },
+    { "cle": "projets-realises", "libelle": "Projets réalisés", "valeur": null, "suffixe": "", "ordre": 4 }
+  ],
+
+  "faq": [
+    {
+      "question": "Qui peut s’inscrire ?",
+      "reponse": "Toute personne motivée : étudiants, jeunes diplômés, professionnels en reconversion, entrepreneurs et entreprises. Les femmes qui veulent rejoindre les métiers du numérique sont particulièrement les bienvenues. Chaque fiche formation précise le public visé et les éventuels prérequis.",
+      "rubrique": "Inscription", "accueil": 1, "ordre": 1
+    },
+    {
+      "question": "Les formations sont-elles accessibles aux débutants ?",
+      "reponse": "Oui. Les masterclass gratuites, Data Starter, IA générative au travail et Créateurs d’agents IA sont pensés pour les débutants. Les parcours Data Engineer, Data Scientist et Ingénieur IA demandent des bases, indiquées sur leur fiche.",
+      "rubrique": "Inscription", "accueil": 1, "ordre": 2
+    },
+    {
+      "question": "Les formations sont-elles en ligne ou en présentiel ?",
+      "reponse": "Notre pédagogie est hybride : cours en direct, vidéos à revoir et présentiel à notre siège d’Akpakpa (Cotonou). Certaines formations courtes se suivent au choix en présentiel ou en ligne. Le format de chaque session est indiqué dans le calendrier.",
+      "rubrique": "Formats", "accueil": 1, "ordre": 3
+    },
+    {
+      "question": "Comment s’inscrire ?",
+      "reponse": "Choisissez votre formation, cliquez sur « S’inscrire » et indiquez votre nom, votre e-mail et votre numéro WhatsApp. Pour une formation gratuite, votre place est confirmée immédiatement. Pour une formation payante, vous recevez ensuite les instructions de paiement sur WhatsApp.",
+      "rubrique": "Inscription", "accueil": 1, "ordre": 4
+    },
+    {
+      "question": "Comment payer ?",
+      "reponse": "Par Mobile Money : MTN, Moov ou Celtiis. Après votre inscription, un bouton ouvre WhatsApp avec un message prérempli pour recevoir les instructions de paiement. Le paiement en plusieurs tranches est possible. Notre équipe valide votre inscription dès réception du paiement.",
+      "rubrique": "Paiement", "accueil": 1, "ordre": 5
+    },
+    {
+      "question": "Les formations donnent-elles droit à une certification ?",
+      "reponse": "Chaque parcours se termine par un certificat de fin de parcours DIMO Tech Academy. La formation IA générative au travail délivre une attestation. Les masterclass gratuites ne donnent pas lieu à un certificat.",
+      "rubrique": "Certification", "accueil": 1, "ordre": 6
+    },
+    {
+      "question": "Peut-on suivre une formation depuis un autre pays ?",
+      "reponse": "Oui. Les cours en direct et les vidéos à revoir sont accessibles depuis n’importe quel pays avec une connexion internet. Le présentiel a lieu à Akpakpa (Cotonou). Pour payer depuis l’étranger, écrivez-nous sur WhatsApp : nous vous indiquons la solution adaptée.",
+      "rubrique": "Formats", "accueil": 1, "ordre": 7
+    },
+    {
+      "question": "Proposez-vous des formations sur mesure pour les entreprises ?",
+      "reponse": "Oui. Nous formons vos équipes à l’IA générative, aux agents IA, à Power BI et à l’analyse de données, sur site (formules Essentielle, Premium et Corporate de 2 jours) ou en ligne. Le programme est adapté à votre secteur. Demandez un devis depuis la page Entreprises.",
+      "rubrique": "Entreprises", "accueil": 1, "ordre": 8
+    },
+    {
+      "question": "Comment fonctionne le paiement en plusieurs tranches ?",
+      "reponse": "Vous convenez de l’échéancier avec notre équipe sur WhatsApp. Chaque versement est enregistré dans votre dossier : vous voyez à tout moment le montant reçu et le reste à payer. Vos contenus en ligne s’ouvrent dès qu’une partie suffisante du montant est réglée, puis restent accessibles.",
+      "rubrique": "Paiement", "accueil": 0, "ordre": 9
+    },
+    {
+      "question": "Que se passe-t-il si je manque une séance en direct ?",
+      "reponse": "Les vidéos des cours sont à revoir dans votre espace apprenant, regroupées par module, avec les supports à télécharger.",
+      "rubrique": "Espace apprenant", "accueil": 0, "ordre": 10
+    },
+    {
+      "question": "Comment accéder à mon espace apprenant ?",
+      "reponse": "Depuis « Espace apprenant », indiquez l’e-mail utilisé à l’inscription : vous recevez un lien de connexion. Vous pouvez ensuite créer un mot de passe. Votre espace regroupe vos formations, la prochaine séance en direct, les replays, les supports et votre progression.",
+      "rubrique": "Espace apprenant", "accueil": 0, "ordre": 11
+    },
+    {
+      "question": "La formation garantit-elle un emploi ?",
+      "reponse": "Aucune formation ne peut garantir un emploi. Nous mettons en revanche tout en œuvre pour vous y préparer : projets réels pour votre portfolio, mentors pendant le parcours, stages selon les parcours et préparation à l’emploi ou aux premiers clients.",
+      "rubrique": "Certification", "accueil": 0, "ordre": 12
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+# Réglages et secrets propres à chaque installation
+/config/config.php
+# Données générées
+/storage/logs/*
+/storage/sessions/*
+/storage/fichiers/*
+/uploads/*
+!/storage/**/.gitkeep
+!/uploads/.gitkeep
+!/uploads/.htaccess
