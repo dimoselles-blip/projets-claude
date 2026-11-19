@@ -25,14 +25,14 @@ foreach ($formateurs as $p) {
     <div class="grille-2-col" style="align-items:center">
       <div>
         <?php if ($fondatrice && $fondatrice['photo']): ?>
-          <img src="<?= e(media($fondatrice['photo'])) ?>" alt="Morelle ATIN, fondatrice de DIMO Tech Academy" style="border-radius:var(--rayon);width:100%;aspect-ratio:4/5;object-fit:cover" loading="lazy">
+          <img src="<?= e(media($fondatrice['photo'])) ?>" alt="Morelle ATINDOGBE, fondatrice de DIMO Tech Academy" style="border-radius:var(--rayon);width:100%;aspect-ratio:4/5;object-fit:cover" loading="lazy">
         <?php else: ?>
-          <?= partiel('emplacement', ['texte' => 'Portrait de Morelle ATIN, fondatrice', 'ratio' => '4 / 5']) ?>
+          <?= partiel('emplacement', ['texte' => 'Portrait de Morelle ATINDOGBE, fondatrice', 'ratio' => '4 / 5']) ?>
         <?php endif; ?>
       </div>
       <div>
         <p class="surtitre">Le mot de la fondatrice</p>
-        <h2>Morelle ATIN</h2>
+        <h2>Morelle ATINDOGBE</h2>
         <p class="muted">Fondatrice de DIMO Tech Academy — ingénieur Télécoms et TIC, consultante Data/IA.</p>
         <?php if ($mot !== ''): ?>
           <div class="citation"><?= paragraphes($mot) ?></div>

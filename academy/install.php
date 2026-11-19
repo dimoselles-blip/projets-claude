@@ -22,7 +22,7 @@ $urlDetectee = $proto . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . ($base 
 
 $v = [
     'db_hote' => 'localhost', 'db_port' => '3306', 'db_nom' => '', 'db_utilisateur' => '', 'db_mot_de_passe' => '',
-    'url' => $urlDetectee, 'admin_nom' => '', 'admin_email' => '', 'admin_mdp' => '', 'contact_email' => 'contact@dimotech.fr', 'whatsapp' => '',
+    'url' => $urlDetectee, 'admin_nom' => '', 'admin_email' => '', 'admin_mdp' => '', 'contact_email' => 'contact@dimotech.fr', 'whatsapp' => '229433373686',
 ];
 
 $verifications = [
@@ -112,7 +112,7 @@ if (!$dejaInstalle && ($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
             if ($v['contact_email'] !== '') {
                 $conf = str_replace('contact@dimotech.fr', $v['contact_email'], $conf);
             }
-            $conf = str_replace("'whatsapp' => '',", "'whatsapp' => " . $q($v['whatsapp']) . ',', $conf);
+            $conf = preg_replace("/'whatsapp' => '[0-9]*',/", "'whatsapp' => " . $q($v['whatsapp']) . ',', $conf, 1);
             if (file_put_contents(RACINE . '/config/config.php', $conf, LOCK_EX) === false) {
                 throw new RuntimeException('Impossible d’écrire config/config.php.');
             }

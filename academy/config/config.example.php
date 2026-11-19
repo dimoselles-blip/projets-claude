@@ -37,12 +37,12 @@ return [
 
     // ── Contact ──────────────────────────────────────────────────────────
     'contact' => [
-        // Le catalogue cite contact@dimotech.fr et contact@dimo-tech.net : choisir l'adresse officielle.
+        // Adresse officielle de l'académie.
         'email' => 'contact@dimotech.fr',
         'email_assistance' => 'contact@dimotech.fr',
-        // Numéro WhatsApp au format international, chiffres seulement (ex. 229XXXXXXXXXX).
-        // Laisser vide tant qu'il n'est pas confirmé : les boutons WhatsApp mènent alors à la page Contact.
-        'whatsapp' => '',
+        // Numéro WhatsApp au format international, chiffres seulement. Il n'est jamais écrit dans les pages :
+        // tous les boutons WhatsApp (contact, paiement) passent par une redirection du serveur.
+        'whatsapp' => '229433373686',
         'adresse' => 'Akpakpa, Cotonou (Bénin)',
         // Lien Google Maps du siège (facultatif).
         'carte' => '',
@@ -50,7 +50,8 @@ return [
 
     // ── Paiement ─────────────────────────────────────────────────────────
     'paiement' => [
-        // Numéros Mobile Money : jamais affichés dans les pages publiques.
+        // Numéros Mobile Money : jamais affichés (décision du 19/11/2026). Les instructions de paiement
+        // sont toujours données sur WhatsApp. Ces champs servent seulement de mémo pour l'équipe.
         'mobile_money' => [
             'mtn' => ['libelle' => 'MTN Mobile Money', 'numero' => '', 'titulaire' => ''],
             'moov' => ['libelle' => 'Moov Money', 'numero' => '', 'titulaire' => ''],
