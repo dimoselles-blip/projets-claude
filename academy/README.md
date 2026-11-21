@@ -44,11 +44,18 @@ Les quiz et les certificats sont préparés pour la phase 2.
 
 Tout se fait depuis **hPanel**, dans un navigateur : un Chromebook suffit.
 
-### 1. Créer le sous-domaine
+### 1. Créer le site `academy.dimotech.fr`
 
-hPanel → **Domaines** → **Sous-domaines** → créez `academy` pour `dimotech.fr`. Hostinger crée un dossier, par exemple `public_html/academy` : notez-le.
+`dimotech.fr` est un site fait avec **Hostinger AI Builder**. Un tel site n'a ni gestionnaire de fichiers, ni base de données, ni PHP : son bouton « Gérer le site » ouvre toujours le constructeur. La plateforme s'installe donc dans un **site séparé**, sur le sous-domaine, sans toucher au site actuel.
 
-Si le domaine est géré chez un autre registrar, ajoutez chez lui l'enregistrement DNS indiqué par Hostinger. Le sous-domaine peut alors mettre jusqu'à quelques heures à répondre.
+1. hPanel → **Sites web** → sur la carte de l'hébergement : **Créer un site** (ou **Ajouter un site web**).
+2. Choisissez **Site web PHP/HTML personnalisé**. Ne choisissez ni AI Builder ni WordPress.
+3. Domaine : utilisez un domaine existant et saisissez `academy.dimotech.fr`. Choisissez ensuite **Commencer à vide**, puis **Continuer**.
+4. Le site `academy.dimotech.fr` apparaît dans la liste. Son bouton **Gérer le site** ouvre le tableau de bord classique, avec Gestionnaire de fichiers, Bases de données et SSL. Les fichiers vont dans son dossier `public_html`.
+
+Si les DNS de `dimotech.fr` ne sont pas gérés par Hostinger, ajoutez chez le gestionnaire du domaine un enregistrement **A** `academy` vers l'adresse IP de l'hébergement. Elle est affichée dans **Détails du site web**. La mise en service peut prendre quelques heures.
+
+Si Hostinger refuse de créer un site, le nombre de sites de l'offre est atteint : supprimez un site inutilisé ou changez d'offre. Si l'option « PHP/HTML » n'existe pas, l'offre ne comprend pas l'hébergement classique : il faut une offre d'hébergement web (Premium ou Business).
 
 ### 2. Activer HTTPS
 
@@ -74,9 +81,9 @@ La plateforme envoie les confirmations d'inscription et les liens de connexion �
 ### 6. Envoyer les fichiers
 
 1. Téléchargez le paquet **`dimo-tech-academy.zip`**. Il contient le contenu du dossier `academy`, sans la documentation ni aucun réglage.
-2. hPanel → **Fichiers** → **Gestionnaire de fichiers** → ouvrez le dossier du sous-domaine. S'il contient un fichier `default.php`, supprimez-le.
+2. Dans le site `academy.dimotech.fr` : **Fichiers** → **Gestionnaire de fichiers** → ouvrez `public_html`. S'il contient un fichier `default.php`, supprimez-le.
 3. **Importer** → choisissez `dimo-tech-academy.zip` → clic droit sur le fichier → **Extraire** dans le dossier courant, puis supprimez le `.zip`.
-4. Le dossier du sous-domaine doit contenir directement `index.php`, `install.php`, `.htaccess`, `assets/`, `config/`… (et non un sous-dossier qui les contient).
+4. Le dossier `public_html` doit contenir directement `index.php`, `install.php`, `.htaccess`, `assets/`, `config/`… (et non un sous-dossier qui les contient).
 
 ### 7. Lancer l'installateur
 
