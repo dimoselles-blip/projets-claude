@@ -8,8 +8,8 @@ Les réglages éditoriaux se font dans **Administration → Réglages**. Le tabl
 
 | Branchement | Où | Ce qu'il faut |
 | --- | --- | --- |
-| **Numéro WhatsApp** ✅ | `contact.whatsapp` | Branché : `229433373686` (prérempli dans l'installateur). Tous les boutons WhatsApp, y compris celui du paiement, ouvrent WhatsApp ; le numéro n'est jamais écrit dans les pages. ⚠️ À vérifier : il compte 9 chiffres après +229, alors que les numéros béninois en ont 10 depuis 2024 (01 + 8 chiffres). |
-| **Messagerie (envoi des e-mails)** | `email` | 1. Créez une boîte, par exemple `academy@dimotech.fr` (hPanel → E-mails). 2. Passez `mode` à `'smtp'`. 3. Renseignez `expediteur`, `smtp.utilisateur` (l'adresse complète) et `smtp.mot_de_passe`. Hôte `smtp.hostinger.com`, port 465, sécurité `ssl`. 4. Testez avec Administration → Réglages → **M'envoyer un e-mail de test**. Tant que le mode reste `'journal'`, aucun e-mail ne part : confirmations et liens de connexion sont seulement écrits dans `storage/logs/emails.log`. |
+| **Numéro WhatsApp** ✅ | `contact.whatsapp` | Branché : `2290143373686`, soit +229 01 43 37 36 86 (prérempli dans l'installateur). Tous les boutons WhatsApp, y compris celui du paiement, ouvrent WhatsApp ; le numéro n'est jamais écrit dans les pages. |
+| **Messagerie (envoi des e-mails)** | `email` | Se règle dans l'installateur : adresse et mot de passe de la boîte d'envoi (par exemple `contact@dimotech.fr`, hPanel → E-mails), serveur `smtp.hostinger.com`, port 465. Sans mot de passe, la plateforme utilise la fonction `mail()` du serveur, moins fiable. Pour changer plus tard : `mode`, `expediteur`, `smtp.utilisateur`, `smtp.mot_de_passe` dans `config/config.php`. Testez avec Administration → Réglages → **M'envoyer un e-mail de test**. En mode `'journal'` (tests sur ordinateur), aucun e-mail ne part. |
 | **Adresse e-mail officielle** ✅ | `contact.email`, `contact.email_assistance`, `email.copie_equipe` | Branché : `contact@dimotech.fr`. `copie_equipe` reçoit une copie de chaque inscription et de chaque demande. |
 | **Numéros Mobile Money** ✅ | `paiement.mobile_money` | Décision : aucun numéro affiché. L'apprenant choisit MTN, Moov ou Celtiis, puis reçoit les instructions sur WhatsApp. Laisser `afficher_numeros_etape_paiement` à `false`. |
 | **Réseaux sociaux** | `reseaux` | Liens TikTok « DIMO TECH ACADEMY », Facebook « DIMO TECH » et LinkedIn « DIMO TECH ACADEMY ». Une icône sans lien reste masquée. |
@@ -23,13 +23,16 @@ Les réglages éditoriaux se font dans **Administration → Réglages**. Le tabl
 Pour chaque point, le site applique déjà le choix indiqué par défaut et reste modifiable sans toucher au code.
 
 1. **Nom exact du sous-domaine.** Par défaut : `academy.dimotech.fr`. Le site s'adapte à l'adresse réelle saisie à l'installation.
-2. **Formations du brief initial absentes du catalogue 2026.** ✅ Décision : les 6 formations sont gardées, en **Brouillon** (visibles par l'équipe dans l'administration, masquées du public) : Maîtriser ChatGPT & Claude, Créer son premier Agent IA, Power BI : créer son premier Dashboard, Gagner de l'argent avec Claude AI, Data Analytics avec Power BI, Python pour la Data. Pour en mettre une en ligne : complétez sa fiche (accroche, objectifs, modules, format) et passez-la en « Publiée ».
+2. **Formations du brief initial absentes du catalogue 2026.** ✅ Décision : les 6 formations sont gardées et leurs fiches sont rédigées (accroche, problème résolu, objectifs, public, prérequis, programme, résultat, questions fréquentes) : Maîtriser ChatGPT & Claude, Créer son premier Agent IA, Power BI : créer son premier Dashboard, Gagner de l'argent avec Claude AI, Data Analytics avec Power BI, Python pour la Data. Elles restent en **Brouillon** (visibles par l'équipe, masquées du public) jusqu'à votre relecture. Pour en mettre une en ligne : Administration → Formations → la fiche → Statut « Publiée ». À valider en relisant :
+   - certification : « Attestation » pour les 6, comme « IA générative au travail » ;
+   - format : « précisé à chaque session ». Il se change dans la fiche, par exemple « Présentiel ou en ligne » ;
+   - les fiches de Power BI et de Python indiquent les besoins en matériel. Power BI Desktop ne fonctionne que sous Windows, alors que Google Colab, utilisé pour Python, marche dans le navigateur.
 3. **Prix entreprises.** Par défaut, le site affiche les formules Essentielle, Premium et Corporate et l'option en ligne, avec leurs prix. Administration → Réglages → **Prix des formules entreprises** permet de repasser à « Sur devis ». L'accompagnement Data avec DIMO Tech est toujours « Sur devis ».
 4. **Certification.** Le site parle de « certificat de fin de parcours » (attestation pour IA générative au travail, rien pour les masterclass), comme le catalogue. Si des certifications internationales sont délivrées, indiquez lesquelles et dans quels parcours : elles s'ajouteront au champ « Résultat » de chaque fiche.
 5. **Règle d'accès pour les paiements par tranches.** Choix retenu : les contenus s'ouvrent dès **50 %** du montant payé, ou au statut « Confirmée ». Ce seuil se change dans Administration → Réglages.
 6. **Durée des masterclass gratuites.** Elles s'affichent pour l'instant comme « Session courte ». Renseignez la durée dans chaque fiche (champ Durée).
 7. **Dates des prochaines sessions.** Aucune pour l'instant : le site affiche « Dates à venir » et un formulaire de liste d'attente. Les personnes inscrites sur la liste sont visibles dans Administration → Demandes.
-8. **Formateurs et photos.** Morelle ATINDOGBE est enregistrée comme fondatrice, sans être affectée à une formation. Pour chaque formation, ajoutez son formateur (menu Formateurs, puis le champ Formateur de la fiche). Les cadres « à remplacer » marquent les photos à fournir :
+8. **Formateurs et photos.** Morelle ATINDOGBE est enregistrée comme fondatrice, sans être affectée à une formation. Pour chaque formation, ajoutez son formateur (menu Formateurs, puis le champ Formateur de la fiche). Les cadres « à remplacer » sont **masqués sur le site en ligne** ; cochez « Afficher les emplacements » dans Administration → Réglages pour voir où vont les photos à fournir :
    - le portrait de la fondatrice ;
    - les photos de cohorte, d'atelier, d'apprenantes et du siège ;
    - les photos de l'équipe et des formateurs.
@@ -38,7 +41,7 @@ Pour chaque point, le site applique déjà le choix indiqué par défaut et rest
     - Data Starter, Data Analyst & BI, IA générative au travail, Créateurs d'agents IA : Débutant ;
     - Data Engineer, Data Scientist, Cybersécurité, IoT Full-Stack : Intermédiaire ;
     - Ingénieur IA : Avancé.
-11. **Mentions légales.** À compléter : forme juridique, numéros RCCM et IFU, responsable de la publication (fichier `views/site/mentions-legales.php`, ou demandez-moi).
+11. **Mentions légales.** À saisir dans Administration → Réglages → « Mentions légales » : forme juridique, numéros RCCM et IFU, responsable de la publication. Tant que le champ est vide, la page affiche seulement le nom, le siège et le contact.
 12. **Mot de la fondatrice.** Le texte est à saisir dans Administration → Réglages. Voici une proposition à relire et adapter :
 
     > J'ai créé DIMO Tech Academy en 2022 avec une conviction : la Data et l'Intelligence Artificielle ne doivent pas rester l'affaire de quelques-uns. Au Bénin comme partout en Afrique, des talents n'attendent qu'une chose : apprendre concrètement, sur de vrais projets, avec un accompagnement jusqu'à l'emploi ou aux premiers clients.

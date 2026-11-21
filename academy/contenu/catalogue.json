@@ -285,49 +285,164 @@
       "slug": "maitriser-chatgpt-claude",
       "titre": "Maîtriser ChatGPT & Claude",
       "categorie": "ia", "statut": "brouillon", "niveau": "Débutant",
-      "duree": "1 jour", "prix": 10000, "mode": "selon_session", "certification": "aucune",
-      "accroche": "Brouillon — formation du brief initial absente du catalogue 2026. Proche de « IA générative au travail » : à garder, retirer ou fusionner.",
-      "ordre": 90
+      "duree": "1 jour", "prix": 10000, "mode": "selon_session", "certification": "attestation",
+      "accroche": "Prenez en main les deux assistants IA les plus utilisés et obtenez enfin des réponses utiles.",
+      "probleme": "Beaucoup utilisent ChatGPT ou Claude sans méthode et obtiennent des réponses vagues. En une journée, vous apprenez à bien les questionner, à leur confier vos documents et à choisir le bon outil pour chaque tâche.",
+      "objectifs": [
+        "Prendre en main ChatGPT et Claude, en version gratuite comme payante",
+        "Rédiger des prompts clairs qui donnent des réponses précises",
+        "Faire résumer, analyser et rédiger à partir de vos propres documents",
+        "Vérifier les réponses et protéger vos informations confidentielles"
+      ],
+      "public_cible": "Étudiants, salariés, indépendants et toute personne qui veut utiliser l’IA au quotidien.",
+      "prerequis": "Savoir utiliser un ordinateur ou un smartphone et naviguer sur Internet.",
+      "resultat": "Attestation, guide de prompts réutilisables.",
+      "quiz": ["decouvrir-ia", "ia-business"],
+      "ordre": 90,
+      "modules": [
+        { "code": "M1", "titre": "Prendre en main ChatGPT et Claude", "description": "Comptes, interfaces, versions gratuites et payantes." },
+        { "code": "M2", "titre": "L’art du prompt", "description": "Rôle, contexte, consignes, format attendu, itérations." },
+        { "code": "M3", "titre": "Travailler avec ses documents", "description": "Résumer un PDF, analyser un tableau, rédiger un courrier ou un rapport." },
+        { "code": "M4", "titre": "Choisir le bon outil, en sécurité", "description": "Forces de chaque assistant, vérification des réponses, données sensibles." }
+      ]
     },
     {
       "slug": "creer-premier-agent-ia",
       "titre": "Créer son premier Agent IA",
       "categorie": "ia", "statut": "brouillon", "niveau": "Intermédiaire",
-      "duree": "1 jour", "prix": 15000, "mode": "selon_session", "certification": "aucune",
-      "accroche": "Brouillon — formation du brief initial absente du catalogue 2026 : à garder, retirer ou fusionner.",
-      "ordre": 91
+      "duree": "1 jour", "prix": 15000, "mode": "selon_session", "certification": "attestation",
+      "accroche": "En une journée, construisez un agent IA qui répond à votre place, sans écrire de code.",
+      "probleme": "Répondre aux mêmes questions de clients, chercher la même information dans les mêmes documents : un agent IA peut le faire pour vous. Vous repartez avec un premier agent simple, construit sur votre propre cas.",
+      "objectifs": [
+        "Comprendre la différence entre un chatbot et un agent IA",
+        "Définir la mission, les instructions et les connaissances de l’agent",
+        "Construire et tester un agent avec un outil sans code",
+        "Mettre l’agent à disposition de vos clients ou de votre équipe"
+      ],
+      "public_cible": "Entrepreneurs, commerçants, assistants et professionnels qui veulent automatiser des réponses répétitives.",
+      "prerequis": "Utiliser déjà ChatGPT, Claude ou un autre assistant IA. Aucune connaissance en programmation n’est demandée.",
+      "resultat": "Attestation, un premier agent IA prêt à l’emploi.",
+      "quiz": ["ia-business"],
+      "ordre": 91,
+      "modules": [
+        { "code": "M1", "titre": "Comprendre les agents IA", "description": "Instructions, connaissances, outils : ce qui fait un agent." },
+        { "code": "M2", "titre": "Préparer son agent", "description": "Choisir la mission, rédiger les instructions, rassembler les documents." },
+        { "code": "M3", "titre": "Construire et tester", "description": "Création sans code, tests, corrections." },
+        { "code": "M4", "titre": "Mettre en service et aller plus loin", "description": "Partager l’agent, connaître ses limites, préparer la suite." }
+      ],
+      "faq": [
+        { "q": "Quelle différence avec « Créateurs d’agents IA » ?", "r": "Cette journée vous fait construire un premier agent simple. Le parcours « Créateurs d’agents IA », sur 3 jours, va plus loin : plusieurs agents, connexion aux mails, à WhatsApp et aux documents, projet final et certificat." }
+      ]
     },
     {
       "slug": "power-bi-premier-dashboard",
       "titre": "Power BI : créer son premier Dashboard",
       "categorie": "data", "statut": "brouillon", "niveau": "Débutant",
-      "duree": "1 jour", "prix": 15000, "mode": "selon_session", "certification": "aucune",
-      "accroche": "Brouillon — formation du brief initial absente du catalogue 2026 : à garder, retirer ou fusionner.",
-      "ordre": 90
+      "duree": "1 jour", "prix": 15000, "mode": "selon_session", "certification": "attestation",
+      "accroche": "Passez de votre fichier Excel à un tableau de bord clair et interactif en une seule journée.",
+      "probleme": "Des chiffres éparpillés dans plusieurs fichiers Excel, des rapports refaits à la main chaque mois : Power BI réunit vos données dans un tableau de bord qui se met à jour. Vous construisez le vôtre pas à pas.",
+      "objectifs": [
+        "Importer et nettoyer des données Excel avec Power Query",
+        "Créer les visuels essentiels : courbes, histogrammes, cartes, indicateurs",
+        "Ajouter des filtres et des segments pour explorer les chiffres",
+        "Assembler un tableau de bord lisible et le partager"
+      ],
+      "public_cible": "Assistants, gestionnaires, comptables, commerciaux et étudiants qui travaillent avec des chiffres.",
+      "prerequis": "Connaître les bases d’Excel. Un ordinateur portable sous Windows est conseillé : le logiciel Power BI Desktop ne fonctionne pas sur Chromebook ni sur Mac.",
+      "resultat": "Attestation, un premier tableau de bord réalisé sur des données concrètes.",
+      "quiz": ["metier-data"],
+      "ordre": 90,
+      "modules": [
+        { "code": "M1", "titre": "Découvrir Power BI Desktop", "description": "Interface, vocabulaire, exemples de tableaux de bord." },
+        { "code": "M2", "titre": "Importer et préparer ses données", "description": "Fichiers Excel, Power Query, nettoyage simple." },
+        { "code": "M3", "titre": "Créer ses visuels", "description": "Graphiques, cartes, indicateurs, filtres et segments." },
+        { "code": "M4", "titre": "Assembler et partager", "description": "Mise en page, lisibilité, export et publication." }
+      ],
+      "faq": [
+        { "q": "Quelle différence avec la masterclass « Découvrir Power BI » ?", "r": "La masterclass gratuite présente l’outil et ce qu’il permet. Cette journée est entièrement pratique : vous construisez vous-même votre tableau de bord, du fichier Excel au résultat final." }
+      ]
     },
     {
       "slug": "gagner-argent-claude-ai",
       "titre": "Gagner de l’argent avec Claude AI",
       "categorie": "ia", "statut": "brouillon", "niveau": "Intermédiaire",
-      "duree": "3 jours", "prix": 25000, "mode": "selon_session", "certification": "aucune",
-      "accroche": "Brouillon — formation du brief initial absente du catalogue 2026 : à garder, retirer ou fusionner.",
-      "ordre": 92
+      "duree": "3 jours", "prix": 25000, "mode": "selon_session", "certification": "attestation",
+      "accroche": "Transformez vos compétences en services payants grâce à Claude, avec méthode et transparence.",
+      "probleme": "L’IA ouvre de nouvelles possibilités de revenus, à condition de proposer un vrai service, bien fait et au juste prix. En 3 jours, vous construisez une offre réaliste, produisez vos premiers livrables avec Claude et apprenez à trouver vos clients.",
+      "objectifs": [
+        "Utiliser Claude pour produire des livrables de qualité professionnelle",
+        "Choisir une offre de services adaptée à vos compétences et à votre marché",
+        "Fixer vos prix, rédiger un devis et présenter votre offre",
+        "Trouver vos premiers clients et travailler avec eux en toute transparence"
+      ],
+      "public_cible": "Étudiants, jeunes diplômés, indépendants et salariés qui veulent créer une activité complémentaire.",
+      "prerequis": "Utiliser déjà un assistant IA (ChatGPT, Claude ou autre) et avoir un ordinateur portable.",
+      "resultat": "Attestation, une offre de services prête à présenter, premiers livrables pour votre portfolio.",
+      "quiz": ["ia-business"],
+      "ordre": 92,
+      "modules": [
+        { "code": "M1", "titre": "Claude, ses forces et ses limites", "description": "Projets, documents longs, rédaction, analyse." },
+        { "code": "M2", "titre": "Choisir son offre de services", "description": "Rédaction, création de contenus, traduction, analyse de documents, assistance." },
+        { "code": "M3", "titre": "Produire des livrables de qualité", "description": "Méthodes, modèles réutilisables, relecture et vérification." },
+        { "code": "M4", "titre": "Trouver et fidéliser ses clients", "description": "Prix, devis, WhatsApp Business, LinkedIn, plateformes de missions." }
+      ],
+      "faq": [
+        { "q": "Combien vais-je gagner ?", "r": "Personne ne peut le promettre honnêtement : vos revenus dépendent de votre offre, du temps que vous y consacrez et de votre marché. La formation vous donne une méthode, des outils et une offre prête à présenter." }
+      ]
     },
     {
       "slug": "data-analytics-power-bi",
       "titre": "Data Analytics avec Power BI",
       "categorie": "data", "statut": "brouillon", "niveau": "Intermédiaire",
-      "duree": "2 semaines", "prix": 50000, "mode": "selon_session", "certification": "aucune",
-      "accroche": "Brouillon — formation du brief initial absente du catalogue 2026 : à garder, retirer ou fusionner.",
-      "ordre": 91
+      "duree": "2 semaines", "prix": 50000, "mode": "selon_session", "certification": "attestation",
+      "accroche": "Allez au-delà des graphiques : modélisez vos données, calculez avec DAX et livrez des rapports qui aident à décider.",
+      "probleme": "Un bon tableau de bord repose sur des données bien préparées et des calculs justes. En deux semaines, vous apprenez à construire un rapport Power BI complet, de la préparation des données à la publication.",
+      "objectifs": [
+        "Préparer et transformer les données avec Power Query",
+        "Construire un modèle de données fiable (relations, modèle en étoile)",
+        "Écrire des mesures DAX pour vos indicateurs clés",
+        "Concevoir, publier et partager des rapports dans Power BI Service"
+      ],
+      "public_cible": "Assistants, comptables, contrôleurs de gestion, chargés de suivi-évaluation et analystes débutants.",
+      "prerequis": "Bonne maîtrise d’Excel. Avoir déjà créé un premier tableau de bord Power BI est un plus. Un ordinateur portable sous Windows est conseillé.",
+      "resultat": "Attestation, un rapport Power BI complet sur un cas d’entreprise, pour votre portfolio.",
+      "quiz": ["metier-data"],
+      "ordre": 91,
+      "modules": [
+        { "code": "M1", "titre": "Préparer les données", "description": "Power Query, nettoyage, fusion de sources." },
+        { "code": "M2", "titre": "Modéliser", "description": "Relations, modèle en étoile, table de dates." },
+        { "code": "M3", "titre": "Calculer avec DAX", "description": "Mesures, CALCULATE, comparaisons dans le temps." },
+        { "code": "M4", "titre": "Raconter avec les données", "description": "Indicateurs clés, mise en page, storytelling." },
+        { "code": "M5", "titre": "Publier et partager", "description": "Power BI Service, actualisation, droits d’accès." }
+      ],
+      "faq": [
+        { "q": "Quelle différence avec le parcours « Data Analyst & BI » ?", "r": "Cette formation de deux semaines se concentre sur Power BI. Le parcours « Data Analyst & BI », sur 6 mois, couvre aussi SQL, l’analyse métier et un stage, pour préparer au métier de Data Analyst." }
+      ]
     },
     {
       "slug": "python-pour-la-data",
       "titre": "Python pour la Data",
       "categorie": "data", "statut": "brouillon", "niveau": "Intermédiaire",
-      "duree": "3 semaines", "prix": 60000, "mode": "selon_session", "certification": "aucune",
-      "accroche": "Brouillon — formation du brief initial absente du catalogue 2026 : à garder, retirer ou fusionner.",
-      "ordre": 92
+      "duree": "3 semaines", "prix": 60000, "mode": "selon_session", "certification": "attestation",
+      "accroche": "Apprenez Python pour analyser vos données plus vite et plus loin qu’avec Excel.",
+      "probleme": "Quand les fichiers deviennent trop gros ou les analyses trop répétitives, Excel atteint ses limites. Python permet d’automatiser ces traitements et d’aller plus loin dans l’analyse. Vous apprenez pas à pas, sur des données réelles.",
+      "objectifs": [
+        "Écrire vos premiers programmes Python",
+        "Lire, nettoyer et transformer des données avec pandas",
+        "Visualiser vos résultats avec Matplotlib et Seaborn",
+        "Mener une analyse complète, de la question à la présentation"
+      ],
+      "public_cible": "Utilisateurs d’Excel, analystes, étudiants et professionnels qui veulent passer à la programmation.",
+      "prerequis": "Être à l’aise avec un ordinateur et avec Excel. Aucune expérience en programmation n’est demandée. Google Colab s’utilise dans le navigateur, y compris sur Chromebook.",
+      "resultat": "Attestation, des notebooks réutilisables et un projet d’analyse pour votre portfolio.",
+      "quiz": ["metier-data", "pro-ia"],
+      "ordre": 92,
+      "modules": [
+        { "code": "M1", "titre": "Les bases de Python", "description": "Variables, listes, conditions, boucles, fonctions, dans Google Colab." },
+        { "code": "M2", "titre": "Manipuler les données avec pandas", "description": "Lire CSV et Excel, filtrer, regrouper, fusionner, nettoyer." },
+        { "code": "M3", "titre": "Visualiser", "description": "Matplotlib et Seaborn." },
+        { "code": "M4", "titre": "Projet d’analyse", "description": "Une question, des données réelles, une présentation des résultats." }
+      ]
     }
   ],
 

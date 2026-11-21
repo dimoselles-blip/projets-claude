@@ -10,9 +10,10 @@
     <h2>Éditeur du site</h2>
     <p>DIMO Tech Academy, branche formation de DIMO Group.<br>
     Siège : <?= e(cfg('contact.adresse', 'Akpakpa, Cotonou (Bénin)')) ?>.<br>
-    Contact : <a href="mailto:<?= e(cfg('contact.email')) ?>"><?= e(cfg('contact.email')) ?></a>.<br>
-    Forme juridique, numéro RCCM et numéro IFU : <em>à compléter</em>.<br>
-    Responsable de la publication : <em>à compléter</em>.</p>
+    Contact : <a href="mailto:<?= e(cfg('contact.email')) ?>"><?= e(cfg('contact.email')) ?></a>.</p>
+    <?php if (trim((string) reglage('identite_legale')) !== ''): ?>
+      <p><?= nl2br(e(trim((string) reglage('identite_legale')))) ?></p>
+    <?php endif; ?>
 
     <h2>Hébergement</h2>
     <p>Hostinger International Ltd., 61 Lordou Vironos Street, 6023 Larnaca, Chypre — <a href="https://www.hostinger.com" target="_blank" rel="noopener">hostinger.com</a>.</p>

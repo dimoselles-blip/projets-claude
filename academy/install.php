@@ -22,7 +22,8 @@ $urlDetectee = $proto . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . ($base 
 
 $v = [
     'db_hote' => 'localhost', 'db_port' => '3306', 'db_nom' => '', 'db_utilisateur' => '', 'db_mot_de_passe' => '',
-    'url' => $urlDetectee, 'admin_nom' => '', 'admin_email' => '', 'admin_mdp' => '', 'contact_email' => 'contact@dimotech.fr', 'whatsapp' => '229433373686',
+    'url' => $urlDetectee, 'admin_nom' => '', 'admin_email' => '', 'admin_mdp' => '', 'contact_email' => 'contact@dimotech.fr', 'whatsapp' => '2290143373686',
+    'smtp_utilisateur' => 'contact@dimotech.fr', 'smtp_mot_de_passe' => '', 'smtp_hote' => 'smtp.hostinger.com', 'smtp_port' => '465',
 ];
 
 $verifications = [
@@ -68,6 +69,20 @@ if (!$dejaInstalle && ($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
         $erreurs[] = 'L’e-mail de contact n’est pas valide.';
     }
     $v['whatsapp'] = preg_replace('/\D/', '', $v['whatsapp']) ?? '';
+    // Numéro béninois saisi sans indicatif : 01XXXXXXXX (10 chiffres) ou ancien format à 8 chiffres.
+    if (strlen($v['whatsapp']) === 10 && str_starts_with($v['whatsapp'], '01')) {
+        $v['whatsapp'] = '229' . $v['whatsapp'];
+    } elseif (strlen($v['whatsapp']) === 8) {
+        $v['whatsapp'] = '22901' . $v['whatsapp'];
+    }
+    $smtp = $v['smtp_mot_de_passe'] !== '';
+    if ($smtp && !filter_var($v['smtp_utilisateur'], FILTER_VALIDATE_EMAIL)) {
+        $erreurs[] = 'Indiquez l’adresse complète de la boîte d’envoi (par exemple contact@dimotech.fr).';
+    }
+    if ($smtp && $v['smtp_hote'] === '') {
+        $erreurs[] = 'Indiquez le serveur d’envoi (smtp.hostinger.com pour une boîte Hostinger).';
+    }
+    $v['smtp_port'] = in_array($v['smtp_port'], ['465', '587'], true) ? $v['smtp_port'] : '465';
 
     if (!$erreurs && !$bloquant) {
         $GLOBALS['DTA_CONFIG'] = ['site' => ['url' => $v['url']]];
@@ -113,6 +128,18 @@ if (!$dejaInstalle && ($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
                 $conf = str_replace('contact@dimotech.fr', $v['contact_email'], $conf);
             }
             $conf = preg_replace("/'whatsapp' => '[0-9]*',/", "'whatsapp' => " . $q($v['whatsapp']) . ',', $conf, 1);
+            // Envoi des e-mails : SMTP si le mot de passe de la boîte est fourni, sinon fonction mail() de PHP.
+            if ($smtp) {
+                $conf = preg_replace("/'mode' => 'journal',/", "'mode' => 'smtp',", $conf, 1);
+                $conf = preg_replace("/'expediteur' => '[^']*',/", "'expediteur' => " . $r($v['smtp_utilisateur']) . ',', $conf, 1);
+                $conf = preg_replace("/('smtp' => \[.*?'hote' => )'[^']*',/s", '${1}' . $r($v['smtp_hote']) . ',', $conf, 1);
+                $conf = preg_replace("/('smtp' => \[.*?'port' => )\d+,/s", '${1}' . (int) $v['smtp_port'] . ',', $conf, 1);
+                $conf = preg_replace("/('smtp' => \[.*?'securite' => )'[a-z]*',/s", '${1}' . ($v['smtp_port'] === '587' ? "'tls'," : "'ssl',"), $conf, 1);
+                $conf = preg_replace("/('smtp' => \[.*?'utilisateur' => )'',/s", '${1}' . $r($v['smtp_utilisateur']) . ',', $conf, 1);
+                $conf = preg_replace("/('smtp' => \[.*?'mot_de_passe' => )'',/s", '${1}' . $r($v['smtp_mot_de_passe']) . ',', $conf, 1);
+            } else {
+                $conf = preg_replace("/'mode' => 'journal',/", "'mode' => 'mail',", $conf, 1);
+            }
             if (file_put_contents(RACINE . '/config/config.php', $conf, LOCK_EX) === false) {
                 throw new RuntimeException('Impossible d’écrire config/config.php.');
             }
@@ -150,8 +177,8 @@ function h(string $s): string
       <p>La plateforme est prête : tables créées, catalogue 2026 importé, compte administrateur créé et fichier <code>config/config.php</code> écrit.</p>
       <ol class="installation-etapes">
         <li>Supprimez le fichier <code>install.php</code> depuis le gestionnaire de fichiers (il est de toute façon bloqué).</li>
-        <li>Ouvrez <code>config/config.php</code> pour régler l’envoi des e-mails (SMTP), les réseaux sociaux et les numéros Mobile Money.</li>
-        <li>Connectez-vous à l’administration pour ajouter les dates de sessions.</li>
+        <li>Dans l’administration, ouvrez Réglages et cliquez sur « M’envoyer un e-mail de test » pour vérifier l’envoi des e-mails.</li>
+        <li>Ajoutez les dates des prochaines sessions (menu Sessions).</li>
       </ol>
       <p class="installation-actions"><a class="btn btn-corail" href="espace/connexion">Accéder à l’administration</a> <a class="btn btn-contour" href="./">Voir le site</a></p>
     <?php elseif ($dejaInstalle): ?>
@@ -191,7 +218,17 @@ function h(string $s): string
           <label class="champ"><span>Adresse du site</span><input name="url" type="url" value="<?= h($v['url']) ?>" required></label>
           <div class="grille-2">
             <label class="champ"><span>E-mail de contact</span><input name="contact_email" type="email" value="<?= h($v['contact_email']) ?>"></label>
-            <label class="champ"><span>WhatsApp (facultatif)</span><input name="whatsapp" value="<?= h($v['whatsapp']) ?>" placeholder="229XXXXXXXXXX" inputmode="tel"></label>
+            <label class="champ"><span>WhatsApp (facultatif)</span><input name="whatsapp" value="<?= h($v['whatsapp']) ?>" placeholder="22901XXXXXXXX" inputmode="tel"></label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Envoi des e-mails</legend>
+          <p class="muted">Confirmations d’inscription et liens de connexion. Indiquez une boîte mail créée dans hPanel → E-mails. Sans mot de passe, la plateforme utilise l’envoi simple du serveur, moins fiable.</p>
+          <div class="grille-2">
+            <label class="champ"><span>Adresse de la boîte d’envoi</span><input name="smtp_utilisateur" type="email" value="<?= h($v['smtp_utilisateur']) ?>"></label>
+            <label class="champ"><span>Mot de passe de cette boîte</span><input type="password" name="smtp_mot_de_passe" value="<?= h($v['smtp_mot_de_passe']) ?>" autocomplete="new-password"></label>
+            <label class="champ"><span>Serveur d’envoi (SMTP)</span><input name="smtp_hote" value="<?= h($v['smtp_hote']) ?>"></label>
+            <label class="champ"><span>Port</span><select name="smtp_port"><option value="465"<?= $v['smtp_port'] === '465' ? ' selected' : '' ?>>465 (SSL)</option><option value="587"<?= $v['smtp_port'] === '587' ? ' selected' : '' ?>>587 (TLS)</option></select></label>
           </div>
         </fieldset>
         <fieldset>

@@ -6,7 +6,7 @@ Elle comprend le site public, l'inscription avec paiement Mobile Money, l'espace
 
 | Document | Pour quoi faire |
 | --- | --- |
-| Ce fichier | Mettre la plateforme en ligne chez Hostinger |
+| Ce fichier | Mettre la plateforme en ligne chez Hostinger, puis la mettre à jour |
 | [`GUIDE-CONTENU.md`](GUIDE-CONTENU.md) | Ajouter une formation, une session, un témoignage, valider un paiement… |
 | [`BRANCHEMENTS.md`](BRANCHEMENTS.md) | Ce qu'il reste à brancher, et les points à confirmer avant publication |
 | [`contenu/catalogue.json`](contenu/catalogue.json) | Le fichier de contenu unique : formations, sessions, témoignages, compteurs, FAQ |
@@ -40,48 +40,69 @@ Les quiz et les certificats sont préparés pour la phase 2.
 
 ---
 
-## Mise en ligne chez Hostinger (environ 20 minutes)
+## Mise en ligne chez Hostinger (environ 30 minutes)
 
-Tout se fait depuis **hPanel**, dans un navigateur.
+Tout se fait depuis **hPanel**, dans un navigateur : un Chromebook suffit.
 
 ### 1. Créer le sous-domaine
 
-hPanel → **Domaines** → **Sous-domaines** → créer `academy` (ou le nom retenu) pour `dimotech.fr`. Notez le dossier créé, par exemple `public_html/academy`. Si le domaine est géré chez un autre registrar, ajoutez chez lui l'enregistrement DNS indiqué par Hostinger (type A ou CNAME).
+hPanel → **Domaines** → **Sous-domaines** → créez `academy` pour `dimotech.fr`. Hostinger crée un dossier, par exemple `public_html/academy` : notez-le.
 
-### 2. Vérifier PHP
+Si le domaine est géré chez un autre registrar, ajoutez chez lui l'enregistrement DNS indiqué par Hostinger. Le sous-domaine peut alors mettre jusqu'à quelques heures à répondre.
 
-hPanel → **Avancé** → **Configuration PHP** : choisissez **PHP 8.2 ou 8.3**. Les extensions `pdo_mysql`, `mbstring`, `gd` et `curl` sont actives par défaut chez Hostinger.
+### 2. Activer HTTPS
 
-### 3. Créer la base de données
+hPanel → **Sécurité** → **SSL** : vérifiez que le certificat du sous-domaine est installé, sinon installez-le (gratuit). Activez ensuite **Forcer HTTPS**.
 
-hPanel → **Bases de données** → **Gestion** : créez une base MySQL et un utilisateur, puis notez le nom de la base, l'utilisateur et le mot de passe.
+Faites cette étape avant l'installateur : il enregistre l'adresse du site telle qu'il la voit, en `https://`.
 
-### 4. Envoyer les fichiers
+### 3. Vérifier PHP
 
-1. Sur GitHub, téléchargez le dépôt (**Code** → **Download ZIP**), décompressez-le et compressez à nouveau **le contenu du dossier `academy`** en `academy.zip`. Sur Chromebook, l'application Fichiers sait décompresser et compresser.
-2. hPanel → **Gestionnaire de fichiers** → ouvrez le dossier du sous-domaine → **Importer** `academy.zip` → clic droit → **Extraire**.
-3. Le dossier du sous-domaine doit contenir directement `index.php`, `install.php`, `.htaccess`, `assets/`, `config/`, etc.
+hPanel → **Avancé** → **Configuration PHP** : choisissez **PHP 8.2 ou 8.3**. Les extensions nécessaires (`pdo_mysql`, `mbstring`, `gd`, `curl`) sont actives par défaut.
 
-> Autre méthode : hPanel → **Avancé** → **Git** permet de déployer le dépôt GitHub. Faites alors pointer le sous-domaine vers le sous-dossier `academy` du dépôt.
+### 4. Créer la base de données
 
-### 5. Lancer l'installateur
+hPanel → **Bases de données** → **Gestion** : créez une base MySQL et son utilisateur, avec un mot de passe solide. Hostinger ajoute un préfixe aux noms, par exemple `u123456789_academy` : notez les **noms complets** et le mot de passe.
 
-Ouvrez `https://academy.dimotech.fr/install.php`. L'installateur vérifie l'hébergement, puis demande :
-- les informations de la base de données (étape 3) ;
-- l'adresse du site, l'e-mail de contact et le numéro WhatsApp (facultatif) ;
-- le nom, l'e-mail et le mot de passe de l'administrateur.
+### 5. Préparer la boîte d'envoi des e-mails
 
-Il crée les tables, importe le catalogue 2026, crée le compte administrateur et écrit `config/config.php`. Ensuite, il se bloque. **Supprimez `install.php`** du serveur.
+La plateforme envoie les confirmations d'inscription et les liens de connexion à l'espace apprenant.
 
-### 6. Activer HTTPS
+- Si `contact@dimotech.fr` est une boîte Hostinger (hPanel → **E-mails**), munissez-vous de son mot de passe.
+- Sinon, créez-y une boîte, par exemple `academy@dimotech.fr`, ou relevez le serveur SMTP de votre fournisseur de messagerie.
 
-hPanel → **Sécurité** → **SSL** : installez le certificat gratuit pour le sous-domaine, puis activez **Forcer HTTPS**.
+### 6. Envoyer les fichiers
 
-### 7. Brancher le reste
+1. Téléchargez le paquet **`dimo-tech-academy.zip`**. Il contient le contenu du dossier `academy`, sans la documentation ni aucun réglage.
+2. hPanel → **Fichiers** → **Gestionnaire de fichiers** → ouvrez le dossier du sous-domaine. S'il contient un fichier `default.php`, supprimez-le.
+3. **Importer** → choisissez `dimo-tech-academy.zip` → clic droit sur le fichier → **Extraire** dans le dossier courant, puis supprimez le `.zip`.
+4. Le dossier du sous-domaine doit contenir directement `index.php`, `install.php`, `.htaccess`, `assets/`, `config/`… (et non un sous-dossier qui les contient).
 
-Ouvrez `config/config.php` dans le Gestionnaire de fichiers. Ce fichier unique contient le numéro WhatsApp, les numéros Mobile Money, les adresses e-mail, l'envoi des e-mails (SMTP), les réseaux sociaux, FedaPay et Google Analytics. Tout est détaillé dans [`BRANCHEMENTS.md`](BRANCHEMENTS.md).
+### 7. Lancer l'installateur
 
-Connectez-vous ensuite à `https://academy.dimotech.fr/espace/connexion` avec le compte administrateur. Le tableau de bord rappelle ce qui reste à brancher.
+Ouvrez `https://academy.dimotech.fr/install.php`. Il vérifie l'hébergement, puis demande :
+- la base de données (étape 4) : serveur `localhost`, port `3306` ;
+- l'adresse du site, l'e-mail de contact et le numéro WhatsApp (déjà préremplis) ;
+- la boîte d'envoi des e-mails (étape 5) : adresse, mot de passe, serveur `smtp.hostinger.com`, port 465. Sans mot de passe, la plateforme utilise l'envoi simple du serveur, moins fiable ;
+- le nom, l'e-mail et le mot de passe (10 caractères minimum) du compte administrateur.
+
+Il crée les tables, importe le catalogue 2026, crée le compte administrateur et écrit `config/config.php`. Ensuite, il se bloque.
+
+### 8. Finaliser
+
+1. Dans le Gestionnaire de fichiers, **supprimez `install.php`**.
+2. Connectez-vous sur `https://academy.dimotech.fr/espace/connexion` avec le compte administrateur.
+3. **Réglages** → **M'envoyer un e-mail de test**. Vérifiez qu'il arrive, y compris dans les indésirables.
+4. **Réglages** : saisissez les mentions légales (forme juridique, RCCM, IFU, responsable de la publication) et, si vous le souhaitez, le mot de la fondatrice.
+5. **Formations** : passez en « Publiée » les formations en brouillon à mettre en ligne.
+6. **Sessions** : ajoutez les dates des prochaines sessions.
+7. Testez une inscription avec votre propre adresse, puis annulez-la depuis **Inscriptions**.
+
+Le tableau de bord de l'administration rappelle ce qui reste à brancher. Les autres réglages (réseaux sociaux, FedaPay, Google Analytics) sont dans `config/config.php` et détaillés dans [`BRANCHEMENTS.md`](BRANCHEMENTS.md).
+
+### Mettre à jour la plateforme plus tard
+
+Envoyez le nouveau paquet `.zip` dans le même dossier et extrayez-le en remplaçant les fichiers existants. Le paquet ne contient ni `config/config.php`, ni les photos envoyées, ni les supports de cours : réglages, base de données et fichiers sont conservés. Supprimez ensuite `install.php`, qui revient avec le paquet (il reste bloqué tant que `config/config.php` existe).
 
 ---
 

@@ -43,6 +43,12 @@ function branchements_restants(): array
     if (cfg('email.mode') === 'journal') {
         $r[] = ['Envoi des e-mails', 'Les e-mails (confirmations, liens de connexion) ne partent pas encore : ils sont enregistrés dans storage/logs/emails.log.', 'email'];
     }
+    if (cfg('email.mode') === 'mail') {
+        $r[] = ['Boîte d’envoi des e-mails', 'Les e-mails partent avec l’envoi simple du serveur et peuvent arriver en indésirables. Pour plus de fiabilité, renseignez une boîte mail (SMTP).', 'email'];
+    }
+    if (trim((string) reglage('identite_legale')) === '') {
+        $r[] = ['Mentions légales', 'Forme juridique, RCCM, IFU et responsable de la publication à saisir dans Réglages.', null];
+    }
     if (!cfg('reseaux.facebook') && !cfg('reseaux.linkedin') && !cfg('reseaux.tiktok')) {
         $r[] = ['Réseaux sociaux', 'Liens TikTok, Facebook et LinkedIn à renseigner.', 'reseaux'];
     }
@@ -319,6 +325,7 @@ function admin_enregistrer_reglages(): void
     enregistrer_reglage('delai_lien_visio', (string) max(1, min(168, (int) champ('delai_lien_visio') ?: 24)));
     enregistrer_reglage('phrase_cohorte', mb_substr(champ('phrase_cohorte'), 0, 300));
     enregistrer_reglage('mot_fondatrice', mb_substr(champ('mot_fondatrice'), 0, 5000));
+    enregistrer_reglage('identite_legale', mb_substr(champ('identite_legale'), 0, 1000));
     flash('succes', 'Réglages enregistrés.');
     rediriger('/admin/reglages');
 }

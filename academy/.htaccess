@@ -15,6 +15,8 @@ DirectoryIndex index.php
     RewriteRule ^(config|src|views|storage|contenu)(/|$) - [F,L]
     # Fichiers cachés (.env, .git…), sauf .well-known (certificats SSL)
     RewriteRule (^|/)\.(?!well-known/) - [F,L]
+    # Documentation et fichiers techniques (au cas où ils seraient envoyés sur le serveur)
+    RewriteRule \.(md|sql|log|dist|bak)$ - [F,L,NC]
 
     # Fichiers existants (images, CSS, JS) servis directement
     RewriteCond %{REQUEST_FILENAME} -f

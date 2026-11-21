@@ -149,10 +149,13 @@ const REGLAGES_DEFAUT = [
     // 'formules' : affiche les formules entreprises et leurs prix ; 'devis' : affiche « Sur devis ».
     'prix_entreprises' => 'formules',
     // Affiche les emplacements « à remplacer » (photos, témoignages) tant qu'ils sont vides.
-    'afficher_emplacements' => '1',
+    // Masqués par défaut sur le site en ligne ; à cocher dans Réglages pour repérer les photos à fournir.
+    'afficher_emplacements' => '0',
     // Le lien visio d'une séance en direct apparaît ce nombre d'heures avant le début.
     'delai_lien_visio' => '24',
     // Textes de la page À propos.
     'mot_fondatrice' => '',
+    // Mentions légales : forme juridique, RCCM, IFU, responsable de la publication (une information par ligne).
+    'identite_legale' => '',
     'phrase_cohorte' => 'Notre première cohorte a déjà trouvé un emploi.',
 ];

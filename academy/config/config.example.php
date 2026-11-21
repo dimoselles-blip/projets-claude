@@ -42,7 +42,7 @@ return [
         'email_assistance' => 'contact@dimotech.fr',
         // Numéro WhatsApp au format international, chiffres seulement. Il n'est jamais écrit dans les pages :
         // tous les boutons WhatsApp (contact, paiement) passent par une redirection du serveur.
-        'whatsapp' => '229433373686',
+        'whatsapp' => '2290143373686',
         'adresse' => 'Akpakpa, Cotonou (Bénin)',
         // Lien Google Maps du siège (facultatif).
         'carte' => '',

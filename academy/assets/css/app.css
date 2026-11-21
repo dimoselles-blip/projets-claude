@@ -796,7 +796,7 @@ body.menu-ouvert .wa-flottant { display: none; }
 /* ---------- Pages diverses ---------- */
 .grille-2-col { display: grid; gap: 32px; }
 @media (min-width: 960px) { .grille-2-col { grid-template-columns: 1fr 1fr; gap: 56px; } }
-.carte-contact { display: grid; gap: 14px; }
+.carte-contact { display: grid; gap: 14px; align-content: start; }
 .ligne-contact { display: flex; gap: 14px; align-items: flex-start; }
 .ligne-contact .puce-icone { width: 46px; height: 46px; }
 .ligne-contact strong { display: block; }
@@ -815,6 +815,8 @@ body.menu-ouvert .wa-flottant { display: none; }
 .membre span { color: var(--muted); font-size: .9rem; }
 .bandeau-femmes { display: grid; gap: 24px; align-items: center; padding: clamp(24px, 4vw, 44px); border-radius: 24px; background: linear-gradient(135deg, var(--corail-clair), var(--bleu-clair)); border: 1px solid var(--ligne); }
 @media (min-width: 860px) { .bandeau-femmes { grid-template-columns: 1.2fr .8fr; } }
+@media (min-width: 860px) { .bandeau-femmes.bandeau-femmes-seul { grid-template-columns: minmax(0, 760px); } }
+.bloc-fondatrice { max-width: 760px; }
 .etapes-parcours { list-style: none; counter-reset: e; display: grid; gap: 14px; }
 @media (min-width: 860px) { .etapes-parcours { grid-template-columns: repeat(4, 1fr); } }
 .etapes-parcours li { counter-increment: e; padding: 20px; border-radius: var(--rayon); background: var(--carte); border: 1px solid var(--ligne); }

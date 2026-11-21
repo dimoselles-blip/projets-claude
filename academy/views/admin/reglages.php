@@ -35,6 +35,7 @@
     <legend>Textes</legend>
     <div class="champ"><label for="r-cohorte">Phrase sur la première cohorte</label><input id="r-cohorte" name="phrase_cohorte" value="<?= e(reglage('phrase_cohorte')) ?>"><small class="aide">Sans chiffre inventé. Laisser vide pour la masquer.</small></div>
     <div class="champ"><label for="r-mot">Mot de la fondatrice (page À propos)</label><textarea id="r-mot" name="mot_fondatrice" rows="7"><?= e(reglage('mot_fondatrice')) ?></textarea><small class="aide">Séparez les paragraphes par une ligne vide.</small></div>
+    <div class="champ"><label for="r-legal">Mentions légales : identité de l’éditeur</label><textarea id="r-legal" name="identite_legale" rows="4" placeholder="Forme juridique : …&#10;RCCM : …&#10;IFU : …&#10;Responsable de la publication : …"><?= e(reglage('identite_legale')) ?></textarea><small class="aide">Une information par ligne. Tant que ce champ est vide, la page Mentions légales affiche seulement le nom, le siège et le contact.</small></div>
   </fieldset>
   <div class="barre-enregistrer"><button class="btn btn-corail" type="submit">Enregistrer les réglages</button></div>
 </form>
@@ -44,7 +45,7 @@
   <table class="tableau-simple">
     <tr><th scope="row">Adresse du site</th><td><?= e(cfg('site.url')) ?></td></tr>
     <tr><th scope="row">Numéro WhatsApp</th><td><?= cfg('contact.whatsapp') ? 'Renseigné (masqué dans les pages)' : '<strong>À renseigner</strong>' ?></td></tr>
-    <tr><th scope="row">Numéros Mobile Money</th><td><?= implode(', ', array_map(fn($op) => (cfg('paiement.mobile_money.' . $op . '.numero') ? '✓ ' : '— ') . strtoupper($op), OPERATEURS_MOBILE_MONEY)) ?></td></tr>
+    <tr><th scope="row">Numéros Mobile Money</th><td><?= cfg('paiement.afficher_numeros_etape_paiement') ? implode(', ', array_map(fn($op) => (cfg('paiement.mobile_money.' . $op . '.numero') ? '✓ ' : '— ') . strtoupper($op), OPERATEURS_MOBILE_MONEY)) : 'Jamais affichés : les instructions de paiement sont envoyées sur WhatsApp' ?></td></tr>
     <tr><th scope="row">E-mail de contact</th><td><?= e(cfg('contact.email')) ?></td></tr>
     <tr><th scope="row">Envoi des e-mails</th><td><?= e(['smtp' => 'SMTP', 'mail' => 'Fonction mail() de PHP', 'journal' => 'Journal (aucun envoi réel)'][cfg('email.mode')] ?? cfg('email.mode')) ?></td></tr>
     <tr><th scope="row">Réseaux sociaux</th><td><?= implode(', ', array_filter(['TikTok' => cfg('reseaux.tiktok'), 'Facebook' => cfg('reseaux.facebook'), 'LinkedIn' => cfg('reseaux.linkedin')], fn($v) => $v) ? array_keys(array_filter(['TikTok' => cfg('reseaux.tiktok'), 'Facebook' => cfg('reseaux.facebook'), 'LinkedIn' => cfg('reseaux.linkedin')])) : ['À renseigner']) ?></td></tr>

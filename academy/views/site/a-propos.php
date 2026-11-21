@@ -2,6 +2,7 @@
 defined('DTA') || exit;
 $mot = trim((string) reglage('mot_fondatrice'));
 $phraseCohorte = (string) reglage('phrase_cohorte');
+$emplacements = afficher_emplacements();
 $fondatrice = null;
 $equipe = [];
 foreach ($formateurs as $p) {
@@ -22,21 +23,24 @@ foreach ($formateurs as $p) {
 
 <section class="contenu-page">
   <div class="conteneur">
-    <div class="grille-2-col" style="align-items:center">
+    <?php $portrait = $fondatrice && $fondatrice['photo']; ?>
+    <div class="<?= $portrait || $emplacements ? 'grille-2-col' : 'bloc-fondatrice' ?>" style="align-items:center">
+      <?php if ($portrait || $emplacements): ?>
       <div>
-        <?php if ($fondatrice && $fondatrice['photo']): ?>
+        <?php if ($portrait): ?>
           <img src="<?= e(media($fondatrice['photo'])) ?>" alt="Morelle ATINDOGBE, fondatrice de DIMO Tech Academy" style="border-radius:var(--rayon);width:100%;aspect-ratio:4/5;object-fit:cover" loading="lazy">
         <?php else: ?>
           <?= partiel('emplacement', ['texte' => 'Portrait de Morelle ATINDOGBE, fondatrice', 'ratio' => '4 / 5']) ?>
         <?php endif; ?>
       </div>
+      <?php endif; ?>
       <div>
-        <p class="surtitre">Le mot de la fondatrice</p>
+        <p class="surtitre"><?= $mot !== '' || $emplacements ? 'Le mot de la fondatrice' : 'La fondatrice' ?></p>
         <h2>Morelle ATINDOGBE</h2>
         <p class="muted">Fondatrice de DIMO Tech Academy — ingénieur Télécoms et TIC, consultante Data/IA.</p>
         <?php if ($mot !== ''): ?>
           <div class="citation"><?= paragraphes($mot) ?></div>
-        <?php elseif (afficher_emplacements()): ?>
+        <?php elseif ($emplacements): ?>
           <div class="citation temoignage-emplacement" style="border-style:dashed">
             <p class="emplacement-etiquette">À remplacer</p>
             <p class="muted" style="margin:0">Mot de la fondatrice : pourquoi DIMO Tech Academy, la vision, l’engagement envers les apprenants. Texte à saisir dans Administration → Réglages.</p>
@@ -63,6 +67,7 @@ foreach ($formateurs as $p) {
       </div>
     </div>
 
+    <?php if ($equipe || $emplacements): ?>
     <div style="margin-top:72px">
       <div class="section-entete section-entete-gauche">
         <p class="surtitre">L’équipe</p>
@@ -76,7 +81,7 @@ foreach ($formateurs as $p) {
             <strong><?= e($p['nom']) ?></strong><span><?= e($p['role']) ?></span>
           </div>
         <?php endforeach; ?>
-        <?php if (afficher_emplacements()): for ($i = count($equipe); $i < 4; $i++): ?>
+        <?php if ($emplacements): for ($i = count($equipe); $i < 4; $i++): ?>
           <div class="membre">
             <?= partiel('emplacement', ['texte' => 'Photo d’un membre de l’équipe', 'ratio' => '1']) ?>
             <strong>Prénom et nom</strong><span>Rôle — à remplacer</span>
@@ -84,8 +89,9 @@ foreach ($formateurs as $p) {
         <?php endfor; endif; ?>
       </div>
     </div>
+    <?php endif; ?>
 
-    <div class="bandeau-femmes" style="margin-top:72px">
+    <div class="bandeau-femmes<?= $emplacements ? '' : ' bandeau-femmes-seul' ?>" style="margin-top:72px">
       <div>
         <p class="surtitre">Notre engagement</p>
         <h2>Les femmes au cœur de la Tech</h2>
@@ -95,9 +101,11 @@ foreach ($formateurs as $p) {
       <?= partiel('emplacement', ['texte' => 'Photo d’apprenantes en formation', 'ratio' => '4 / 3']) ?>
     </div>
 
+    <?php if ($emplacements): ?>
     <div style="margin-top:72px">
       <?= partiel('emplacement', ['texte' => 'Photo de cohorte au siège d’Akpakpa', 'ratio' => '21 / 9']) ?>
     </div>
+    <?php endif; ?>
   </div>
 </section>
 <?= partiel('cta-final') ?>
