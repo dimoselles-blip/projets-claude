@@ -37,7 +37,7 @@ Routeur::get('/inscription/suivi/{jeton}', 'page_suivi');
 Routeur::post('/inscription/suivi/{jeton}/whatsapp', 'suivi_whatsapp');
 Routeur::post('/inscription/suivi/{jeton}/en-ligne', 'suivi_paiement_en_ligne');
 Routeur::post('/inscription/suivi/{jeton}/acces', 'suivi_envoyer_acces');
-Routeur::get('/paiement/retour', 'retour_paiement');
+Routeur::get('/paiement/retour/{jeton}/{p}', 'retour_paiement');
 Routeur::post('/webhooks/fedapay', 'webhook_fedapay');
 
 // ── Espace apprenant ────────────────────────────────────────
@@ -63,6 +63,7 @@ Routeur::get('/admin/inscriptions/{id}', 'admin_inscription');
 Routeur::post('/admin/inscriptions/{id}/statut', 'admin_inscription_statut');
 Routeur::post('/admin/inscriptions/{id}/paiement', 'admin_inscription_paiement');
 Routeur::post('/admin/inscriptions/{id}/paiement/{pid}/supprimer', 'admin_inscription_supprimer_paiement');
+Routeur::post('/admin/inscriptions/{id}/paiement/{pid}/verifier', 'admin_inscription_verifier_paiement');
 Routeur::post('/admin/inscriptions/{id}/note', 'admin_inscription_note');
 Routeur::post('/admin/inscriptions/{id}/lien', 'admin_inscription_lien');
 Routeur::get('/admin/demandes', 'admin_demandes');

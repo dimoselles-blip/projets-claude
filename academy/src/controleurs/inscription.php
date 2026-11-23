@@ -112,9 +112,16 @@ function suivi_paiement_en_ligne(string $jeton): void
     if (!fedapay_actif() || reste_a_payer($ins) <= 0 || $ins['statut'] === 'annulee') {
         rediriger('/inscription/suivi/' . $jeton);
     }
+    $reste = reste_a_payer($ins);
+    $montant = (int) preg_replace('/\D/', '', champ('montant', (string) $reste));
+    $minimum = min($reste, MONTANT_MIN_EN_LIGNE);
+    if ($montant < $minimum || $montant > $reste) {
+        flash('erreur', 'Indiquez un montant entre ' . prix($minimum) . ' et ' . prix($reste) . '.');
+        rediriger('/inscription/suivi/' . $jeton);
+    }
     try {
         DB::modifier('inscriptions', ['moyen_paiement' => 'fedapay'], ['id' => $ins['id']]);
-        rediriger(fedapay_demarrer($ins), 302);
+        rediriger(fedapay_demarrer($ins, $montant), 302);
     } catch (Throwable $e) {
         error_log('[fedapay] ' . $e->getMessage());
         flash('erreur', 'Le paiement en ligne est momentanément indisponible. Utilisez le paiement via WhatsApp.');
@@ -143,11 +150,14 @@ function masquer_email(string $email): string
 }
 
 /** Retour du paiement FedaPay (phase 2). */
-function retour_paiement(): void
+function retour_paiement(string $jeton, string $pid): void
 {
-    $p = DB::un('SELECT p.*, i.jeton_suivi FROM paiements p JOIN inscriptions i ON i.id = p.inscription_id WHERE p.id = ?', [(int) param('p')]);
+    $p = DB::un(
+        'SELECT p.*, i.jeton_suivi FROM paiements p JOIN inscriptions i ON i.id = p.inscription_id WHERE p.id = ? AND i.jeton_suivi = ?',
+        [(int) $pid, $jeton]
+    );
     if (!$p) {
-        rediriger('/');
+        page_introuvable();
     }
     try {
         $p2 = fedapay_synchroniser((int) $p['id']);

@@ -24,6 +24,9 @@ const MOYENS_PAIEMENT = [
 
 const OPERATEURS_MOBILE_MONEY = ['mtn', 'moov', 'celtiis'];
 
+/** Plus petit montant payable en ligne en une fois (F CFA), sauf s'il reste moins à payer. */
+const MONTANT_MIN_EN_LIGNE = 1000;
+
 function libelle_statut(string $statut): string
 {
     return STATUTS_INSCRIPTION[$statut] ?? $statut;

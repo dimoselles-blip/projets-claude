@@ -87,16 +87,26 @@ $texteAcces = $seuil === 0 ? 'dès la première tranche validée' : ($seuil >= 1
             <?php endif; ?>
             <button class="btn btn-corail btn-large btn-bloc" type="submit"><?= icone('whatsapp') ?>Recevoir les instructions sur WhatsApp</button>
           </form>
-          <?php if (fedapay_actif()): ?>
+          <?php if (fedapay_actif()): $minEnLigne = min($reste, MONTANT_MIN_EN_LIGNE); ?>
             <div class="separateur">ou</div>
-            <form method="post" action="<?= e(url('/inscription/suivi/' . $ins['jeton_suivi'] . '/en-ligne')) ?>">
+            <form method="post" action="<?= e(url('/inscription/suivi/' . $ins['jeton_suivi'] . '/en-ligne')) ?>" class="formulaire">
               <?= champ_csrf() ?>
-              <button class="btn btn-bleu btn-large btn-bloc" type="submit"><?= icone('paiement') ?>Payer en ligne maintenant (<?= e(prix($reste)) ?>)</button>
+              <?php if ($reste > $minEnLigne): ?>
+                <div class="champ">
+                  <label for="montant-en-ligne">Montant à payer maintenant (F CFA)</label>
+                  <input id="montant-en-ligne" name="montant" type="number" inputmode="numeric" min="<?= $minEnLigne ?>" max="<?= $reste ?>" step="1" value="<?= $reste ?>" required>
+                  <small class="aide">Payez tout ou une tranche, entre <?= e(prix($minEnLigne)) ?> et <?= e(prix($reste)) ?>.</small>
+                </div>
+              <?php else: ?>
+                <input type="hidden" name="montant" value="<?= $reste ?>">
+              <?php endif; ?>
+              <button class="btn btn-bleu btn-large btn-bloc" type="submit"><?= icone('paiement') ?>Payer en ligne maintenant</button>
+              <p class="muted" style="margin:0;font-size:.9rem">Mobile Money ou carte bancaire, sur la page sécurisée de FedaPay. Le paiement est validé automatiquement.</p>
             </form>
           <?php endif; ?>
           <ul class="liste-coches" style="margin-top:18px;font-size:.9rem">
             <li><?= icone('info') ?><span>Paiement en plusieurs tranches possible : précisez-le dans votre message.</span></li>
-            <li><?= icone('info') ?><span>Votre inscription reste « En attente de paiement » jusqu’à validation par notre équipe.</span></li>
+            <li><?= icone('info') ?><span><?= fedapay_actif() ? 'Avec WhatsApp, votre inscription reste « En attente de paiement » jusqu’à validation par notre équipe.' : 'Votre inscription reste « En attente de paiement » jusqu’à validation par notre équipe.' ?></span></li>
             <li><?= icone('info') ?><span>Vos contenus en ligne s’ouvrent <?= e($texteAcces) ?>.</span></li>
           </ul>
         </div>

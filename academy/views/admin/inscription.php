@@ -51,7 +51,7 @@ $seuil = (int) reglage('seuil_acces_tranches');
                   <td><strong><?= e(prix((int) $p['montant'])) ?></strong></td>
                   <td><?= e(MOYENS_PAIEMENT[$p['moyen']] ?? $p['moyen']) ?></td>
                   <td><?= e($p['reference']) ?><?= $p['note'] ? '<br><span class="muted">' . e($p['note']) . '</span>' : '' ?><?= $p['admin_nom'] ? '<br><span class="muted">par ' . e($p['admin_nom']) . '</span>' : '' ?></td>
-                  <td class="tableau-actions"><form method="post" action="<?= e(url('/admin/inscriptions/' . $ins['id'] . '/paiement/' . $p['id'] . '/supprimer')) ?>" data-confirmer="Supprimer cette tranche ?"><?= champ_csrf() ?><button class="btn-lien" type="submit">Supprimer</button></form></td>
+                  <td class="tableau-actions"><?php if ($p['fournisseur'] === 'fedapay' && $p['statut'] === 'en_attente' && $p['externe_id']): ?><form method="post" action="<?= e(url('/admin/inscriptions/' . $ins['id'] . '/paiement/' . $p['id'] . '/verifier')) ?>"><?= champ_csrf() ?><button class="btn-lien" type="submit">Vérifier auprès de FedaPay</button></form><?php endif; ?><form method="post" action="<?= e(url('/admin/inscriptions/' . $ins['id'] . '/paiement/' . $p['id'] . '/supprimer')) ?>" data-confirmer="Supprimer cette tranche ?"><?= champ_csrf() ?><button class="btn-lien" type="submit">Supprimer</button></form></td>
                 </tr>
               <?php endforeach; ?>
             </tbody>

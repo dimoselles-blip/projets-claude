@@ -13,6 +13,10 @@ function fedapay_actif(): bool
 
 function fedapay_base(): string
 {
+    // Adresse de l'API imposée (tests uniquement) ; sinon déduite du préfixe de la clé.
+    if ((string) cfg('paiement.fedapay.api_base', '') !== '') {
+        return rtrim((string) cfg('paiement.fedapay.api_base'), '/');
+    }
     return str_starts_with((string) cfg('paiement.fedapay.cle_secrete', ''), 'sk_live_')
         ? 'https://api.fedapay.com/v1'
         : 'https://sandbox-api.fedapay.com/v1';
@@ -62,6 +66,26 @@ function fedapay_demarrer(array $ins, ?int $montant = null): string
     if ($montant <= 0) {
         throw new RuntimeException('Rien à payer pour cette inscription.');
     }
+    // Une tentative récente du même montant, encore en attente, est réutilisée (pas de doublon si l'on clique deux fois).
+    $recente = DB::un(
+        "SELECT * FROM paiements WHERE inscription_id = ? AND fournisseur = 'fedapay' AND statut = 'en_attente'
+         AND montant = ? AND lien_paiement IS NOT NULL AND cree_le >= ? ORDER BY id DESC LIMIT 1",
+        [$ins['id'], $montant, date('Y-m-d H:i:s', time() - 1800)]
+    );
+    if ($recente) {
+        try {
+            $recente = fedapay_synchroniser((int) $recente['id']);
+        } catch (Throwable $e) {
+            error_log('[fedapay] tentative précédente illisible : ' . $e->getMessage());
+            $recente = null;
+        }
+        if (($recente['statut'] ?? '') === 'en_attente') {
+            return (string) $recente['lien_paiement'];
+        }
+        if (($recente['statut'] ?? '') === 'valide') {
+            throw new RuntimeException('Ce paiement vient d’être validé.');
+        }
+    }
     $morceaux = explode(' ', $ins['nom'], 2);
     $paiementId = DB::inserer('paiements', [
         'inscription_id' => $ins['id'],
@@ -75,7 +99,8 @@ function fedapay_demarrer(array $ins, ?int $montant = null): string
         'description' => mb_substr('DIMO Tech Academy ' . $ins['reference'] . ' — ' . $ins['formation_titre'], 0, 250),
         'amount' => $montant,
         'currency' => ['iso' => cfg('paiement.fedapay.devise', 'XOF')],
-        'callback_url' => url_absolue('/paiement/retour?p=' . $paiementId),
+        // Retour après paiement : FedaPay ajoute ?id=…&status=… ; le jeton de suivi empêche de deviner l'adresse.
+        'callback_url' => url_absolue('/paiement/retour/' . $ins['jeton_suivi'] . '/' . $paiementId),
         'customer' => [
             'firstname' => $morceaux[0],
             'lastname' => $morceaux[1] ?? $morceaux[0],
@@ -101,11 +126,17 @@ function fedapay_synchroniser(int $paiementId): ?array
     $t = fedapay_extraire(fedapay_requete('GET', '/transactions/' . $p['externe_id']), 'transaction');
     $statut = strtolower((string) ($t['status'] ?? 'pending'));
     if (in_array($statut, ['approved', 'transferred'], true)) {
-        DB::modifier('paiements', ['statut' => 'valide', 'recu_le' => maintenant()], ['id' => $paiementId]);
-        $ins = recalculer_inscription((int) $p['inscription_id']);
-        notifier((int) $ins['utilisateur_id'], 'Paiement reçu', 'Votre paiement en ligne de ' . prix((int) $p['montant']) . ' pour « ' . $ins['formation_titre'] . ' » est validé.', '/espace');
-    } elseif (in_array($statut, ['declined', 'canceled', 'cancelled', 'expired'], true)) {
-        DB::modifier('paiements', ['statut' => 'echoue'], ['id' => $paiementId]);
+        // Mise à jour conditionnelle : le retour du navigateur et le webhook peuvent arriver en même temps.
+        $fait = DB::requete(
+            "UPDATE paiements SET statut = 'valide', recu_le = ? WHERE id = ? AND statut = 'en_attente'",
+            [maintenant(), $paiementId]
+        )->rowCount();
+        if ($fait) {
+            $ins = recalculer_inscription((int) $p['inscription_id']);
+            notifier((int) $ins['utilisateur_id'], 'Paiement reçu', 'Votre paiement en ligne de ' . prix((int) $p['montant']) . ' pour « ' . $ins['formation_titre'] . ' » est validé.', '/espace');
+        }
+    } elseif (in_array($statut, ['declined', 'canceled', 'cancelled', 'expired', 'refunded'], true)) {
+        DB::requete("UPDATE paiements SET statut = 'echoue' WHERE id = ? AND statut = 'en_attente'", [$paiementId]);
     }
     return DB::un('SELECT * FROM paiements WHERE id = ?', [$paiementId]);
 }

@@ -201,6 +201,28 @@ function admin_inscription_paiement(string $id): void
     rediriger('/admin/inscriptions/' . $id);
 }
 
+/** Relit auprès de FedaPay le statut d'un paiement en ligne resté « en cours ». */
+function admin_inscription_verifier_paiement(string $id, string $pid): void
+{
+    exiger_admin();
+    $p = DB::un("SELECT * FROM paiements WHERE id = ? AND inscription_id = ? AND fournisseur = 'fedapay'", [(int) $pid, (int) $id]);
+    if (!$p) {
+        page_introuvable();
+    }
+    try {
+        $p = fedapay_synchroniser((int) $p['id']);
+        match ($p['statut']) {
+            'valide' => flash('succes', 'Paiement confirmé par FedaPay et enregistré.'),
+            'echoue' => flash('erreur', 'FedaPay indique que ce paiement n’a pas abouti.'),
+            default => flash('info', 'Paiement toujours en attente chez FedaPay.'),
+        };
+    } catch (Throwable $e) {
+        error_log('[fedapay admin] ' . $e->getMessage());
+        flash('erreur', 'FedaPay ne répond pas : ' . $e->getMessage());
+    }
+    rediriger('/admin/inscriptions/' . $id);
+}
+
 function admin_inscription_supprimer_paiement(string $id, string $pid): void
 {
     exiger_admin();
